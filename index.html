@@ -845,21 +845,48 @@
       background: #f8f9fa;
     }
 
-    .topic-list .topic-action.delete {
-      color: #dc3545;
-      border-color: #dc3545;
-      display: none;
-    }
-
-    body.panel-edit-mode .topic-list .topic-action.delete {
-      display: inline-block;
-    }
-
     .topic-list span.topic-title {
       white-space: nowrap;
       overflow: hidden;
+      cursor: pointer;
       text-overflow: ellipsis;
       flex: 1;
+    }
+
+    .topic-context-menu {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+      display: none;
+      flex-direction: column;
+      min-width: 180px;
+      z-index: 6000;
+      padding: 4px 0;
+    }
+
+    .topic-context-menu.show {
+      display: flex;
+    }
+
+    .topic-context-menu button {
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 8px 14px;
+      font-size: 11px;
+      color: #212529;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .topic-context-menu button:hover {
+      background: #f1f3f5;
+    }
+
+    .topic-context-menu button.danger {
+      color: #dc3545;
     }
 
     .panel-backdrop {
@@ -898,7 +925,7 @@
     }
 
     .page[contenteditable="true"] {
-      outline: 2px solid var(--theme-primary);
+      outline: 2px solid #d1d5db;
       outline-offset: 4px;
     }
 
@@ -916,6 +943,11 @@
       justify-content: space-between;
     }
 
+    h1 .topic-title-text {
+      flex: 1;
+      cursor: pointer;
+    }
+
     .magic-icon {
       display: inline-flex;
       align-items: center;
@@ -924,8 +956,8 @@
       height: 24px;
       font-size: 16px;
       cursor: pointer;
-      background: transparent;
-      border: 1px solid var(--theme-primary);
+      background: rgba(0, 0, 0, 0.05);
+      border: none;
       border-radius: 50%;
       transition: all 0.3s ease;
       flex-shrink: 0;
@@ -1097,7 +1129,7 @@
     }
 
     .magic-page[contenteditable="true"] {
-      outline: 2px solid var(--theme-primary);
+      outline: 2px solid #d1d5db;
       outline-offset: 4px;
     }
 
@@ -1223,7 +1255,7 @@
 
   <button class="reading-mode-exit" id="readingModeExit" title="Salir del modo lectura">✕</button>
 
-  <input type="file" id="loadHtmlInput" accept=".html" />
+  <input type="file" id="loadHtmlInput" accept=".html" multiple />
 
   <!-- Barra de herramientas -->
   <div class="edit-toolbar" id="editToolbar">
@@ -1448,6 +1480,206 @@
         '#C5E1A5', '#FFF9C4', '#FFE082', '#FFCCBC', '#D7CCC8', '#F5F5F5', '#CFD8DC', '#E1BEE7'
       ];
 
+      const topicMenu = document.createElement('div');
+      topicMenu.id = 'topicContextMenu';
+      topicMenu.className = 'topic-context-menu';
+      topicMenu.innerHTML = `
+        <button data-action="rename">Cambiar título</button>
+        <button data-action="move">Mover tema</button>
+        <button data-action="duplicate">Duplicar tema</button>
+        <button data-action="delete" class="danger">Eliminar tema</button>
+      `;
+      document.body.appendChild(topicMenu);
+
+      let topicMenuContext = null;
+      let topicMenuJustOpened = false;
+
+      function hideTopicMenu() {
+        topicMenu.classList.remove('show');
+        topicMenuContext = null;
+        topicMenuJustOpened = false;
+      }
+
+      function getTopicTitle(page) {
+        if (!page) return '';
+        const h1 = page.querySelector('h1');
+        const titleSpan = h1?.querySelector('span:first-child');
+        return (titleSpan?.textContent || h1?.textContent || '').trim();
+      }
+
+      function showTopicMenu(event, tema) {
+        if (!tema || !tema.page) return;
+        hideTopicMenu();
+
+        const page = tema.page;
+        const title = (tema.titulo || getTopicTitle(page) || 'Tema').trim();
+        topicMenuContext = { page, titulo: title };
+
+        const pageX = event.pageX || (event.clientX + window.scrollX);
+        const pageY = event.pageY || (event.clientY + window.scrollY);
+
+        topicMenu.style.left = pageX + 'px';
+        topicMenu.style.top = pageY + 'px';
+        topicMenu.classList.add('show');
+
+        const rect = topicMenu.getBoundingClientRect();
+        let newLeft = rect.left;
+        let newTop = rect.top;
+
+        if (rect.right > window.innerWidth) {
+          newLeft = window.innerWidth - rect.width - 12;
+        }
+        if (rect.bottom > window.innerHeight) {
+          newTop = window.innerHeight - rect.height - 12;
+        }
+
+        newLeft = Math.max(8, newLeft);
+        newTop = Math.max(8, newTop);
+
+        topicMenu.style.left = window.scrollX + newLeft + 'px';
+        topicMenu.style.top = window.scrollY + newTop + 'px';
+
+        topicMenuJustOpened = true;
+        setTimeout(() => {
+          topicMenuJustOpened = false;
+        }, 0);
+      }
+
+      function renameTopicPage(page) {
+        if (!page) return false;
+        const h1 = page.querySelector('h1');
+        const titleSpan = h1?.querySelector('span:first-child');
+        const currentTitle = (titleSpan?.textContent || h1?.textContent || 'Tema').trim();
+        const newTitle = prompt('Nuevo título para el tema:', currentTitle);
+        if (!newTitle || !newTitle.trim()) return false;
+        const cleanTitle = newTitle.trim();
+        if (titleSpan) {
+          titleSpan.textContent = cleanTitle;
+        } else if (h1) {
+          h1.textContent = cleanTitle;
+        }
+        page.dataset.topicTitle = cleanTitle;
+        initializeSections();
+        buildSectionsPanel();
+        buildTableOfContents();
+        setupMagicIcons();
+        return true;
+      }
+
+      function moveTopicPage(page) {
+        if (!page) return false;
+        if (!sections.length) {
+          initializeSections();
+        }
+        if (sections.length <= 1) {
+          alert('No hay otras secciones disponibles para mover este tema.');
+          return false;
+        }
+
+        const currentSection = sections.find(section => section.id === page.dataset.sectionId);
+        const options = sections.map((section, idx) => `${idx + 1}. ${section.nombre}${section === currentSection ? ' (actual)' : ''}`).join('\n');
+        const choice = prompt(`Mover tema a sección:\n${options}\nEscribe el número o nombre de la sección destino:`, currentSection?.nombre || '');
+        if (!choice || !choice.trim()) return false;
+
+        const trimmed = choice.trim().toLowerCase();
+        let targetSection = sections.find((section, idx) => String(idx + 1) === trimmed);
+        if (!targetSection) {
+          targetSection = sections.find(section => section.nombre.toLowerCase() === trimmed);
+        }
+
+        if (!targetSection) {
+          alert('No se encontró la sección indicada.');
+          return false;
+        }
+
+        page.dataset.sectionId = targetSection.id;
+        page.dataset.sectionName = targetSection.nombre;
+        initializeSections();
+        buildSectionsPanel();
+        return true;
+      }
+
+      function deleteTopicPage(page) {
+        if (!page) return false;
+        const title = getTopicTitle(page) || 'este tema';
+        if (!confirm(`¿Eliminar "${title}"?`)) {
+          return false;
+        }
+        page.remove();
+        pages = pages.filter(p => p !== page);
+        initializeSections();
+        buildSectionsPanel();
+        buildTableOfContents();
+        return true;
+      }
+
+      function duplicateTopicPage(page) {
+        if (!page) return null;
+        const clone = page.cloneNode(true);
+        const titleSpan = clone.querySelector('h1 span:first-child');
+        if (titleSpan) {
+          const currentTitle = titleSpan.textContent.trim();
+          titleSpan.textContent = currentTitle ? `${currentTitle} (Copia)` : 'Tema (Copia)';
+        }
+        const newId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+        clone.dataset.topicId = newId;
+        clone.contentEditable = isEditMode ? 'true' : 'false';
+        page.parentNode.insertBefore(clone, page.nextSibling);
+        pages = [...document.querySelectorAll('.page')];
+        setupMagicIcons();
+        io.observe(clone);
+        initializeSections();
+        buildSectionsPanel();
+        buildTableOfContents();
+        clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return clone;
+      }
+
+      topicMenu.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button || !topicMenuContext) return;
+        event.preventDefault();
+        event.stopPropagation();
+
+        const { page } = topicMenuContext;
+        if (!page) {
+          hideTopicMenu();
+          return;
+        }
+
+        switch (button.dataset.action) {
+          case 'rename':
+            renameTopicPage(page);
+            break;
+          case 'move':
+            moveTopicPage(page);
+            break;
+          case 'duplicate':
+            duplicateTopicPage(page);
+            break;
+          case 'delete':
+            deleteTopicPage(page);
+            break;
+        }
+
+        hideTopicMenu();
+      });
+
+      document.addEventListener('click', (event) => {
+        if (topicMenuJustOpened) return;
+        if (!topicMenu.contains(event.target)) {
+          hideTopicMenu();
+        }
+      });
+
+      document.addEventListener('scroll', hideTopicMenu, true);
+      window.addEventListener('resize', hideTopicMenu);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          hideTopicMenu();
+        }
+      });
+
       /* === ZOOM === */
       function updateZoom(delta) {
         currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
@@ -1545,16 +1777,19 @@
       function enableHtmlPaste() {
         const editableElements = document.querySelectorAll('[contenteditable="true"]');
         editableElements.forEach(el => {
+          if (el.dataset.pasteHandlerBound === 'true') return;
           el.addEventListener('paste', (e) => {
             e.preventDefault();
             const html = e.clipboardData.getData('text/html') || e.clipboardData.getData('text/plain');
             document.execCommand('insertHTML', false, html);
           });
+          el.dataset.pasteHandlerBound = 'true';
         });
       }
 
       /* === MODAL === */
       function showModal(content) {
+        hideTopicMenu();
         modalContent.innerHTML = content;
         modalOverlay.classList.add('show');
       }
@@ -1626,34 +1861,63 @@
         pages.forEach(page => {
           const h1 = page.querySelector('h1');
           if (!h1) return;
-          
-          // Si ya tiene el icono, no hacer nada
-          if (h1.querySelector('.magic-icon')) return;
-          
-          // Obtener el texto del título
-          let titleText = h1.textContent.trim();
-          
-          // Crear estructura con span para el título y el icono
-          const titleSpan = document.createElement('span');
-          titleSpan.textContent = titleText;
-          
-          const magicIcon = document.createElement('span');
-          magicIcon.className = 'magic-icon';
-          magicIcon.title = 'Ver contenido mágico';
-          magicIcon.textContent = '✨';
-          
-          // Evento click para el icono
-          magicIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            closePanel();
-            const topicId = page.dataset.topicId || '';
-            activateMagicTopic(magicAnchorFor(page), titleText);
-          });
-          
-          // Limpiar h1 y agregar nueva estructura
-          h1.innerHTML = '';
-          h1.appendChild(titleSpan);
-          h1.appendChild(magicIcon);
+
+          let titleSpan = h1.querySelector('.topic-title-text');
+          if (!titleSpan) {
+            const existingSpan = h1.querySelector('span:first-child');
+            const currentTitle = (existingSpan?.textContent || h1.textContent || '').trim();
+            const existingMagic = h1.querySelector('.magic-icon');
+
+            if (existingSpan) {
+              titleSpan = existingSpan;
+              titleSpan.classList.add('topic-title-text');
+            } else {
+              titleSpan = document.createElement('span');
+              titleSpan.className = 'topic-title-text';
+              titleSpan.textContent = currentTitle;
+            }
+
+            h1.innerHTML = '';
+            h1.appendChild(titleSpan);
+            if (existingMagic) {
+              h1.appendChild(existingMagic);
+            }
+          }
+
+          let magicIcon = h1.querySelector('.magic-icon');
+          if (!magicIcon) {
+            magicIcon = document.createElement('span');
+            magicIcon.className = 'magic-icon';
+            magicIcon.title = 'Ver contenido mágico';
+            magicIcon.textContent = '✨';
+            h1.appendChild(magicIcon);
+          }
+
+          const getTitle = () => (titleSpan?.textContent || '').trim() || getTopicTitle(page) || 'Tema';
+
+          if (!magicIcon.dataset.bound) {
+            magicIcon.addEventListener('click', (e) => {
+              e.stopPropagation();
+              closePanel();
+              activateMagicTopic(magicAnchorFor(page), getTitle());
+            });
+            magicIcon.dataset.bound = 'true';
+          }
+
+          if (!titleSpan.dataset.bound) {
+            titleSpan.title = 'Doble clic para opciones del tema';
+            titleSpan.addEventListener('dblclick', (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              showTopicMenu(event, { page, titulo: getTitle() });
+            });
+            titleSpan.addEventListener('click', (event) => event.stopPropagation());
+            titleSpan.dataset.bound = 'true';
+          }
+
+          if (titleSpan.nextSibling !== magicIcon) {
+            h1.appendChild(magicIcon);
+          }
         });
       }
 
@@ -1716,6 +1980,7 @@
         if (!panel.classList.contains('open')) {
           panelBackdrop.classList.remove('show');
         }
+        hideTopicMenu();
       }
 
       tocBtn?.addEventListener('click', () => {
@@ -1880,7 +2145,7 @@
       function createColorPalette(paletteId, isHighlight) {
         const palette = document.getElementById(paletteId);
         if (!palette) return;
-        
+
         palette.innerHTML = '';
         
         pastelColors.forEach(color => {
@@ -1909,32 +2174,70 @@
         palette.appendChild(customSwatch);
       }
 
+      function supportsCommand(command) {
+        if (typeof document.queryCommandSupported !== 'function') return true;
+        try {
+          return document.queryCommandSupported(command);
+        } catch (e) {
+          return false;
+        }
+      }
+
       function applyColor(color, isHighlight) {
         if (!restoreSelection()) {
           alert('Por favor, selecciona el texto primero');
           return;
         }
-        
+
         const selection = window.getSelection();
-        if (!selection.rangeCount) return;
-        
-        const range = selection.getRangeAt(0);
-        const span = document.createElement('span');
-        
+        if (!selection.rangeCount || selection.isCollapsed) {
+          alert('Por favor, selecciona el texto primero');
+          savedSelection = null;
+          return;
+        }
+
+        const styleWithCss = supportsCommand('styleWithCSS');
+        if (styleWithCss) {
+          document.execCommand('styleWithCSS', false, true);
+        }
+
+        let command = 'foreColor';
         if (isHighlight) {
-          span.style.backgroundColor = color;
-        } else {
-          span.style.color = color;
+          if (supportsCommand('hiliteColor')) {
+            command = 'hiliteColor';
+          } else if (supportsCommand('backColor')) {
+            command = 'backColor';
+          } else {
+            command = null;
+          }
         }
-        
-        try {
-          range.surroundContents(span);
-        } catch (e) {
-          const fragment = range.extractContents();
-          span.appendChild(fragment);
-          range.insertNode(span);
+
+        let applied = false;
+        if (command) {
+          applied = document.execCommand(command, false, color);
         }
-        
+
+        if (styleWithCss) {
+          document.execCommand('styleWithCSS', false, false);
+        }
+
+        if (!applied) {
+          const range = selection.getRangeAt(0);
+          const wrapper = document.createElement('span');
+          if (isHighlight) {
+            wrapper.style.backgroundColor = color;
+          } else {
+            wrapper.style.color = color;
+          }
+          try {
+            range.surroundContents(wrapper);
+          } catch (e) {
+            const fragment = range.extractContents();
+            wrapper.appendChild(fragment);
+            range.insertNode(wrapper);
+          }
+        }
+
         selection.removeAllRanges();
         savedSelection = null;
       }
@@ -1995,6 +2298,21 @@
 
       /* === PLANTILLAS === */
       document.getElementById('insertTemplateBtn')?.addEventListener('click', () => {
+        const hasSelection = saveCurrentSelection();
+        if (!hasSelection) {
+          const activeEditable = document.activeElement && document.activeElement.isContentEditable ? document.activeElement : null;
+          const target = activeEditable || getCurrentPage() || getCurrentMagicPage();
+          if (target) {
+            const range = document.createRange();
+            range.selectNodeContents(target);
+            range.collapse(false);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            saveCurrentSelection();
+          }
+        }
+
         showModal(`
           <div class="modal-header">
             <h3>Insertar Plantilla</h3>
@@ -2061,6 +2379,9 @@
         ];
 
         const grid = document.getElementById('templateGrid');
+        if (grid) {
+          grid.innerHTML = '';
+        }
         templates.forEach(template => {
           const card = document.createElement('div');
           card.className = 'template-card';
@@ -2069,10 +2390,29 @@
             <div class="template-preview">${template.html}</div>
           `;
           card.addEventListener('click', () => {
-            document.execCommand('insertHTML', false, template.html);
+            let inserted = false;
+            if (restoreSelection()) {
+              execCmd('insertHTML', template.html);
+              inserted = true;
+            } else {
+              const fallback = (document.activeElement && document.activeElement.isContentEditable)
+                ? document.activeElement
+                : (getCurrentPage() || getCurrentMagicPage());
+              if (fallback) {
+                fallback.focus();
+                execCmd('insertHTML', template.html);
+                inserted = true;
+              }
+            }
+
+            if (!inserted) {
+              alert('Selecciona un área editable antes de insertar una plantilla.');
+            }
+
+            savedSelection = null;
             hideModal();
           });
-          grid.appendChild(card);
+          grid?.appendChild(card);
         });
       });
 
@@ -2088,6 +2428,7 @@
         if (!tocPanel.classList.contains('open')) {
           panelBackdrop.classList.remove('show');
         }
+        hideTopicMenu();
       }
 
       function magicAnchorFor(page) {
@@ -2231,39 +2572,32 @@
             numSpan.textContent = globalTopicCounter + '.';
             globalTopicCounter++;
             
-            const btnMain = document.createElement('button');
-            btnMain.className = 'topic-action';
-            btnMain.title = 'Ir al tema';
-            btnMain.textContent = '📄';
-            btnMain.addEventListener('click', () => {
-              closeMagicView();
-              closePanel();
-              tema.page.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-            
-            const btnDelete = document.createElement('button');
-            btnDelete.className = 'topic-action delete';
-            btnDelete.title = 'Eliminar tema';
-            btnDelete.textContent = '🗑️';
-            btnDelete.addEventListener('click', () => {
-              if (confirm(`¿Eliminar "${tema.titulo}"?`)) {
-                tema.page.remove();
-                pages = pages.filter(p => p !== tema.page);
-                initializeSections();
-                buildSectionsPanel();
-              }
-            });
-            
-            const titleSpan = document.createElement('span');
-            titleSpan.className = 'topic-title';
-            titleSpan.textContent = tema.titulo;
-            
-            li.appendChild(numSpan);
-            li.appendChild(btnMain);
-            li.appendChild(btnDelete);
-            li.appendChild(titleSpan);
-            topicList.appendChild(li);
+          const btnMain = document.createElement('button');
+          btnMain.className = 'topic-action';
+          btnMain.title = 'Ir al tema';
+          btnMain.textContent = '📄';
+          btnMain.addEventListener('click', () => {
+            closeMagicView();
+            closePanel();
+            tema.page.scrollIntoView({ behavior: 'smooth', block: 'start' });
           });
+
+          const titleSpan = document.createElement('span');
+          titleSpan.className = 'topic-title';
+          titleSpan.textContent = tema.titulo;
+          titleSpan.title = 'Doble clic para opciones del tema';
+          titleSpan.addEventListener('dblclick', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            showTopicMenu(event, tema);
+          });
+          titleSpan.addEventListener('click', (event) => event.stopPropagation());
+
+          li.appendChild(numSpan);
+          li.appendChild(btnMain);
+          li.appendChild(titleSpan);
+          topicList.appendChild(li);
+        });
           
           sectionDiv.appendChild(sectionHeader);
           sectionDiv.appendChild(topicList);
@@ -2409,7 +2743,8 @@
       /* === EDICIÓN === */
       function toggleEditMode() {
         isEditMode = !isEditMode;
-        
+        hideTopicMenu();
+
         if (isEditMode) {
           pages.forEach(page => page.contentEditable = 'true');
           const magicPage = getCurrentMagicPage();
@@ -2617,30 +2952,7 @@
   document.getElementById('duplicateTopicBtn')?.addEventListener('click', () => {
     const currentPage = getCurrentPage();
     if (!currentPage) return;
-
-    const clone = currentPage.cloneNode(true);
-    const h1 = clone.querySelector('h1');
-    if (h1) {
-      const titleSpan = h1.querySelector('span:first-child');
-      if (titleSpan) {
-        titleSpan.textContent = titleSpan.textContent + ' (Copia)';
-      }
-    }
-    
-    clone.dataset.topicId = 'topic-' + Date.now();
-
-    currentPage.parentNode.insertBefore(clone, currentPage.nextSibling);
-    
-    pages = [...document.querySelectorAll('.page')];
-    io.observe(clone);
-    
-    // Configurar icono mágico en el clon
-    setupMagicIcons();
-    
-    initializeSections();
-    buildSectionsPanel();
-    
-    clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    duplicateTopicPage(currentPage);
   });
 
   /* === EXPORTAR TEMA === */
@@ -2848,120 +3160,162 @@ ${document.querySelector('style').textContent}
     btn.textContent = '✅ Guardado';
     setTimeout(() => btn.textContent = oldText, 2000);
   });
-  
+
+  function importHtmlFile(file, existingTopicIds) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const htmlText = event.target.result;
+          const parser = new DOMParser();
+          const loadedDoc = parser.parseFromString(htmlText, 'text/html');
+
+          let hasNewStructure = false;
+          let importedSectionId = null;
+          let importedSectionName = 'Importado';
+
+          try {
+            const buildMatch = htmlText.match(/build:topics\s({.*?})/s);
+            if (buildMatch) {
+              const buildData = JSON.parse(buildMatch[1]);
+              if (buildData.secciones && buildData.secciones.length > 0) {
+                hasNewStructure = true;
+                importedSectionId = buildData.secciones[0].id;
+                importedSectionName = buildData.secciones[0].nombre;
+              }
+            }
+          } catch (error) {
+            console.log('Archivo sin estructura de secciones');
+          }
+
+          const loadedSpecialty = loadedDoc.getElementById('specialtyTitle');
+          if (loadedSpecialty && specialtySpan && loadedSpecialty.textContent.trim()) {
+            specialtySpan.textContent = loadedSpecialty.textContent.trim();
+          }
+
+          const mainContainer = document.querySelector('body');
+          const scriptTag = mainContainer.querySelector('script');
+          const loadedPages = loadedDoc.querySelectorAll('.page');
+
+          if (loadedPages.length === 0) {
+            throw new Error(`No se encontraron secciones de contenido en ${file.name}`);
+          }
+
+          if (!hasNewStructure) {
+            importedSectionId = 'seccion-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+            importedSectionName = file.name.replace(/\.html$/i, '');
+          }
+
+          loadedPages.forEach(page => {
+            const clonedPage = page.cloneNode(true);
+            afterContentSanitize(clonedPage);
+
+            if (!clonedPage.dataset.sectionId) {
+              clonedPage.dataset.sectionId = importedSectionId;
+            }
+            if (!clonedPage.dataset.sectionName) {
+              clonedPage.dataset.sectionName = importedSectionName;
+            }
+
+            let topicId = clonedPage.dataset.topicId;
+            if (!topicId) {
+              topicId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+              clonedPage.dataset.topicId = topicId;
+            } else if (existingTopicIds.has(topicId)) {
+              const newId = topicId + '-' + Math.random().toString(36).substr(2, 4);
+              clonedPage.dataset.topicId = newId;
+              topicId = newId;
+            }
+            existingTopicIds.add(topicId);
+
+            clonedPage.contentEditable = isEditMode ? 'true' : 'false';
+            mainContainer.insertBefore(clonedPage, scriptTag);
+          });
+
+          const magicContainer = document.querySelector('.magic-content-container');
+          if (magicContainer) {
+            const loadedMagicContainer = loadedDoc.querySelector('.magic-content-container');
+            if (loadedMagicContainer) {
+              loadedMagicContainer.querySelectorAll('.magic-topic').forEach(topic => {
+                const clonedTopic = topic.cloneNode(true);
+                afterContentSanitize(clonedTopic);
+                magicContainer.appendChild(clonedTopic);
+              });
+            }
+          }
+
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      };
+      reader.onerror = () => reject(reader.error || new Error('No se pudo leer el archivo'));
+      reader.readAsText(file);
+    });
+  }
+
   /* === CARGAR HTML === */
   loadHtmlBtn?.addEventListener('click', () => {
     loadHtmlInput.click();
   });
-  
-  loadHtmlInput?.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    if (!file.name.endsWith('.html')) {
-      alert('Por favor selecciona un archivo HTML válido');
+
+  loadHtmlInput?.addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    const htmlFiles = files.filter(file => file.name.toLowerCase().endsWith('.html'));
+    const ignoredFiles = files.filter(file => !file.name.toLowerCase().endsWith('.html'));
+
+    if (!htmlFiles.length) {
+      alert('Por favor selecciona archivos HTML válidos');
+      e.target.value = '';
       return;
     }
-    
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const parser = new DOMParser();
-        const loadedDoc = parser.parseFromString(event.target.result, 'text/html');
-        
-        let hasNewStructure = false;
-        let importedSectionId = null;
-        let importedSectionName = 'Importado';
-        
-        try {
-          const htmlContent = event.target.result;
-          const buildMatch = htmlContent.match(/build:topics\s({.*?})/s);
-          if (buildMatch) {
-            const buildData = JSON.parse(buildMatch[1]);
-            if (buildData.secciones && buildData.secciones.length > 0) {
-              hasNewStructure = true;
-              importedSectionId = buildData.secciones[0].id;
-              importedSectionName = buildData.secciones[0].nombre;
-            }
-          }
-        } catch (e) {
-          console.log('Archivo sin estructura de secciones');
+
+    if (ignoredFiles.length) {
+      alert(`Se ignoraron archivos no compatibles: ${ignoredFiles.map(f => f.name).join(', ')}`);
+    }
+
+    const existingTopicIds = new Set(pages.map(p => p.dataset.topicId).filter(Boolean));
+
+    try {
+      for (const file of htmlFiles) {
+        await importHtmlFile(file, existingTopicIds);
+      }
+
+      pages = [...document.querySelectorAll('.page')];
+      pages.forEach(p => {
+        afterContentSanitize(p);
+        if (!p.dataset.topicId) {
+          p.dataset.topicId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         }
-        
-        const loadedSpecialty = loadedDoc.getElementById('specialtyTitle');
-        if (loadedSpecialty && specialtySpan) {
-          specialtySpan.textContent = loadedSpecialty.textContent;
-        }
-        
-        const mainContainer = document.querySelector('body');
-        const loadedPages = loadedDoc.querySelectorAll('.page');
-        
-        if (loadedPages.length === 0) {
-          alert('No se encontraron secciones de contenido en el archivo');
-          return;
-        }
-        
-        if (!hasNewStructure) {
-          importedSectionId = 'seccion-' + Date.now();
-          importedSectionName = file.name.replace('.html', '');
-        }
-        
-        const scriptTag = mainContainer.querySelector('script');
-        loadedPages.forEach(page => {
-          const clonedPage = page.cloneNode(true);
-          afterContentSanitize(clonedPage);
-          
-          if (!clonedPage.dataset.sectionId) {
-            clonedPage.dataset.sectionId = importedSectionId;
-            clonedPage.dataset.sectionName = importedSectionName;
-          }
-          
-          mainContainer.insertBefore(clonedPage, scriptTag);
-        });
-        
-        const magicContainer = document.querySelector('.magic-content-container');
-        if (magicContainer) {
-          const loadedMagicContainer = loadedDoc.querySelector('.magic-content-container');
-          if (loadedMagicContainer) {
-            const loadedMagicTopics = loadedMagicContainer.querySelectorAll('.magic-topic');
-            loadedMagicTopics.forEach(topic => {
-              const clonedTopic = topic.cloneNode(true);
-              afterContentSanitize(clonedTopic);
-              magicContainer.appendChild(clonedTopic);
-            });
-          }
-        }
-        
-        pages = [...document.querySelectorAll('.page')];
-        pages.forEach(p => {
-          afterContentSanitize(p);
-          if (!p.dataset.topicId) {
-            p.dataset.topicId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-          }
-          io.observe(p);
-        });
-        
-        // Configurar iconos mágicos en páginas cargadas
-        setupMagicIcons();
-        
-        initializeSections();
-        buildSectionsPanel();
-        
-        const btn = loadHtmlBtn;
-        const oldText = btn.textContent;
+        io.observe(p);
+      });
+
+      setupMagicIcons();
+      initializeSections();
+      buildSectionsPanel();
+      buildTableOfContents();
+
+      if (isEditMode) {
+        pages.forEach(page => page.contentEditable = 'true');
+        enableHtmlPaste();
+      }
+
+      const btn = loadHtmlBtn;
+      if (btn) {
+        const oldText = btn.innerHTML;
         btn.innerHTML = '<span>✅</span> <span class="topbar-btn-label">Cargado</span>';
         setTimeout(() => btn.innerHTML = oldText, 2000);
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-      } catch (error) {
-        console.error('Error al cargar el archivo:', error);
-        alert('Error al cargar el archivo: ' + error.message);
       }
-    };
-    
-    reader.readAsText(file);
-    e.target.value = '';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      console.error('Error al cargar el archivo:', error);
+      alert('Error al cargar archivos: ' + error.message);
+    } finally {
+      e.target.value = '';
+    }
   });
 
   /* === COPIAR HTML === */
