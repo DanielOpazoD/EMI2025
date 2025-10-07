@@ -393,6 +393,97 @@
       text-align: right;
     }
 
+    /* ===== Plantillas ===== */
+    .template-block {
+      display: block;
+      margin: 8px 0;
+      padding: 4px;
+      border-radius: 6px;
+      transition: box-shadow 0.2s ease, outline 0.2s ease;
+      position: relative;
+    }
+
+    .template-block > :first-child {
+      margin-top: 0;
+    }
+
+    .template-block > :last-child {
+      margin-bottom: 0;
+    }
+
+    .template-block.selected-template {
+      outline: 2px solid var(--theme-primary);
+      outline-offset: 2px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .template-toolbar {
+      position: fixed;
+      background: #fff;
+      border: 2px solid var(--theme-primary);
+      border-radius: 6px;
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 3500;
+      min-width: 240px;
+    }
+
+    .template-toolbar.show {
+      display: flex;
+    }
+
+    .template-toolbar-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .template-toolbar label {
+      font-size: 9px;
+      color: #6c757d;
+      font-weight: 600;
+      min-width: 64px;
+    }
+
+    .template-toolbar input[type="color"] {
+      width: 36px;
+      height: 24px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      padding: 0;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .template-toolbar input[type="range"] {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .template-toolbar .size-display {
+      font-size: 9px;
+      color: #495057;
+      min-width: 52px;
+      text-align: right;
+    }
+
+    .template-toolbar button {
+      padding: 4px 8px;
+      border: 1px solid #ced4da;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 10px;
+      transition: all 0.15s;
+    }
+
+    .template-toolbar button:hover {
+      background: #f8f9fa;
+    }
+
     img.selected-image {
       outline: 2px solid var(--theme-primary);
       outline-offset: 2px;
@@ -1417,16 +1508,47 @@
     </div>
     <div class="image-toolbar-row">
       <label>Ancho:</label>
-      <input type="range" id="imageWidthSlider" min="50" max="800" step="10">
+      <input type="range" id="imageWidthSlider" min="50" max="900" step="1">
       <span class="size-display" id="widthDisplay">200px</span>
     </div>
     <div class="image-toolbar-row">
       <label>Alto:</label>
-      <input type="range" id="imageHeightSlider" min="50" max="800" step="10">
+      <input type="range" id="imageHeightSlider" min="50" max="900" step="1">
       <span class="size-display" id="heightDisplay">auto</span>
     </div>
     <div class="image-toolbar-row">
       <button id="deleteImageBtn" title="Eliminar" style="color: #dc3545; flex: 1;">🗑️ Eliminar</button>
+    </div>
+  </div>
+
+  <div class="template-toolbar" id="templateToolbar">
+    <div class="template-toolbar-row">
+      <label for="templateBgColor">Fondo:</label>
+      <input type="color" id="templateBgColor" value="#ffffff">
+      <button id="templateClearBgBtn" title="Quitar fondo">Sin fondo</button>
+    </div>
+    <div class="template-toolbar-row">
+      <label for="templateTextColor">Texto:</label>
+      <input type="color" id="templateTextColor" value="#212529">
+      <button id="templateResetTextColorBtn" title="Restablecer color">Restablecer</button>
+    </div>
+    <div class="template-toolbar-row">
+      <label for="templateFontSize">Tamaño:</label>
+      <input type="range" id="templateFontSize" min="80" max="180" step="5">
+      <span class="size-display" id="templateFontSizeDisplay">100%</span>
+    </div>
+    <div class="template-toolbar-row">
+      <label for="templateMarginTop">Arriba:</label>
+      <input type="range" id="templateMarginTop" min="0" max="120" step="1">
+      <span class="size-display" id="templateMarginTopDisplay">0px</span>
+    </div>
+    <div class="template-toolbar-row">
+      <label for="templateMarginBottom">Abajo:</label>
+      <input type="range" id="templateMarginBottom" min="0" max="120" step="1">
+      <span class="size-display" id="templateMarginBottomDisplay">0px</span>
+    </div>
+    <div class="template-toolbar-row">
+      <button id="templateDeleteBtn" title="Eliminar plantilla" style="color:#dc3545; flex:1;">🗑️ Eliminar</button>
     </div>
   </div>
 
@@ -1494,6 +1616,7 @@
       let pages = [...document.querySelectorAll('.page')];
       let globalTopicCounter = 1;
       let selectedImage = null;
+      let selectedTemplateBlock = null;
       let currentZoom = 1;
       let allSectionsExpanded = true;
       let savedSelection = null;
@@ -1536,6 +1659,18 @@
       const imageFrameToggle = document.getElementById('imageFrameToggle');
       const wrapFigureBtn = document.getElementById('wrapFigureBtn');
       const unwrapFigureBtn = document.getElementById('unwrapFigureBtn');
+      const templateToolbar = document.getElementById('templateToolbar');
+      const templateBgColorInput = document.getElementById('templateBgColor');
+      const templateClearBgBtn = document.getElementById('templateClearBgBtn');
+      const templateTextColorInput = document.getElementById('templateTextColor');
+      const templateResetTextColorBtn = document.getElementById('templateResetTextColorBtn');
+      const templateFontSizeSlider = document.getElementById('templateFontSize');
+      const templateFontSizeDisplay = document.getElementById('templateFontSizeDisplay');
+      const templateMarginTopSlider = document.getElementById('templateMarginTop');
+      const templateMarginTopDisplay = document.getElementById('templateMarginTopDisplay');
+      const templateMarginBottomSlider = document.getElementById('templateMarginBottom');
+      const templateMarginBottomDisplay = document.getElementById('templateMarginBottomDisplay');
+      const templateDeleteBtn = document.getElementById('templateDeleteBtn');
       const alignButtons = {
         left: document.getElementById('alignLeftBtn'),
         center: document.getElementById('alignCenterBtn'),
@@ -1548,6 +1683,9 @@
       const zoomValue = document.getElementById('zoomValue');
       const highlightPalette = document.getElementById('highlightPalette');
       const textColorPalette = document.getElementById('textColorPalette');
+      const insertTemplateBtn = document.getElementById('insertTemplateBtn');
+      const insertHtmlBtn = document.getElementById('insertHtmlBtn');
+      const insertTableBtn = document.getElementById('insertTableBtn');
 
       const pastelColors = [
         '#FFB6C1', '#FFD1DC', '#FFC8DD', '#E7C6FF', '#C8B6FF', '#B4D4FF', '#AEC6CF', '#B2DFDB',
@@ -1751,6 +1889,8 @@
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
           hideTopicMenu();
+          hideTemplateToolbar();
+          hideImageToolbar();
         }
       });
 
@@ -1768,7 +1908,7 @@
       function saveCurrentSelection() {
         const selection = window.getSelection();
         if (selection.rangeCount > 0) {
-          savedSelection = selection.getRangeAt(0);
+          savedSelection = selection.getRangeAt(0).cloneRange();
           return true;
         }
         return false;
@@ -1776,12 +1916,231 @@
 
       function restoreSelection() {
         if (savedSelection) {
+          if (!document.contains(savedSelection.startContainer) || !document.contains(savedSelection.endContainer)) {
+            savedSelection = null;
+            return false;
+          }
           const selection = window.getSelection();
           selection.removeAllRanges();
-          selection.addRange(savedSelection);
-          return true;
+          try {
+            selection.addRange(savedSelection);
+            return true;
+          } catch (err) {
+            savedSelection = null;
+          }
         }
         return false;
+      }
+
+      function ensureEditableSelection() {
+        if (restoreSelection()) {
+          const restored = window.getSelection();
+          if (restored.rangeCount > 0) {
+            return restored;
+          }
+        }
+
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          return selection;
+        }
+
+        const activeEditable = document.activeElement && document.activeElement.isContentEditable
+          ? document.activeElement
+          : null;
+        const target = activeEditable || getCurrentPage() || getCurrentMagicPage();
+        if (!target) return null;
+
+        const range = document.createRange();
+        range.selectNodeContents(target);
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        return selection;
+      }
+
+      function insertNodeAtSelection(node) {
+        const selection = ensureEditableSelection();
+        if (!selection || !selection.rangeCount) return null;
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        range.insertNode(node);
+        range.setStartAfter(node);
+        range.setEndAfter(node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        savedSelection = null;
+        return node;
+      }
+
+      function insertHtmlAtSelection(html) {
+        const selection = ensureEditableSelection();
+        if (!selection || !selection.rangeCount) return null;
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        const fragment = range.createContextualFragment(html);
+        const nodes = Array.from(fragment.childNodes);
+        range.insertNode(fragment);
+        const lastNode = nodes[nodes.length - 1];
+        if (lastNode) {
+          range.setStartAfter(lastNode);
+          range.setEndAfter(lastNode);
+        }
+        selection.removeAllRanges();
+        selection.addRange(range);
+        savedSelection = null;
+        return nodes[0] || null;
+      }
+
+      function normalizeColorToHex(color, fallback = '#ffffff') {
+        if (!color || color === 'transparent' || color === 'rgba(0, 0, 0, 0)') {
+          return fallback;
+        }
+        if (color.startsWith('#')) {
+          if (color.length === 4) {
+            return '#' + color.slice(1).split('').map(ch => ch + ch).join('');
+          }
+          return color;
+        }
+        const rgbMatch = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+        if (rgbMatch) {
+          return '#' + rgbMatch.slice(1, 4).map(value => {
+            const hex = parseInt(value, 10).toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+          }).join('');
+        }
+        const temp = document.createElement('div');
+        temp.style.color = color;
+        document.body.appendChild(temp);
+        const computed = window.getComputedStyle(temp).color;
+        document.body.removeChild(temp);
+        if (computed === color) {
+          return fallback;
+        }
+        return normalizeColorToHex(computed, fallback);
+      }
+
+      function parsePxValue(value, fallback = 0) {
+        if (!value) return fallback;
+        const parsed = parseFloat(value);
+        return Number.isFinite(parsed) ? Math.round(parsed) : fallback;
+      }
+
+      function createTemplateBlock(template) {
+        if (!template) return null;
+        const block = document.createElement('div');
+        block.className = 'template-block';
+        block.dataset.templateBlock = 'true';
+        if (template.name) {
+          block.dataset.templateName = template.name;
+        }
+        block.dataset.fontScale = '100';
+        block.setAttribute('tabindex', '0');
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = template.html;
+        while (wrapper.firstChild) {
+          block.appendChild(wrapper.firstChild);
+        }
+        return block;
+      }
+
+      function updateTemplateToolbarState(block) {
+        if (!block || !templateToolbar) return;
+        const computed = window.getComputedStyle(block);
+
+        if (templateBgColorInput) {
+          const bgValue = block.dataset.bgColor || block.style.backgroundColor || computed.backgroundColor;
+          templateBgColorInput.value = normalizeColorToHex(bgValue, '#ffffff');
+        }
+
+        if (templateTextColorInput) {
+          const textValue = block.dataset.textColor || block.style.color || computed.color;
+          templateTextColorInput.value = normalizeColorToHex(textValue, '#212529');
+        }
+
+        if (templateFontSizeSlider && templateFontSizeDisplay) {
+          const fontScale = parseInt(block.dataset.fontScale || '100', 10) || 100;
+          templateFontSizeSlider.value = fontScale;
+          templateFontSizeDisplay.textContent = fontScale + '%';
+        }
+
+        if (templateMarginTopSlider && templateMarginTopDisplay) {
+          const topMax = parseInt(templateMarginTopSlider.max || '120', 10);
+          let marginTop = block.dataset.marginTop !== undefined
+            ? parseInt(block.dataset.marginTop, 10)
+            : parsePxValue(block.style.marginTop || computed.marginTop, 0);
+          marginTop = Number.isFinite(marginTop) ? Math.max(0, Math.min(topMax, marginTop)) : 0;
+          templateMarginTopSlider.value = marginTop;
+          templateMarginTopDisplay.textContent = marginTop + 'px';
+        }
+
+        if (templateMarginBottomSlider && templateMarginBottomDisplay) {
+          const bottomMax = parseInt(templateMarginBottomSlider.max || '120', 10);
+          let marginBottom = block.dataset.marginBottom !== undefined
+            ? parseInt(block.dataset.marginBottom, 10)
+            : parsePxValue(block.style.marginBottom || computed.marginBottom, 0);
+          marginBottom = Number.isFinite(marginBottom) ? Math.max(0, Math.min(bottomMax, marginBottom)) : 0;
+          templateMarginBottomSlider.value = marginBottom;
+          templateMarginBottomDisplay.textContent = marginBottom + 'px';
+        }
+      }
+
+      function updateTemplateToolbarPosition(block) {
+        if (!templateToolbar || !block) return;
+        templateToolbar.classList.add('show');
+        const rect = block.getBoundingClientRect();
+        const toolbarWidth = templateToolbar.offsetWidth || 260;
+        const toolbarHeight = templateToolbar.offsetHeight || 220;
+
+        let left = rect.right + 12;
+        let top = rect.top;
+
+        if (left + toolbarWidth > window.innerWidth - 10) {
+          left = rect.left - toolbarWidth - 12;
+        }
+
+        if (left < 10) {
+          left = 10;
+        }
+
+        if (top + toolbarHeight > window.innerHeight - 10) {
+          top = window.innerHeight - toolbarHeight - 10;
+        }
+
+        if (top < 10) {
+          top = 10;
+        }
+
+        templateToolbar.style.left = left + 'px';
+        templateToolbar.style.top = top + 'px';
+      }
+
+      function repositionTemplateToolbar() {
+        if (selectedTemplateBlock) {
+          updateTemplateToolbarPosition(selectedTemplateBlock);
+        }
+      }
+
+      function showTemplateToolbar(block) {
+        if (!templateToolbar || !block) return;
+        if (selectedTemplateBlock && selectedTemplateBlock !== block) {
+          selectedTemplateBlock.classList.remove('selected-template');
+        }
+        hideImageToolbar();
+        selectedTemplateBlock = block;
+        block.classList.add('selected-template');
+        updateTemplateToolbarState(block);
+        updateTemplateToolbarPosition(block);
+      }
+
+      function hideTemplateToolbar() {
+        if (selectedTemplateBlock) {
+          selectedTemplateBlock.classList.remove('selected-template');
+          selectedTemplateBlock = null;
+        }
+        if (templateToolbar) {
+          templateToolbar.classList.remove('show');
+        }
       }
 
       function sanitizeCitations(el) {
@@ -2258,17 +2617,27 @@
 
         if (widthSlider && widthDisplay) {
           const widthValue = parseInt(img.style.width) || img.width || 200;
-          widthSlider.value = widthValue;
+          const sliderMax = parseInt(widthSlider.max || '900', 10);
+          const sliderMin = parseInt(widthSlider.min || '50', 10);
+          const clampedWidth = Math.max(sliderMin, Math.min(sliderMax, widthValue));
+          widthSlider.value = clampedWidth;
           widthDisplay.textContent = widthValue + 'px';
         }
 
         if (heightSlider && heightDisplay) {
           if (img.style.height && img.style.height !== 'auto') {
             const parsedHeight = parseInt(img.style.height) || img.height || 200;
-            heightSlider.value = parsedHeight;
+            const sliderMax = parseInt(heightSlider.max || '900', 10);
+            const sliderMin = parseInt(heightSlider.min || '50', 10);
+            const clampedHeight = Math.max(sliderMin, Math.min(sliderMax, parsedHeight));
+            heightSlider.value = clampedHeight;
             heightDisplay.textContent = parsedHeight + 'px';
           } else {
-            heightSlider.value = img.height || 200;
+            const autoHeight = img.height || 200;
+            const sliderMax = parseInt(heightSlider.max || '900', 10);
+            const sliderMin = parseInt(heightSlider.min || '50', 10);
+            const clampedAuto = Math.max(sliderMin, Math.min(sliderMax, autoHeight));
+            heightSlider.value = clampedAuto;
             heightDisplay.textContent = 'auto';
           }
         }
@@ -2282,8 +2651,11 @@
 
       window.addEventListener('scroll', repositionImageToolbar, { passive: true });
       window.addEventListener('resize', repositionImageToolbar);
+      window.addEventListener('scroll', repositionTemplateToolbar, { passive: true });
+      window.addEventListener('resize', repositionTemplateToolbar);
 
       function showImageToolbar(img) {
+        hideTemplateToolbar();
         if (selectedImage && selectedImage !== img) {
           selectedImage.classList.remove('selected-image');
         }
@@ -2309,6 +2681,17 @@
         } else if (!e.target.closest('#imageToolbar') && !e.target.closest('img') && !e.target.closest('.image-figure')) {
           hideImageToolbar();
         }
+
+        if (isEditMode) {
+          const templateBlock = e.target.closest('.template-block');
+          if (templateBlock) {
+            showTemplateToolbar(templateBlock);
+          } else if (!e.target.closest('#templateToolbar')) {
+            hideTemplateToolbar();
+          }
+        } else if (!e.target.closest('#templateToolbar')) {
+          hideTemplateToolbar();
+        }
       });
 
       document.getElementById('imageWidthSlider')?.addEventListener('input', (e) => {
@@ -2327,6 +2710,87 @@
           document.getElementById('heightDisplay').textContent = height + 'px';
           repositionImageToolbar();
         }
+      });
+
+      templateBgColorInput?.addEventListener('input', (e) => {
+        if (!selectedTemplateBlock) return;
+        const color = e.target.value || '#ffffff';
+        selectedTemplateBlock.dataset.bgColor = color;
+        selectedTemplateBlock.style.backgroundColor = color;
+        repositionTemplateToolbar();
+      });
+
+      templateClearBgBtn?.addEventListener('click', () => {
+        if (!selectedTemplateBlock) return;
+        delete selectedTemplateBlock.dataset.bgColor;
+        selectedTemplateBlock.style.backgroundColor = 'transparent';
+        if (templateBgColorInput) {
+          templateBgColorInput.value = '#ffffff';
+        }
+        repositionTemplateToolbar();
+      });
+
+      templateTextColorInput?.addEventListener('input', (e) => {
+        if (!selectedTemplateBlock) return;
+        const color = e.target.value || '#212529';
+        selectedTemplateBlock.dataset.textColor = color;
+        selectedTemplateBlock.style.color = color;
+      });
+
+      templateResetTextColorBtn?.addEventListener('click', () => {
+        if (!selectedTemplateBlock) return;
+        delete selectedTemplateBlock.dataset.textColor;
+        selectedTemplateBlock.style.color = '';
+        if (templateTextColorInput) {
+          templateTextColorInput.value = '#212529';
+        }
+      });
+
+      templateFontSizeSlider?.addEventListener('input', (e) => {
+        if (!selectedTemplateBlock) return;
+        const size = parseInt(e.target.value, 10) || 100;
+        selectedTemplateBlock.dataset.fontScale = String(size);
+        selectedTemplateBlock.style.fontSize = size === 100 ? '' : size + '%';
+        if (templateFontSizeDisplay) {
+          templateFontSizeDisplay.textContent = size + '%';
+        }
+        repositionTemplateToolbar();
+      });
+
+      templateMarginTopSlider?.addEventListener('input', (e) => {
+        if (!selectedTemplateBlock) return;
+        const margin = parseInt(e.target.value, 10) || 0;
+        selectedTemplateBlock.dataset.marginTop = String(margin);
+        selectedTemplateBlock.style.marginTop = margin + 'px';
+        if (templateMarginTopDisplay) {
+          templateMarginTopDisplay.textContent = margin + 'px';
+        }
+        repositionTemplateToolbar();
+      });
+
+      templateMarginBottomSlider?.addEventListener('input', (e) => {
+        if (!selectedTemplateBlock) return;
+        const margin = parseInt(e.target.value, 10) || 0;
+        selectedTemplateBlock.dataset.marginBottom = String(margin);
+        selectedTemplateBlock.style.marginBottom = margin + 'px';
+        if (templateMarginBottomDisplay) {
+          templateMarginBottomDisplay.textContent = margin + 'px';
+        }
+        repositionTemplateToolbar();
+      });
+
+      templateDeleteBtn?.addEventListener('click', () => {
+        if (!selectedTemplateBlock) return;
+        const block = selectedTemplateBlock;
+        const range = document.createRange();
+        range.setStartAfter(block);
+        range.collapse(true);
+        block.remove();
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        savedSelection = null;
+        hideTemplateToolbar();
       });
 
       function applyFloatClass(targetClass) {
@@ -2611,9 +3075,38 @@
       });
 
       /* === PLANTILLAS === */
+      insertTemplateBtn?.addEventListener('pointerdown', () => {
+        saveCurrentSelection();
+      });
+
+      insertTemplateBtn?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          saveCurrentSelection();
+        }
+      });
+
+      insertHtmlBtn?.addEventListener('pointerdown', () => {
+        saveCurrentSelection();
+      });
+
+      insertHtmlBtn?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          saveCurrentSelection();
+        }
+      });
+
+      insertTableBtn?.addEventListener('pointerdown', () => {
+        saveCurrentSelection();
+      });
+
+      insertTableBtn?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          saveCurrentSelection();
+        }
+      });
+
       document.getElementById('insertTemplateBtn')?.addEventListener('click', () => {
-        const hasSelection = saveCurrentSelection();
-        if (!hasSelection) {
+        if (!savedSelection) {
           const activeEditable = document.activeElement && document.activeElement.isContentEditable ? document.activeElement : null;
           const target = activeEditable || getCurrentPage() || getCurrentMagicPage();
           if (target) {
@@ -2704,26 +3197,16 @@
             <div class="template-preview">${template.html}</div>
           `;
           card.addEventListener('click', () => {
-            let inserted = false;
-            if (restoreSelection()) {
-              execCmd('insertHTML', template.html);
-              inserted = true;
-            } else {
-              const fallback = (document.activeElement && document.activeElement.isContentEditable)
-                ? document.activeElement
-                : (getCurrentPage() || getCurrentMagicPage());
-              if (fallback) {
-                fallback.focus();
-                execCmd('insertHTML', template.html);
-                inserted = true;
-              }
-            }
-
-            if (!inserted) {
+            const block = createTemplateBlock(template);
+            if (!block) return;
+            const insertedBlock = insertNodeAtSelection(block);
+            if (!insertedBlock) {
               alert('Selecciona un área editable antes de insertar una plantilla.');
+              return;
             }
 
-            savedSelection = null;
+            showTemplateToolbar(insertedBlock);
+            insertedBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             hideModal();
           });
           grid?.appendChild(card);
@@ -3035,6 +3518,7 @@
           closeTocPanel();
           hideModal();
           hideImageToolbar();
+          hideTemplateToolbar();
           closeMagicView();
           highlightPalette.classList.remove('show');
           textColorPalette.classList.remove('show');
@@ -3076,6 +3560,7 @@
           editBtn.classList.remove('active');
           editBtn.textContent = '✏️';
           saveHtmlBtn.style.display = 'none';
+          hideTemplateToolbar();
           hideImageToolbar();
         }
       }
@@ -3126,8 +3611,12 @@
           document.getElementById('insertCustomHtmlBtn')?.addEventListener('click', () => {
             const htmlCode = document.getElementById('customHtmlInput').value;
             if (htmlCode.trim()) {
-              execCmd('insertHTML', htmlCode);
-              hideModal();
+              const insertedNode = insertHtmlAtSelection(htmlCode);
+              if (insertedNode) {
+                hideModal();
+              } else {
+                alert('Selecciona un área editable antes de insertar HTML.');
+              }
             } else {
               alert('Por favor ingresa código HTML válido');
             }
@@ -3209,9 +3698,13 @@
           tableHTML += '</tr>';
         }
         tableHTML += '</tbody></table></div>';
-        
-        execCmd('insertHTML', tableHTML);
-        hideModal();
+
+        const insertedNode = insertHtmlAtSelection(tableHTML);
+        if (insertedNode) {
+          hideModal();
+        } else {
+          alert('Selecciona un área editable antes de insertar una tabla.');
+        }
       });
     }, 100);
   });
