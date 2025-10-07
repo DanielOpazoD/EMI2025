@@ -305,7 +305,7 @@
 
     /* ===== Panel de herramientas de imagen ===== */
     .image-toolbar {
-      position: absolute;
+      position: fixed;
       background: #fff;
       border: 2px solid var(--theme-primary);
       border-radius: 6px;
@@ -320,6 +320,32 @@
 
     .image-toolbar.show {
       display: flex;
+    }
+
+    .image-frame {
+      border: 2px solid rgba(13, 110, 253, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      background: rgba(13, 110, 253, 0.08);
+      padding: 6px;
+      border-radius: 6px;
+    }
+
+    .image-figure {
+      display: inline-block;
+      margin: 10px;
+      text-align: center;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 10px;
+    }
+
+    .image-figure figcaption {
+      margin-top: 8px;
+      font-size: 0.85em;
+      color: #495057;
+      outline: none;
+      min-width: 120px;
     }
 
     .image-toolbar-row {
@@ -392,6 +418,28 @@
     img.inline-image {
       display: inline;
       vertical-align: middle;
+      margin: 0 5px;
+    }
+
+    .image-figure.float-left {
+      float: left;
+      margin: 0 10px 10px 0;
+    }
+
+    .image-figure.float-right {
+      float: right;
+      margin: 0 0 10px 10px;
+    }
+
+    .image-figure.center-block {
+      display: block;
+      margin: 10px auto;
+      float: none;
+    }
+
+    .image-figure.inline-image {
+      display: inline-block;
+      float: none;
       margin: 0 5px;
     }
 
@@ -1354,6 +1402,20 @@
       <button id="inlineBtn" title="En línea">↔️</button>
     </div>
     <div class="image-toolbar-row">
+      <label for="imageAltInput">Alt:</label>
+      <input type="text" id="imageAltInput" placeholder="Texto alternativo" style="flex:1; font-size: 11px; padding: 4px;">
+      <button id="applyAltBtn" title="Aplicar texto alternativo">Aplicar</button>
+    </div>
+    <div class="image-toolbar-row">
+      <label for="imageFrameToggle">Marco:</label>
+      <input type="checkbox" id="imageFrameToggle" style="margin-right: 6px;">
+      <span style="font-size: 10px; color: #495057;">Agregar marco</span>
+    </div>
+    <div class="image-toolbar-row">
+      <button id="wrapFigureBtn" title="Agregar figura" style="flex:1;">➕ Cuadro</button>
+      <button id="unwrapFigureBtn" title="Quitar figura" style="flex:1;">➖ Quitar</button>
+    </div>
+    <div class="image-toolbar-row">
       <label>Ancho:</label>
       <input type="range" id="imageWidthSlider" min="50" max="800" step="10">
       <span class="size-display" id="widthDisplay">200px</span>
@@ -1469,6 +1531,18 @@
       const readingModeExit = document.getElementById('readingModeExit');
       const exportMarkdownBtn = document.getElementById('exportMarkdownBtn');
       const imageToolbar = document.getElementById('imageToolbar');
+      const imageAltInput = document.getElementById('imageAltInput');
+      const applyAltBtn = document.getElementById('applyAltBtn');
+      const imageFrameToggle = document.getElementById('imageFrameToggle');
+      const wrapFigureBtn = document.getElementById('wrapFigureBtn');
+      const unwrapFigureBtn = document.getElementById('unwrapFigureBtn');
+      const alignButtons = {
+        left: document.getElementById('alignLeftBtn'),
+        center: document.getElementById('alignCenterBtn'),
+        right: document.getElementById('alignRightBtn'),
+        inline: document.getElementById('inlineBtn')
+      };
+      const floatClasses = ['float-left', 'float-right', 'center-block', 'inline-image'];
       const zoomInBtn = document.getElementById('zoomInBtn');
       const zoomOutBtn = document.getElementById('zoomOutBtn');
       const zoomValue = document.getElementById('zoomValue');
@@ -2051,30 +2125,125 @@
       }
 
       /* === MANEJO DE IMÁGENES === */
-      function showImageToolbar(img) {
-        selectedImage = img;
-        img.classList.add('selected-image');
-        
-        const rect = img.getBoundingClientRect();
-        imageToolbar.style.left = rect.left + 'px';
-        imageToolbar.style.top = (rect.top - imageToolbar.offsetHeight - 10) + 'px';
+      function getImageContainer(img) {
+        if (img.parentElement && img.parentElement.classList.contains('image-figure')) {
+          return img.parentElement;
+        }
+        return img;
+      }
+
+      function setActiveAlignButton(activeClass) {
+        Object.values(alignButtons).forEach(btn => btn?.classList.remove('active'));
+        switch (activeClass) {
+          case 'float-left':
+            alignButtons.left?.classList.add('active');
+            break;
+          case 'center-block':
+            alignButtons.center?.classList.add('active');
+            break;
+          case 'float-right':
+            alignButtons.right?.classList.add('active');
+            break;
+          case 'inline-image':
+            alignButtons.inline?.classList.add('active');
+            break;
+        }
+      }
+
+      function updateToolbarPosition(img) {
+        if (!imageToolbar || !img) return;
+
         imageToolbar.classList.add('show');
-        
+
+        const rect = img.getBoundingClientRect();
+        const toolbarWidth = imageToolbar.offsetWidth || 240;
+        const toolbarHeight = imageToolbar.offsetHeight || 160;
+
+        let left = rect.left;
+        let top = rect.top - toolbarHeight - 10;
+
+        if (top < 10) {
+          top = rect.bottom + 10;
+        }
+
+        if (top + toolbarHeight > window.innerHeight - 10) {
+          top = Math.max(10, window.innerHeight - toolbarHeight - 10);
+        }
+
+        if (left + toolbarWidth > window.innerWidth - 10) {
+          left = window.innerWidth - toolbarWidth - 10;
+        }
+
+        if (left < 10) {
+          left = 10;
+        }
+
+        imageToolbar.style.left = left + 'px';
+        imageToolbar.style.top = top + 'px';
+      }
+
+      function updateToolbarState(img) {
+        if (!img) return;
+
+        if (imageAltInput) {
+          imageAltInput.value = img.getAttribute('alt') || '';
+        }
+
+        if (imageFrameToggle) {
+          imageFrameToggle.checked = img.classList.contains('image-frame');
+        }
+
+        if (wrapFigureBtn && unwrapFigureBtn) {
+          const isWrapped = img.parentElement?.classList.contains('image-figure') || false;
+          wrapFigureBtn.disabled = isWrapped;
+          unwrapFigureBtn.disabled = !isWrapped;
+        }
+
+        const container = getImageContainer(img);
+        const activeFloat = floatClasses.find(cls => container.classList.contains(cls));
+        setActiveAlignButton(activeFloat);
+
         const widthSlider = document.getElementById('imageWidthSlider');
         const heightSlider = document.getElementById('imageHeightSlider');
         const widthDisplay = document.getElementById('widthDisplay');
         const heightDisplay = document.getElementById('heightDisplay');
-        
-        widthSlider.value = img.width || 200;
-        widthDisplay.textContent = (img.width || 200) + 'px';
-        
-        if (img.style.height && img.style.height !== 'auto') {
-          heightSlider.value = parseInt(img.style.height) || 200;
-          heightDisplay.textContent = (parseInt(img.style.height) || 200) + 'px';
-        } else {
-          heightSlider.value = img.height || 200;
-          heightDisplay.textContent = 'auto';
+
+        if (widthSlider && widthDisplay) {
+          const widthValue = parseInt(img.style.width) || img.width || 200;
+          widthSlider.value = widthValue;
+          widthDisplay.textContent = widthValue + 'px';
         }
+
+        if (heightSlider && heightDisplay) {
+          if (img.style.height && img.style.height !== 'auto') {
+            const parsedHeight = parseInt(img.style.height) || img.height || 200;
+            heightSlider.value = parsedHeight;
+            heightDisplay.textContent = parsedHeight + 'px';
+          } else {
+            heightSlider.value = img.height || 200;
+            heightDisplay.textContent = 'auto';
+          }
+        }
+      }
+
+      function repositionImageToolbar() {
+        if (selectedImage) {
+          updateToolbarPosition(selectedImage);
+        }
+      }
+
+      window.addEventListener('scroll', repositionImageToolbar, { passive: true });
+      window.addEventListener('resize', repositionImageToolbar);
+
+      function showImageToolbar(img) {
+        if (selectedImage && selectedImage !== img) {
+          selectedImage.classList.remove('selected-image');
+        }
+        selectedImage = img;
+        img.classList.add('selected-image');
+
+        updateToolbarState(img);
+        updateToolbarPosition(img);
       }
 
       function hideImageToolbar() {
@@ -2089,7 +2258,7 @@
         if (isEditMode && e.target.tagName === 'IMG') {
           e.preventDefault();
           showImageToolbar(e.target);
-        } else if (!e.target.closest('#imageToolbar') && !e.target.closest('img')) {
+        } else if (!e.target.closest('#imageToolbar') && !e.target.closest('img') && !e.target.closest('.image-figure')) {
           hideImageToolbar();
         }
       });
@@ -2099,6 +2268,7 @@
           const width = parseInt(e.target.value);
           selectedImage.style.width = width + 'px';
           document.getElementById('widthDisplay').textContent = width + 'px';
+          repositionImageToolbar();
         }
       });
 
@@ -2107,32 +2277,128 @@
           const height = parseInt(e.target.value);
           selectedImage.style.height = height + 'px';
           document.getElementById('heightDisplay').textContent = height + 'px';
+          repositionImageToolbar();
         }
       });
 
-      document.getElementById('alignLeftBtn')?.addEventListener('click', () => {
-        if (selectedImage) {
-          selectedImage.className = 'float-left';
+      function applyFloatClass(targetClass) {
+        if (!selectedImage) return;
+
+        const container = getImageContainer(selectedImage);
+
+        floatClasses.forEach(cls => {
+          container.classList.remove(cls);
+          if (container !== selectedImage) {
+            selectedImage.classList.remove(cls);
+          }
+        });
+
+        if (targetClass) {
+          container.classList.add(targetClass);
+        }
+
+        setActiveAlignButton(targetClass || '');
+        repositionImageToolbar();
+      }
+
+      alignButtons.left?.addEventListener('click', () => {
+        applyFloatClass('float-left');
+      });
+
+      alignButtons.center?.addEventListener('click', () => {
+        applyFloatClass('center-block');
+      });
+
+      alignButtons.right?.addEventListener('click', () => {
+        applyFloatClass('float-right');
+      });
+
+      alignButtons.inline?.addEventListener('click', () => {
+        applyFloatClass('inline-image');
+      });
+
+      applyAltBtn?.addEventListener('click', () => {
+        if (!selectedImage || !imageAltInput) return;
+        selectedImage.alt = imageAltInput.value.trim();
+        selectedImage.setAttribute('alt', selectedImage.alt);
+        imageAltInput.blur();
+      });
+
+      imageAltInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          applyAltBtn?.click();
         }
       });
 
-      document.getElementById('alignCenterBtn')?.addEventListener('click', () => {
-        if (selectedImage) {
-          selectedImage.className = 'center-block';
+      imageFrameToggle?.addEventListener('change', (e) => {
+        if (!selectedImage) return;
+        if (e.target.checked) {
+          selectedImage.classList.add('image-frame');
+        } else {
+          selectedImage.classList.remove('image-frame');
         }
+        repositionImageToolbar();
       });
 
-      document.getElementById('alignRightBtn')?.addEventListener('click', () => {
-        if (selectedImage) {
-          selectedImage.className = 'float-right';
-        }
-      });
+      function wrapImageWithFigure() {
+        if (!selectedImage || selectedImage.parentElement?.classList.contains('image-figure')) return;
 
-      document.getElementById('inlineBtn')?.addEventListener('click', () => {
-        if (selectedImage) {
-          selectedImage.className = 'inline-image';
+        const container = getImageContainer(selectedImage);
+        const existingFloat = floatClasses.find(cls => container.classList.contains(cls));
+
+        const figure = document.createElement('figure');
+        figure.classList.add('image-figure');
+
+        if (existingFloat) {
+          container.classList.remove(existingFloat);
+          figure.classList.add(existingFloat);
         }
-      });
+
+        const caption = document.createElement('figcaption');
+        caption.contentEditable = 'true';
+        caption.spellcheck = true;
+        caption.textContent = 'Escribe una descripción';
+
+        const parent = selectedImage.parentElement;
+        parent?.insertBefore(figure, selectedImage);
+        figure.appendChild(selectedImage);
+        figure.appendChild(caption);
+
+        caption.focus();
+
+        if (wrapFigureBtn) wrapFigureBtn.disabled = true;
+        if (unwrapFigureBtn) unwrapFigureBtn.disabled = false;
+
+        updateToolbarState(selectedImage);
+        updateToolbarPosition(selectedImage);
+      }
+
+      function unwrapImageFigure() {
+        if (!selectedImage) return;
+        const figure = selectedImage.parentElement;
+        if (!figure || !figure.classList.contains('image-figure')) return;
+
+        const existingFloat = floatClasses.find(cls => figure.classList.contains(cls));
+        const parent = figure.parentElement;
+        if (!parent) return;
+
+        parent.insertBefore(selectedImage, figure);
+        figure.remove();
+
+        if (existingFloat) {
+          selectedImage.classList.add(existingFloat);
+        }
+
+        if (wrapFigureBtn) wrapFigureBtn.disabled = false;
+        if (unwrapFigureBtn) unwrapFigureBtn.disabled = true;
+
+        updateToolbarState(selectedImage);
+        updateToolbarPosition(selectedImage);
+      }
+
+      wrapFigureBtn?.addEventListener('click', wrapImageWithFigure);
+      unwrapFigureBtn?.addEventListener('click', unwrapImageFigure);
 
       document.getElementById('deleteImageBtn')?.addEventListener('click', () => {
         if (selectedImage && confirm('¿Eliminar esta imagen?')) {
