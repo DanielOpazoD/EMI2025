@@ -845,21 +845,55 @@
       background: #f8f9fa;
     }
 
-    .topic-list .topic-action.delete {
-      color: #dc3545;
-      border-color: #dc3545;
-      display: none;
-    }
-
-    body.panel-edit-mode .topic-list .topic-action.delete {
-      display: inline-block;
-    }
-
     .topic-list span.topic-title {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       flex: 1;
+      cursor: pointer;
+    }
+
+    .topic-context-menu {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #d0d7de;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+      min-width: 180px;
+      padding: 4px 0;
+      z-index: 5000;
+      display: none;
+    }
+
+    .topic-context-menu.show {
+      display: block;
+    }
+
+    .topic-context-menu button {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 6px 14px;
+      font-size: 10px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #212529;
+    }
+
+    .topic-context-menu button:hover {
+      background: #f1f3f5;
+    }
+
+    .topic-context-menu button.danger {
+      color: #dc3545;
+    }
+
+    .topic-context-menu button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .panel-backdrop {
@@ -898,7 +932,7 @@
     }
 
     .page[contenteditable="true"] {
-      outline: 2px solid var(--theme-primary);
+      outline: 2px solid #e5e7eb;
       outline-offset: 4px;
     }
 
@@ -925,7 +959,8 @@
       font-size: 16px;
       cursor: pointer;
       background: transparent;
-      border: 1px solid var(--theme-primary);
+      border: 1px solid #d0d7de;
+      color: #495057;
       border-radius: 50%;
       transition: all 0.3s ease;
       flex-shrink: 0;
@@ -933,7 +968,8 @@
     }
 
     .magic-icon:hover {
-      background: var(--theme-primary);
+      background: #f1f3f5;
+      color: #212529;
       transform: scale(1.15) rotate(15deg);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
@@ -1097,7 +1133,7 @@
     }
 
     .magic-page[contenteditable="true"] {
-      outline: 2px solid var(--theme-primary);
+      outline: 2px solid #e5e7eb;
       outline-offset: 4px;
     }
 
@@ -1223,7 +1259,7 @@
 
   <button class="reading-mode-exit" id="readingModeExit" title="Salir del modo lectura">✕</button>
 
-  <input type="file" id="loadHtmlInput" accept=".html" />
+  <input type="file" id="loadHtmlInput" accept=".html" multiple />
 
   <!-- Barra de herramientas -->
   <div class="edit-toolbar" id="editToolbar">
@@ -1443,6 +1479,13 @@
       const highlightPalette = document.getElementById('highlightPalette');
       const textColorPalette = document.getElementById('textColorPalette');
 
+      const topicContextMenu = document.createElement('div');
+      topicContextMenu.id = 'topicContextMenu';
+      topicContextMenu.className = 'topic-context-menu';
+      document.body.appendChild(topicContextMenu);
+
+      topicContextMenu.addEventListener('click', (e) => e.stopPropagation());
+
       const pastelColors = [
         '#FFB6C1', '#FFD1DC', '#FFC8DD', '#E7C6FF', '#C8B6FF', '#B4D4FF', '#AEC6CF', '#B2DFDB',
         '#C5E1A5', '#FFF9C4', '#FFE082', '#FFCCBC', '#D7CCC8', '#F5F5F5', '#CFD8DC', '#E1BEE7'
@@ -1476,6 +1519,45 @@
           return true;
         }
         return false;
+      }
+
+      function getActiveEditableElement() {
+        if (document.activeElement && document.activeElement.isContentEditable) {
+          return document.activeElement;
+        }
+        const magicPage = getCurrentMagicPage();
+        if (magicPage && magicPage.isContentEditable) {
+          return magicPage;
+        }
+        const currentPage = getCurrentPage();
+        if (currentPage && currentPage.isContentEditable) {
+          return currentPage;
+        }
+        return null;
+      }
+
+      function ensureSelectionOnCurrentPage() {
+        const editable = getActiveEditableElement();
+        if (!editable) return null;
+
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(editable);
+        range.collapse(false);
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+        savedSelection = range;
+
+        if (typeof editable.focus === 'function') {
+          editable.focus({ preventScroll: true });
+        }
+
+        return editable;
+      }
+
+      function hideTopicMenu() {
+        topicContextMenu.classList.remove('show');
       }
 
       function sanitizeCitations(el) {
@@ -1574,11 +1656,14 @@
         
         pages.forEach(page => {
           const sectionId = page.dataset.sectionId || 'seccion-default';
-          const topicId = page.dataset.topicId || 'topic-' + Date.now();
+          const topicId = page.dataset.topicId || ('topic-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8));
           const h1 = page.querySelector('h1');
           const titleSpan = h1?.querySelector('span:first-child');
           const title = (titleSpan?.textContent || h1?.textContent || 'Sin título').trim();
-          
+
+          page.dataset.sectionId = sectionId;
+          page.dataset.topicId = topicId;
+
           if (!sectionMap.has(sectionId)) {
             sectionMap.set(sectionId, {
               id: sectionId,
@@ -1587,8 +1672,13 @@
               temas: []
             });
           }
-          
-          sectionMap.get(sectionId).temas.push({
+
+          const sectionData = sectionMap.get(sectionId);
+          if (sectionData && page.dataset.sectionName == null) {
+            page.dataset.sectionName = sectionData.nombre;
+          }
+
+          sectionData.temas.push({
             id: topicId,
             titulo: title,
             page: page
@@ -1607,6 +1697,182 @@
       
       document.querySelectorAll('.magic-topic').forEach(m => afterContentSanitize(m));
       initializeSections();
+
+      function getPageByTopicId(topicId) {
+        return pages.find(p => p.dataset.topicId === topicId);
+      }
+
+      function findTopicData(topicId) {
+        for (const section of sections) {
+          const tema = section.temas.find(t => t.id === topicId);
+          if (tema) {
+            return { section, tema };
+          }
+        }
+        return null;
+      }
+
+      function renameTopic(topicId) {
+        const data = findTopicData(topicId);
+        if (!data) return;
+
+        const currentTitle = data.tema.titulo || 'Tema';
+        const newTitle = prompt('Cambiar título del tema:', currentTitle);
+        if (!newTitle || !newTitle.trim()) return;
+
+        const trimmed = newTitle.trim();
+        const page = data.tema.page || getPageByTopicId(topicId);
+
+        if (page) {
+          const titleSpan = page.querySelector('h1 span:first-child');
+          if (titleSpan) {
+            titleSpan.textContent = trimmed;
+          } else {
+            const heading = page.querySelector('h1');
+            if (heading) heading.textContent = trimmed;
+          }
+          page.dataset.topicTitle = trimmed;
+        }
+
+        hideTopicMenu();
+        initializeSections();
+        buildSectionsPanel();
+        if (tocPanel.classList.contains('open')) {
+          buildTableOfContents();
+        }
+      }
+
+      function moveTopic(topicId) {
+        const data = findTopicData(topicId);
+        if (!data) return;
+
+        if (sections.length <= 1) {
+          alert('No hay otras secciones disponibles para mover este tema.');
+          return;
+        }
+
+        const options = sections.map((section, index) => {
+          const indicator = section.id === data.section.id ? ' (actual)' : '';
+          return `${index + 1}. ${section.nombre}${indicator}`;
+        }).join('\n');
+
+        const defaultOption = sections.findIndex(section => section.id === data.section.id) + 1;
+        const choice = prompt(`Mover "${data.tema.titulo}" a:\n${options}`, String(defaultOption));
+        if (!choice) return;
+
+        const targetIndex = parseInt(choice, 10) - 1;
+        if (Number.isNaN(targetIndex) || targetIndex < 0 || targetIndex >= sections.length) return;
+
+        const destination = sections[targetIndex];
+        if (!destination || destination.id === data.section.id) return;
+
+        const page = data.tema.page || getPageByTopicId(topicId);
+        if (page) {
+          page.dataset.sectionId = destination.id;
+          page.dataset.sectionName = destination.nombre;
+        }
+
+        hideTopicMenu();
+        initializeSections();
+        buildSectionsPanel();
+        if (tocPanel.classList.contains('open')) {
+          buildTableOfContents();
+        }
+      }
+
+      function deleteTopic(topicId) {
+        const data = findTopicData(topicId);
+        if (!data) return;
+
+        if (!confirm(`¿Eliminar "${data.tema.titulo}"?`)) return;
+
+        const page = data.tema.page || getPageByTopicId(topicId);
+        if (page) {
+          page.remove();
+          pages = pages.filter(p => p !== page);
+        }
+
+        hideTopicMenu();
+        initializeSections();
+        buildSectionsPanel();
+        if (tocPanel.classList.contains('open')) {
+          buildTableOfContents();
+        }
+      }
+
+      function openTopicContextMenu(event, topicId) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const data = findTopicData(topicId);
+        if (!data) return;
+
+        topicContextMenu.innerHTML = '';
+
+        const items = [
+          {
+            label: 'Cambiar título del tema',
+            icon: '✏️',
+            action: () => renameTopic(topicId)
+          },
+          {
+            label: 'Mover tema',
+            icon: '🔀',
+            action: () => moveTopic(topicId),
+            disabled: sections.length <= 1
+          },
+          {
+            label: 'Eliminar tema',
+            icon: '🗑️',
+            action: () => deleteTopic(topicId),
+            className: 'danger'
+          }
+        ];
+
+        items.forEach(item => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.innerHTML = `<span>${item.icon}</span><span>${item.label}</span>`;
+          if (item.className) {
+            btn.classList.add(item.className);
+          }
+          if (item.disabled) {
+            btn.disabled = true;
+          } else {
+            btn.addEventListener('click', () => {
+              item.action();
+              hideTopicMenu();
+            });
+          }
+          topicContextMenu.appendChild(btn);
+        });
+
+        const rect = event.target.getBoundingClientRect();
+        const scrollX = window.scrollX || window.pageXOffset;
+        const scrollY = window.scrollY || window.pageYOffset;
+        const isContext = event.type === 'contextmenu';
+        const baseLeft = isContext ? event.clientX : rect.left;
+        const baseTop = isContext ? event.clientY : rect.bottom + 4;
+
+        topicContextMenu.style.left = `${baseLeft + scrollX}px`;
+        topicContextMenu.style.top = `${baseTop + scrollY}px`;
+        topicContextMenu.classList.add('show');
+
+        const menuRect = topicContextMenu.getBoundingClientRect();
+        let adjustedLeft = menuRect.left;
+        let adjustedTop = menuRect.top;
+
+        if (menuRect.right > window.innerWidth - 12) {
+          adjustedLeft = Math.max(12, window.innerWidth - menuRect.width - 12);
+        }
+        if (menuRect.bottom > window.innerHeight - 12) {
+          adjustedTop = Math.max(12, window.innerHeight - menuRect.height - 12);
+        }
+
+        topicContextMenu.style.left = `${adjustedLeft + (window.scrollX || window.pageXOffset)}px`;
+        topicContextMenu.style.top = `${adjustedTop + (window.scrollY || window.pageYOffset)}px`;
+
+      }
 
       (function setSpecialtyFromBuildComment() {
         try {
@@ -1664,7 +1930,8 @@
         isReadingMode = !isReadingMode;
         document.body.classList.toggle('reading-mode', isReadingMode);
         readingModeBtn.classList.toggle('active', isReadingMode);
-        
+        hideTopicMenu();
+
         if (isReadingMode) {
           closePanel();
           closeTocPanel();
@@ -1716,6 +1983,7 @@
         if (!panel.classList.contains('open')) {
           panelBackdrop.classList.remove('show');
         }
+        hideTopicMenu();
       }
 
       tocBtn?.addEventListener('click', () => {
@@ -1911,30 +2179,48 @@
 
       function applyColor(color, isHighlight) {
         if (!restoreSelection()) {
-          alert('Por favor, selecciona el texto primero');
-          return;
+          const editable = ensureSelectionOnCurrentPage();
+          if (!editable || !restoreSelection()) {
+            alert('Por favor, selecciona el texto primero');
+            return;
+          }
         }
-        
+
         const selection = window.getSelection();
         if (!selection.rangeCount) return;
-        
-        const range = selection.getRangeAt(0);
-        const span = document.createElement('span');
-        
-        if (isHighlight) {
-          span.style.backgroundColor = color;
-        } else {
-          span.style.color = color;
-        }
-        
+
+        let applied = false;
+
         try {
-          range.surroundContents(span);
-        } catch (e) {
+          document.execCommand('styleWithCSS', false, true);
+        } catch (error) {}
+
+        try {
+          applied = document.execCommand(isHighlight ? 'hiliteColor' : 'foreColor', false, color);
+          if (!applied && isHighlight) {
+            applied = document.execCommand('backColor', false, color);
+          }
+        } catch (error) {
+          applied = false;
+        }
+
+        try {
+          document.execCommand('styleWithCSS', false, false);
+        } catch (error) {}
+
+        if (!applied) {
+          const range = selection.getRangeAt(0);
+          const span = document.createElement('span');
+          if (isHighlight) {
+            span.style.backgroundColor = color;
+          } else {
+            span.style.color = color;
+          }
           const fragment = range.extractContents();
           span.appendChild(fragment);
           range.insertNode(span);
         }
-        
+
         selection.removeAllRanges();
         savedSelection = null;
       }
@@ -1991,10 +2277,21 @@
             savedSelection = null;
           }
         }
+        if (!e.target.closest('.topic-context-menu')) {
+          hideTopicMenu();
+        }
       });
+
+      window.addEventListener('scroll', hideTopicMenu, true);
+      window.addEventListener('resize', hideTopicMenu);
 
       /* === PLANTILLAS === */
       document.getElementById('insertTemplateBtn')?.addEventListener('click', () => {
+        if (!saveCurrentSelection()) {
+          ensureSelectionOnCurrentPage();
+          saveCurrentSelection();
+        }
+
         showModal(`
           <div class="modal-header">
             <h3>Insertar Plantilla</h3>
@@ -2069,7 +2366,34 @@
             <div class="template-preview">${template.html}</div>
           `;
           card.addEventListener('click', () => {
-            document.execCommand('insertHTML', false, template.html);
+            if (!restoreSelection()) {
+              const editable = ensureSelectionOnCurrentPage();
+              if (!editable) {
+                hideModal();
+                return;
+              }
+            }
+
+            const editableTarget = getActiveEditableElement();
+            editableTarget?.focus();
+
+            const selection = window.getSelection();
+            let inserted = false;
+
+            try {
+              inserted = document.execCommand('insertHTML', false, template.html);
+            } catch (error) {
+              inserted = false;
+            }
+
+            if (!inserted && selection?.rangeCount) {
+              const range = selection.getRangeAt(0);
+              range.deleteContents();
+              const fragment = range.createContextualFragment(template.html);
+              range.insertNode(fragment);
+            }
+
+            savedSelection = null;
             hideModal();
           });
           grid.appendChild(card);
@@ -2088,6 +2412,7 @@
         if (!tocPanel.classList.contains('open')) {
           panelBackdrop.classList.remove('show');
         }
+        hideTopicMenu();
       }
 
       function magicAnchorFor(page) {
@@ -2145,9 +2470,10 @@
       }
 
       function buildSectionsPanel() {
+        hideTopicMenu();
         sectionsContainer.innerHTML = '';
         globalTopicCounter = 1;
-        
+
         sections.forEach((section, sectionIdx) => {
           const sectionDiv = document.createElement('div');
           sectionDiv.className = 'section-item';
@@ -2225,12 +2551,12 @@
           section.temas.forEach(tema => {
             const li = document.createElement('li');
             li.dataset.topicId = tema.id;
-            
+
             const numSpan = document.createElement('span');
             numSpan.className = 'topic-number';
             numSpan.textContent = globalTopicCounter + '.';
             globalTopicCounter++;
-            
+
             const btnMain = document.createElement('button');
             btnMain.className = 'topic-action';
             btnMain.title = 'Ir al tema';
@@ -2240,27 +2566,22 @@
               closePanel();
               tema.page.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
-            
-            const btnDelete = document.createElement('button');
-            btnDelete.className = 'topic-action delete';
-            btnDelete.title = 'Eliminar tema';
-            btnDelete.textContent = '🗑️';
-            btnDelete.addEventListener('click', () => {
-              if (confirm(`¿Eliminar "${tema.titulo}"?`)) {
-                tema.page.remove();
-                pages = pages.filter(p => p !== tema.page);
-                initializeSections();
-                buildSectionsPanel();
-              }
-            });
-            
+
             const titleSpan = document.createElement('span');
             titleSpan.className = 'topic-title';
             titleSpan.textContent = tema.titulo;
-            
+            titleSpan.addEventListener('click', (event) => {
+              event.stopPropagation();
+            });
+            titleSpan.addEventListener('dblclick', (event) => {
+              openTopicContextMenu(event, tema.id);
+            });
+            titleSpan.addEventListener('contextmenu', (event) => {
+              openTopicContextMenu(event, tema.id);
+            });
+
             li.appendChild(numSpan);
             li.appendChild(btnMain);
-            li.appendChild(btnDelete);
             li.appendChild(titleSpan);
             topicList.appendChild(li);
           });
@@ -2276,6 +2597,7 @@
         document.body.classList.toggle('panel-edit-mode', isPanelEditMode);
         editPanelBtn.classList.toggle('active', isPanelEditMode);
         buildSectionsPanel();
+        hideTopicMenu();
       }
 
       function toggleAllSections() {
@@ -2391,6 +2713,7 @@
           highlightPalette.classList.remove('show');
           textColorPalette.classList.remove('show');
           savedSelection = null;
+          hideTopicMenu();
         }
       });
 
@@ -2409,7 +2732,7 @@
       /* === EDICIÓN === */
       function toggleEditMode() {
         isEditMode = !isEditMode;
-        
+
         if (isEditMode) {
           pages.forEach(page => page.contentEditable = 'true');
           const magicPage = getCurrentMagicPage();
@@ -2429,6 +2752,8 @@
           saveHtmlBtn.style.display = 'none';
           hideImageToolbar();
         }
+
+        hideTopicMenu();
       }
       
       function execCmd(command, value = null) {
@@ -2854,113 +3179,123 @@ ${document.querySelector('style').textContent}
     loadHtmlInput.click();
   });
   
-  loadHtmlInput?.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    if (!file.name.endsWith('.html')) {
-      alert('Por favor selecciona un archivo HTML válido');
-      return;
-    }
-    
-    const reader = new FileReader();
-    reader.onload = (event) => {
+  async function importHtmlFile(file) {
+    try {
+      const text = await file.text();
+      const parser = new DOMParser();
+      const loadedDoc = parser.parseFromString(text, 'text/html');
+
+      let hasNewStructure = false;
+      let importedSectionId = null;
+      let importedSectionName = 'Importado';
+
       try {
-        const parser = new DOMParser();
-        const loadedDoc = parser.parseFromString(event.target.result, 'text/html');
-        
-        let hasNewStructure = false;
-        let importedSectionId = null;
-        let importedSectionName = 'Importado';
-        
-        try {
-          const htmlContent = event.target.result;
-          const buildMatch = htmlContent.match(/build:topics\s({.*?})/s);
-          if (buildMatch) {
-            const buildData = JSON.parse(buildMatch[1]);
-            if (buildData.secciones && buildData.secciones.length > 0) {
-              hasNewStructure = true;
-              importedSectionId = buildData.secciones[0].id;
-              importedSectionName = buildData.secciones[0].nombre;
-            }
-          }
-        } catch (e) {
-          console.log('Archivo sin estructura de secciones');
-        }
-        
-        const loadedSpecialty = loadedDoc.getElementById('specialtyTitle');
-        if (loadedSpecialty && specialtySpan) {
-          specialtySpan.textContent = loadedSpecialty.textContent;
-        }
-        
-        const mainContainer = document.querySelector('body');
-        const loadedPages = loadedDoc.querySelectorAll('.page');
-        
-        if (loadedPages.length === 0) {
-          alert('No se encontraron secciones de contenido en el archivo');
-          return;
-        }
-        
-        if (!hasNewStructure) {
-          importedSectionId = 'seccion-' + Date.now();
-          importedSectionName = file.name.replace('.html', '');
-        }
-        
-        const scriptTag = mainContainer.querySelector('script');
-        loadedPages.forEach(page => {
-          const clonedPage = page.cloneNode(true);
-          afterContentSanitize(clonedPage);
-          
-          if (!clonedPage.dataset.sectionId) {
-            clonedPage.dataset.sectionId = importedSectionId;
-            clonedPage.dataset.sectionName = importedSectionName;
-          }
-          
-          mainContainer.insertBefore(clonedPage, scriptTag);
-        });
-        
-        const magicContainer = document.querySelector('.magic-content-container');
-        if (magicContainer) {
-          const loadedMagicContainer = loadedDoc.querySelector('.magic-content-container');
-          if (loadedMagicContainer) {
-            const loadedMagicTopics = loadedMagicContainer.querySelectorAll('.magic-topic');
-            loadedMagicTopics.forEach(topic => {
-              const clonedTopic = topic.cloneNode(true);
-              afterContentSanitize(clonedTopic);
-              magicContainer.appendChild(clonedTopic);
-            });
+        const buildMatch = text.match(/build:topics\s({.*?})/s);
+        if (buildMatch) {
+          const buildData = JSON.parse(buildMatch[1]);
+          if (buildData.secciones && buildData.secciones.length > 0) {
+            hasNewStructure = true;
+            importedSectionId = buildData.secciones[0].id;
+            importedSectionName = buildData.secciones[0].nombre;
           }
         }
-        
-        pages = [...document.querySelectorAll('.page')];
-        pages.forEach(p => {
-          afterContentSanitize(p);
-          if (!p.dataset.topicId) {
-            p.dataset.topicId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-          }
-          io.observe(p);
-        });
-        
-        // Configurar iconos mágicos en páginas cargadas
-        setupMagicIcons();
-        
-        initializeSections();
-        buildSectionsPanel();
-        
-        const btn = loadHtmlBtn;
-        const oldText = btn.textContent;
-        btn.innerHTML = '<span>✅</span> <span class="topbar-btn-label">Cargado</span>';
-        setTimeout(() => btn.innerHTML = oldText, 2000);
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        
       } catch (error) {
-        console.error('Error al cargar el archivo:', error);
-        alert('Error al cargar el archivo: ' + error.message);
+        console.log('Archivo sin estructura de secciones');
       }
-    };
-    
-    reader.readAsText(file);
+
+      const loadedSpecialty = loadedDoc.getElementById('specialtyTitle');
+      if (loadedSpecialty && specialtySpan) {
+        specialtySpan.textContent = loadedSpecialty.textContent;
+      }
+
+      const loadedPages = loadedDoc.querySelectorAll('.page');
+      if (loadedPages.length === 0) {
+        alert(`No se encontraron secciones de contenido en "${file.name}"`);
+        return false;
+      }
+
+      if (!hasNewStructure) {
+        importedSectionId = 'seccion-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+        importedSectionName = file.name.replace(/\.html$/i, '');
+      }
+
+      const scriptTag = document.body.querySelector('script');
+      loadedPages.forEach(page => {
+        const clonedPage = page.cloneNode(true);
+        afterContentSanitize(clonedPage);
+
+        if (!clonedPage.dataset.sectionId) {
+          clonedPage.dataset.sectionId = importedSectionId;
+          clonedPage.dataset.sectionName = importedSectionName;
+        }
+
+        document.body.insertBefore(clonedPage, scriptTag);
+      });
+
+      const magicContainer = document.querySelector('.magic-content-container');
+      if (magicContainer) {
+        const loadedMagicContainer = loadedDoc.querySelector('.magic-content-container');
+        if (loadedMagicContainer) {
+          const loadedMagicTopics = loadedMagicContainer.querySelectorAll('.magic-topic');
+          loadedMagicTopics.forEach(topic => {
+            const clonedTopic = topic.cloneNode(true);
+            afterContentSanitize(clonedTopic);
+            magicContainer.appendChild(clonedTopic);
+          });
+        }
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error al cargar el archivo:', error);
+      alert(`Error al cargar "${file.name}": ${error.message}`);
+      return false;
+    }
+  }
+
+  loadHtmlInput?.addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    let importedAny = false;
+
+    for (const file of files) {
+      if (!file.name.toLowerCase().endsWith('.html')) {
+        alert(`El archivo "${file.name}" no es un documento HTML válido`);
+        continue;
+      }
+
+      const success = await importHtmlFile(file);
+      if (success) {
+        importedAny = true;
+      }
+    }
+
+    if (importedAny) {
+      pages = [...document.querySelectorAll('.page')];
+      pages.forEach(p => {
+        afterContentSanitize(p);
+        if (!p.dataset.topicId) {
+          p.dataset.topicId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        }
+        io.observe(p);
+      });
+
+      setupMagicIcons();
+      initializeSections();
+      buildSectionsPanel();
+      if (tocPanel.classList.contains('open')) {
+        buildTableOfContents();
+      }
+
+      const btn = loadHtmlBtn;
+      const oldText = btn.innerHTML;
+      btn.innerHTML = '<span>✅</span> <span class="topbar-btn-label">Cargado</span>';
+      setTimeout(() => btn.innerHTML = oldText, 2000);
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     e.target.value = '';
   });
 
