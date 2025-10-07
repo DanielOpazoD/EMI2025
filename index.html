@@ -1853,8 +1853,56 @@
         editableElements.forEach(el => {
           if (el.dataset.pasteHandlerBound === 'true') return;
           el.addEventListener('paste', (e) => {
+            const clipboardData = e.clipboardData;
+            if (!clipboardData) return;
+
+            const items = Array.from(clipboardData.items || []);
+            const imageItems = items.filter(item => item.type && item.type.startsWith('image/'));
+
+            if (imageItems.length) {
+              e.preventDefault();
+              const currentSelection = window.getSelection();
+              const baseRange = currentSelection && currentSelection.rangeCount
+                ? currentSelection.getRangeAt(0).cloneRange()
+                : null;
+
+              imageItems.forEach(item => {
+                const file = item.getAsFile();
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                  const dataUrl = event.target?.result;
+                  if (!dataUrl) return;
+
+                  const selection = window.getSelection();
+                  const range = baseRange ? baseRange.cloneRange() : selection?.getRangeAt(0)?.cloneRange();
+                  if (!range) return;
+
+                  range.deleteContents();
+
+                  const img = document.createElement('img');
+                  img.src = typeof dataUrl === 'string' ? dataUrl : '';
+                  range.insertNode(img);
+
+                  range.setStartAfter(img);
+                  range.collapse(true);
+                  const sel = window.getSelection();
+                  if (!sel) return;
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                  if (baseRange) {
+                    baseRange.setStartAfter(img);
+                    baseRange.collapse(true);
+                  }
+                };
+                reader.readAsDataURL(file);
+              });
+              return;
+            }
+
             e.preventDefault();
-            const html = e.clipboardData.getData('text/html') || e.clipboardData.getData('text/plain');
+            const html = clipboardData.getData('text/html') || clipboardData.getData('text/plain');
             document.execCommand('insertHTML', false, html);
           });
           el.dataset.pasteHandlerBound = 'true';
