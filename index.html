@@ -13,34 +13,95 @@
       --zoom-level: 1;
       --base-font-size: 10.5px;
       --dynamic-font-size: 10.5px;
+      --topbar-height: 52px;
     }
 
     html {
       font-size: var(--dynamic-font-size, 10.5px);
     }
 
-    body.theme-blue {
+    .theme-blue {
       --theme-primary: #0d6efd;
       --theme-primary-dark: #0b5ed7;
       --theme-primary-light: #6ea8fe;
     }
 
-    body.theme-green {
+    .theme-green {
       --theme-primary: #198754;
       --theme-primary-dark: #157347;
       --theme-primary-light: #75b798;
     }
 
-    body.theme-purple {
+    .theme-purple {
       --theme-primary: #6f42c1;
       --theme-primary-dark: #59359a;
       --theme-primary-light: #9d7cd4;
     }
 
-    body.theme-orange {
+    .theme-orange {
       --theme-primary: #fd7e14;
       --theme-primary-dark: #dc6502;
       --theme-primary-light: #fda861;
+    }
+
+    .theme-teal {
+      --theme-primary: #0f766e;
+      --theme-primary-dark: #0c5c56;
+      --theme-primary-light: #2dd4bf;
+    }
+
+    .theme-rose {
+      --theme-primary: #e35d6a;
+      --theme-primary-dark: #c54d59;
+      --theme-primary-light: #f29aa3;
+    }
+
+    .theme-amber {
+      --theme-primary: #f0ad4e;
+      --theme-primary-dark: #d99636;
+      --theme-primary-light: #f6cd85;
+    }
+
+    .theme-slate {
+      --theme-primary: #495057;
+      --theme-primary-dark: #343a40;
+      --theme-primary-light: #adb5bd;
+    }
+
+    .theme-sky {
+      --theme-primary: #0ea5e9;
+      --theme-primary-dark: #0284c7;
+      --theme-primary-light: #7dd3fc;
+    }
+
+    .theme-lilac {
+      --theme-primary: #a855f7;
+      --theme-primary-dark: #7e22ce;
+      --theme-primary-light: #cba9fb;
+    }
+
+    .theme-mint {
+      --theme-primary: #10b981;
+      --theme-primary-dark: #0f9d68;
+      --theme-primary-light: #6ee7b7;
+    }
+
+    .theme-coral {
+      --theme-primary: #f97361;
+      --theme-primary-dark: #e05a47;
+      --theme-primary-light: #fbb7ab;
+    }
+
+    .theme-sand {
+      --theme-primary: #d3a15d;
+      --theme-primary-dark: #b27f3f;
+      --theme-primary-light: #f2d3a5;
+    }
+
+    .theme-ink {
+      --theme-primary: #1f3a93;
+      --theme-primary-dark: #152968;
+      --theme-primary-light: #6c87d6;
     }
 
     /* ===== Base ===== */
@@ -107,15 +168,15 @@
       left: 0;
       right: 0;
       z-index: 4000;
-      height: calc(36px * var(--zoom-level));
+      height: var(--topbar-height);
       background: #000;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 10px;
+      padding: 0 16px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
-      font-size: calc(11px * var(--zoom-level));
+      font-size: 14px;
     }
 
     .topbar-left {
@@ -129,8 +190,8 @@
     .topbar-center {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
+      gap: 10px;
+      font-size: 14px;
       flex-wrap: wrap;
       justify-content: center;
       max-width: 90%;
@@ -146,28 +207,29 @@
 
     .topbar-topic {
       display: inline-block;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 5px 12px;
+      border-radius: 6px;
       background: #222;
       color: #ddd;
       max-width: 60vw;
       white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis
+      text-overflow: ellipsis;
+      font-size: 14px;
     }
 
     .topbar-btn {
       background: #111;
       color: #fff;
       border: 1px solid #333;
-      padding: 4px 8px;
+      padding: 7px 12px;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 14px;
       cursor: pointer;
       transition: opacity .15s;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
     }
 
     .topbar-btn.dirty::after {
@@ -187,7 +249,7 @@
     }
 
     .topbar-btn-label {
-      font-size: 9px;
+      font-size: 12px;
       display: none;
     }
 
@@ -200,32 +262,32 @@
     .zoom-controls {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
     }
 
     .zoom-value {
-      min-width: 45px;
+      min-width: 52px;
       text-align: center;
-      font-size: 10px;
+      font-size: 14px;
       background: #222;
-      padding: 2px 4px;
-      border-radius: 3px;
+      padding: 4px 8px;
+      border-radius: 4px;
     }
 
     /* ===== Barra de herramientas mejorada ===== */
     .edit-toolbar {
       position: fixed;
-      top: calc(38px * var(--zoom-level));
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       background: #fff;
       border-bottom: 1px solid #dee2e6;
-      padding: 6px 10px;
+      padding: 10px 18px;
       box-shadow: 0 2px 8px rgba(0,0,0,.12);
       display: none;
       z-index: 3500;
       justify-content: center;
-      font-size: calc(10px * var(--zoom-level));
+      font-size: 13px;
     }
 
     .edit-toolbar.show {
@@ -235,20 +297,20 @@
     .toolbar-content {
       display: flex;
       flex-wrap: wrap;
-      gap: 3px;
+      gap: 6px;
       align-items: center;
       justify-content: center;
       max-width: 1400px;
     }
 
     .edit-toolbar button, .edit-toolbar select {
-      padding: 3px 6px;
+      padding: 5px 9px;
       border: 1px solid #ced4da;
       border-radius: 3px;
       background: #fff;
       cursor: pointer;
-      font-size: 10px;
-      line-height: 1.2;
+      font-size: 13px;
+      line-height: 1.25;
     }
 
     .edit-toolbar button:hover {
@@ -262,8 +324,8 @@
     }
 
     .edit-toolbar select {
-      min-width: 70px;
-      font-size: 10px;
+      min-width: 90px;
+      font-size: 13px;
     }
 
     .toolbar-separator {
@@ -275,16 +337,16 @@
 
     .toolbar-group {
       display: flex;
-      gap: 3px;
+      gap: 6px;
       align-items: center;
-      padding: 2px;
+      padding: 2px 3px;
       background: #f8f9fa;
       border-radius: 3px;
       position: relative;
     }
 
     .toolbar-label {
-      font-size: 9px;
+      font-size: 10px;
       color: #6c757d;
       font-weight: 600;
       margin-right: 3px;
@@ -1238,7 +1300,7 @@
 
     .panel-backdrop {
       position: fixed;
-      top: 36px;
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       bottom: 0;
@@ -1257,16 +1319,17 @@
 
     /* ===== Páginas con zoom CORREGIDO ===== */
     .page {
-      width: calc(210mm * var(--zoom-level));
-      min-height: calc(297mm * var(--zoom-level));
-      padding: calc(12mm * var(--zoom-level));
-      margin: calc(56px * var(--zoom-level)) auto calc(20px * var(--zoom-level));
+      width: calc(210mm * var(--page-zoom, 1));
+      min-height: calc(297mm * var(--page-zoom, 1));
+      padding: calc(12mm * var(--page-zoom, 1));
+      margin: calc(56px * var(--page-zoom, 1)) auto calc(20px * var(--page-zoom, 1));
       box-sizing: border-box;
       background: #fff;
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
       page-break-after: always;
       overflow-wrap: break-word;
       position: relative;
+      font-size: var(--page-font-size, var(--dynamic-font-size, var(--base-font-size)));
     }
 
     .page[contenteditable="true"] {
@@ -2043,7 +2106,7 @@
     /* ===== Visor Mágico ===== */
     .magic-view {
       position: fixed;
-      top: 36px;
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       bottom: 0;
@@ -2078,15 +2141,16 @@
     }
 
     .magic-page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 12mm;
-      margin: calc(20px * var(--zoom-level)) auto;
+      width: calc(210mm * var(--page-zoom, 1));
+      min-height: calc(297mm * var(--page-zoom, 1));
+      padding: calc(12mm * var(--page-zoom, 1));
+      margin: calc(20px * var(--page-zoom, 1)) auto;
       background: #fff;
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
       box-sizing: border-box;
       overflow-wrap: break-word;
-      transform: scale(var(--zoom-level));
+      font-size: var(--page-font-size, var(--dynamic-font-size, var(--base-font-size)));
+      transform: scale(var(--page-zoom, 1));
       transform-origin: top center;
     }
 
@@ -2307,10 +2371,21 @@
       <div class="toolbar-group">
         <span class="toolbar-label">TEMA</span>
         <select id="themeSelect" title="Esquema">
+          <option value="">Predeterminado</option>
           <option value="theme-blue">Azul</option>
           <option value="theme-green">Verde</option>
           <option value="theme-purple">Morado</option>
           <option value="theme-orange">Naranja</option>
+          <option value="theme-teal">Turquesa</option>
+          <option value="theme-rose">Rosa</option>
+          <option value="theme-amber">Ámbar</option>
+          <option value="theme-slate">Pizarra</option>
+          <option value="theme-sky">Cielo</option>
+          <option value="theme-lilac">Lila</option>
+          <option value="theme-mint">Menta</option>
+          <option value="theme-coral">Coral</option>
+          <option value="theme-sand">Arena</option>
+          <option value="theme-ink">Tinta</option>
         </select>
         <button id="duplicateTopicBtn" title="Duplicar">📑</button>
         <button id="exportTopicBtn" title="Exportar">💾</button>
@@ -2632,6 +2707,23 @@
       const MIN_ZOOM_LEVEL = 0.5;
       const MAX_ZOOM_LEVEL = 2;
       const ZOOM_STEP = 0.1;
+      const DEFAULT_PAGE_ZOOM = 1;
+      const THEME_CLASSES = [
+        'theme-blue',
+        'theme-green',
+        'theme-purple',
+        'theme-orange',
+        'theme-teal',
+        'theme-rose',
+        'theme-amber',
+        'theme-slate',
+        'theme-sky',
+        'theme-lilac',
+        'theme-mint',
+        'theme-coral',
+        'theme-sand',
+        'theme-ink'
+      ];
       const LOCAL_CACHE_KEY = 'emi2025-local-cache';
       const LOCAL_CACHE_VERSION = 1;
       const LOCAL_ZOOM_KEY = 'emi2025-zoom-level';
@@ -2654,6 +2746,10 @@
 
       let sections = [];
       let saveCacheBtn = null;
+      let activeZoomTarget = null;
+      const magicZoomState = new Map();
+
+      THEME_CLASSES.forEach(cls => document.body.classList.remove(cls));
 
       function detachPageListeners(page) {
         if (!page) return;
@@ -2770,10 +2866,7 @@
           if (raw) {
             const parsed = JSON.parse(raw);
             if (parsed?.data && Array.isArray(parsed.data.sections)) {
-              importSectionsData(parsed.data, { skipCacheSave: true, skipZoom: true });
-              if (typeof parsed.data.zoom === 'number') {
-                applyZoom(parsed.data.zoom, { skipCache: true, skipPersist: true });
-              }
+              importSectionsData(parsed.data, { skipCacheSave: true });
               clearDirty();
               return;
             }
@@ -2795,6 +2888,7 @@
       const tocClose = document.getElementById('tocClose');
       const panelBackdrop = document.getElementById('panel-backdrop');
       const magic = document.getElementById('magic-view');
+      const magicContainerRoot = document.querySelector('.magic-content-container');
       const specialtySpan = document.getElementById('specialtyTitle');
       const modalOverlay = document.getElementById('modalOverlay');
       const modalContent = document.getElementById('modalContent');
@@ -2957,6 +3051,7 @@
       const zoomInBtn = document.getElementById('zoomInBtn');
       const zoomOutBtn = document.getElementById('zoomOutBtn');
       const zoomValue = document.getElementById('zoomValue');
+      const themeSelect = document.getElementById('themeSelect');
       const highlightPalette = document.getElementById('highlightPalette');
       const textColorPalette = document.getElementById('textColorPalette');
       const insertTemplateBtn = document.getElementById('insertTemplateBtn');
@@ -3022,6 +3117,41 @@
         const h1 = page.querySelector('h1');
         const titleSpan = h1?.querySelector('span:first-child');
         return (titleSpan?.textContent || h1?.textContent || '').trim();
+      }
+
+      function getPageTheme(page) {
+        if (!page) return '';
+        if (page.dataset.themeClass) {
+          return page.dataset.themeClass;
+        }
+        const themeClass = Array.from(page.classList).find(cls => cls.startsWith('theme-'));
+        if (themeClass) {
+          page.dataset.themeClass = themeClass;
+          return themeClass;
+        }
+        return '';
+      }
+
+      function applyThemeToPage(page, themeClass) {
+        if (!page) return;
+        THEME_CLASSES.forEach(cls => page.classList.remove(cls));
+        if (themeClass) {
+          page.classList.add(themeClass);
+          page.dataset.themeClass = themeClass;
+        } else {
+          delete page.dataset.themeClass;
+        }
+      }
+
+      function initializePageState(page) {
+        if (!page) return;
+        const storedZoom = parseFloat(page.dataset.zoom);
+        const initialZoom = !Number.isNaN(storedZoom) && storedZoom > 0
+          ? clampZoom(storedZoom)
+          : DEFAULT_PAGE_ZOOM;
+        applyZoomToElement(page, initialZoom);
+        const currentTheme = getPageTheme(page);
+        applyThemeToPage(page, currentTheme);
       }
 
       function showTopicMenu(event, tema) {
@@ -3145,8 +3275,11 @@
         const newId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
         clone.dataset.topicId = newId;
         clone.contentEditable = isEditMode ? 'true' : 'false';
+        applyZoomToElement(clone, getElementZoom(page));
+        applyThemeToPage(clone, getPageTheme(page));
         page.parentNode.insertBefore(clone, page.nextSibling);
         pages = [...document.querySelectorAll('.page')];
+        initializePageState(clone);
         attachPageListeners(clone);
         setupMagicIcons();
         io.observe(clone);
@@ -3154,6 +3287,7 @@
         buildSectionsPanel();
         buildTableOfContents();
         clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setActiveZoomTarget(clone, 'page');
         scheduleCacheSave();
         return clone;
       }
@@ -3212,9 +3346,26 @@
         return Math.max(MIN_ZOOM_LEVEL, Math.min(MAX_ZOOM_LEVEL, value));
       }
 
-      function applyZoom(value, options = {}) {
-        const { skipCache = false, skipPersist = false } = options;
-        const clamped = clampZoom(value);
+      function getElementZoom(element) {
+        if (!element) return DEFAULT_PAGE_ZOOM;
+        const stored = parseFloat(element.dataset.zoom);
+        if (!Number.isNaN(stored) && stored > 0) {
+          return clampZoom(stored);
+        }
+        return DEFAULT_PAGE_ZOOM;
+      }
+
+      function applyZoomToElement(element, zoom) {
+        if (!element) return;
+        const clamped = clampZoom(zoom);
+        element.style.setProperty('--page-zoom', clamped);
+        element.style.setProperty('--page-font-size', `${BASE_FONT_SIZE * clamped}px`);
+        element.dataset.zoom = String(clamped);
+      }
+
+      function setGlobalZoomState(zoom, options = {}) {
+        const { skipPersist = false } = options;
+        const clamped = clampZoom(zoom);
         currentZoom = clamped;
         document.documentElement.style.setProperty('--zoom-level', clamped);
         document.documentElement.style.setProperty('--dynamic-font-size', `${BASE_FONT_SIZE * clamped}px`);
@@ -3228,6 +3379,64 @@
             console.warn('No se pudo guardar el nivel de zoom:', error);
           }
         }
+      }
+
+      function syncThemeSelector(page) {
+        if (!themeSelect) return;
+        const theme = getPageTheme(page);
+        const option = Array.from(themeSelect.options || []).find(opt => opt.value === theme);
+        themeSelect.value = option ? option.value : '';
+      }
+
+      function setActiveZoomTarget(element, type = 'page', options = {}) {
+        if (!element) return;
+        const { skipTheme = false } = options;
+        activeZoomTarget = { element, type };
+        const zoom = getElementZoom(element);
+        applyZoomToElement(element, zoom);
+        setGlobalZoomState(zoom, { skipPersist: true });
+        if (type === 'page' && !skipTheme) {
+          syncThemeSelector(element);
+        }
+      }
+
+      function getActiveZoomTarget() {
+        if (activeZoomTarget && activeZoomTarget.element && activeZoomTarget.element.isConnected) {
+          return activeZoomTarget;
+        }
+        const fallback = getCurrentPage();
+        if (fallback) {
+          setActiveZoomTarget(fallback, 'page');
+          return activeZoomTarget;
+        }
+        return null;
+      }
+
+      function applyZoom(value, options = {}) {
+        const { skipCache = false, skipPersist = false } = options;
+        const clamped = clampZoom(value);
+        const target = getActiveZoomTarget();
+        if (!target) {
+          setGlobalZoomState(clamped, { skipPersist });
+          if (!skipCache) {
+            scheduleCacheSave({ skipDirtyMark: false });
+          }
+          return;
+        }
+        const { element, type } = target;
+        if (type === 'magic') {
+          applyZoomToElement(element, clamped);
+          const sourceId = element.dataset.sourceId || '';
+          const zoomKey = sourceId || '__magic-default__';
+          magicZoomState.set(zoomKey, clamped);
+          const source = sourceId ? document.getElementById(sourceId) : null;
+          if (source) {
+            source.dataset.magicZoom = String(clamped);
+          }
+        } else {
+          applyZoomToElement(element, clamped);
+        }
+        setGlobalZoomState(clamped, { skipPersist });
         if (!skipCache) {
           scheduleCacheSave({ skipDirtyMark: false });
         }
@@ -4938,6 +5147,7 @@
         if (!p.dataset.sectionId) {
           p.dataset.sectionId = 'seccion-1';
         }
+        initializePageState(p);
         attachPageListeners(p);
       });
       
@@ -5000,7 +5210,7 @@
             magicIcon.addEventListener('click', (e) => {
               e.stopPropagation();
               closePanel();
-              activateMagicTopic(magicAnchorFor(page), getTitle());
+              activateMagicTopic(magicAnchorFor(page), getTitle(), page);
             });
             magicIcon.dataset.bound = 'true';
           }
@@ -5023,6 +5233,8 @@
       }
 
       setupMagicIcons();
+
+      setActiveZoomTarget(getCurrentPage() || pages[0] || null, 'page');
 
       /* === MODO LECTURA === */
       function toggleReadingMode() {
@@ -6170,44 +6382,121 @@
         hideTopicMenu();
       }
 
-      function magicAnchorFor(page) {
+      function magicAnchorFor(page, options = {}) {
+        if (!page) return '';
+        const { createIfMissing = false } = options;
+        const container = magicContainerRoot || document.querySelector('.magic-content-container');
+        if (!container) return '';
+
+        const ensureExistingTopic = (id) => {
+          if (!id) return null;
+          const el = document.getElementById(id);
+          return el || null;
+        };
+
+        let magicId = page.dataset.magicId || '';
+        if (magicId) {
+          const existing = ensureExistingTopic(magicId);
+          if (existing) {
+            return magicId;
+          }
+          delete page.dataset.magicId;
+          magicId = '';
+        }
+
         const tid = page.dataset.topicId || '';
-        if (!tid) return '';
-        
-        if (document.getElementById(`magic-topic-${tid}`)) {
-          return `magic-topic-${tid}`;
+        const candidates = [];
+        if (tid) {
+          candidates.push(`magic-topic-${tid}`, `magic-${tid}`, tid);
         }
-        if (document.getElementById(`magic-${tid}`)) {
-          return `magic-${tid}`;
+
+        for (const candidate of candidates) {
+          const existing = ensureExistingTopic(candidate);
+          if (existing) {
+            page.dataset.magicId = candidate;
+            return candidate;
+          }
         }
-        if (document.getElementById(tid)) {
-          return tid;
+
+        if (!createIfMissing) {
+          return '';
         }
-        return '';
+
+        let topicId = tid;
+        if (!topicId) {
+          topicId = generateUniqueId('topic');
+          page.dataset.topicId = topicId;
+        }
+
+        const newId = `magic-topic-${topicId}`;
+        let topicEl = ensureExistingTopic(newId);
+        if (!topicEl) {
+          topicEl = document.createElement('div');
+          topicEl.id = newId;
+          topicEl.className = 'magic-topic';
+          container.appendChild(topicEl);
+          afterContentSanitize(topicEl);
+        }
+        page.dataset.magicId = newId;
+        return newId;
       }
 
       function closeMagicView() {
         document.body.classList.remove('magic-open');
+        const fallbackPage = getCurrentPage() || pages[0] || null;
+        if (fallbackPage) {
+          setActiveZoomTarget(fallbackPage, 'page');
+        }
       }
 
-      function activateMagicTopic(anchorId, title) {
+      function activateMagicTopic(anchorId, title, sourcePage = null) {
         magic.innerHTML =
           '<div class="magic-header"><strong>✨ Visor del tema</strong><button class="magic-close">&times;</button></div>';
         const magicPage = document.createElement('div');
         magicPage.className = 'magic-page';
+
+        let resolvedAnchorId = anchorId || '';
+        let src = resolvedAnchorId ? document.getElementById(resolvedAnchorId) : null;
+        if ((!src || !resolvedAnchorId) && sourcePage) {
+          resolvedAnchorId = magicAnchorFor(sourcePage, { createIfMissing: true });
+          src = resolvedAnchorId ? document.getElementById(resolvedAnchorId) : null;
+        }
+
+        if (sourcePage && resolvedAnchorId) {
+          sourcePage.dataset.magicId = resolvedAnchorId;
+        }
+
+        const zoomKey = resolvedAnchorId || '__magic-default__';
+        magicPage.dataset.sourceId = resolvedAnchorId || '';
+        magicPage.__sourcePage = sourcePage || null;
 
         const h = document.createElement('h1');
         h.className = 'magic-title';
         h.textContent = title || 'Tema';
         magicPage.appendChild(h);
 
-        const src = anchorId ? document.getElementById(anchorId) : null;
         const wrapper = document.createElement('div');
         wrapper.innerHTML = src ? src.innerHTML : '<p>No hay contenido adicional.</p>';
         afterContentSanitize(wrapper);
 
+        let initialMagicZoom = DEFAULT_PAGE_ZOOM;
+        const storedZoomAttr = src?.dataset?.magicZoom;
+        const storedZoomValue = storedZoomAttr ? parseFloat(storedZoomAttr) : NaN;
+        if (!Number.isNaN(storedZoomValue) && storedZoomValue > 0) {
+          initialMagicZoom = clampZoom(storedZoomValue);
+        } else if (magicZoomState.has(zoomKey)) {
+          initialMagicZoom = clampZoom(magicZoomState.get(zoomKey));
+        }
+
         magicPage.appendChild(wrapper);
         magic.appendChild(magicPage);
+        if (sourcePage) {
+          const sourceTheme = getPageTheme(sourcePage);
+          applyThemeToPage(magicPage, sourceTheme);
+        } else {
+          applyThemeToPage(magicPage, '');
+        }
+        applyZoomToElement(magicPage, initialMagicZoom);
 
         if (isEditMode) {
           magicPage.contentEditable = 'true';
@@ -6218,10 +6507,19 @@
           if (isEditMode && src) {
             src.innerHTML = wrapper.innerHTML;
           }
+          if (src) {
+            const stored = parseFloat(magicPage.dataset.zoom);
+            const zoomToPersist = !Number.isNaN(stored) && stored > 0 ? clampZoom(stored) : DEFAULT_PAGE_ZOOM;
+            src.dataset.magicZoom = String(zoomToPersist);
+            magicZoomState.set(zoomKey, zoomToPersist);
+          }
+          magicPage.__sourcePage = null;
           closeMagicView();
         });
 
         document.body.classList.add('magic-open');
+        setActiveZoomTarget(magicPage, 'magic', { skipTheme: true });
+        syncThemeSelector(sourcePage || magicPage);
       }
 
       function buildSectionsPanel() {
@@ -6306,38 +6604,49 @@
           section.temas.forEach(tema => {
             const li = document.createElement('li');
             li.dataset.topicId = tema.id;
-            
+
             const numSpan = document.createElement('span');
             numSpan.className = 'topic-number';
             numSpan.textContent = globalTopicCounter + '.';
             globalTopicCounter++;
-            
-          const btnMain = document.createElement('button');
-          btnMain.className = 'topic-action';
-          btnMain.title = 'Ir al tema';
-          btnMain.textContent = '📄';
-          btnMain.addEventListener('click', () => {
-            closeMagicView();
-            closePanel();
-            tema.page.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          });
 
-          const titleSpan = document.createElement('span');
-          titleSpan.className = 'topic-title';
-          titleSpan.textContent = tema.titulo;
-          titleSpan.title = 'Doble clic para opciones del tema';
-          titleSpan.addEventListener('dblclick', (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            showTopicMenu(event, tema);
-          });
-          titleSpan.addEventListener('click', (event) => event.stopPropagation());
+            const btnMagic = document.createElement('button');
+            btnMagic.className = 'topic-action';
+            btnMagic.title = 'Abrir sección mágica';
+            btnMagic.textContent = '✨';
+            btnMagic.addEventListener('click', () => {
+              closePanel();
+              activateMagicTopic(magicAnchorFor(tema.page), tema.titulo, tema.page);
+            });
 
-          li.appendChild(numSpan);
-          li.appendChild(btnMain);
-          li.appendChild(titleSpan);
-          topicList.appendChild(li);
-        });
+            const btnMain = document.createElement('button');
+            btnMain.className = 'topic-action';
+            btnMain.title = 'Ir al tema';
+            btnMain.textContent = '📄';
+            btnMain.addEventListener('click', () => {
+              closeMagicView();
+              closePanel();
+              tema.page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              setActiveZoomTarget(tema.page, 'page');
+            });
+
+            const titleSpan = document.createElement('span');
+            titleSpan.className = 'topic-title';
+            titleSpan.textContent = tema.titulo;
+            titleSpan.title = 'Doble clic para opciones del tema';
+            titleSpan.addEventListener('dblclick', (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              showTopicMenu(event, tema);
+            });
+            titleSpan.addEventListener('click', (event) => event.stopPropagation());
+
+            li.appendChild(numSpan);
+            li.appendChild(btnMain);
+            li.appendChild(btnMagic);
+            li.appendChild(titleSpan);
+            topicList.appendChild(li);
+          });
           
           sectionDiv.appendChild(sectionHeader);
           sectionDiv.appendChild(topicList);
@@ -6481,7 +6790,8 @@
         const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (!visible) return;
         const tid = visible.target.dataset.topicId || '';
-        sectionsContainer.querySelectorAll('li').forEach(li => 
+        setActiveZoomTarget(visible.target, 'page');
+        sectionsContainer.querySelectorAll('li').forEach(li =>
           li.classList.toggle('active', li.dataset.topicId === tid)
         );
       }, { root: null, threshold: [0.5, 0.75, 1] });
@@ -6521,15 +6831,27 @@
       });
 
       /* === TEMA DE COLORES === */
-      document.getElementById('themeSelect')?.addEventListener('change', function() {
-        const oldTheme = document.body.className.split(' ').find(c => c.startsWith('theme-'));
-        if (oldTheme) {
-          document.body.classList.remove(oldTheme);
+      themeSelect?.addEventListener('change', function() {
+        const themeClass = this.value || '';
+        const target = getActiveZoomTarget();
+        if (!target || !target.element) return;
+
+        if (target.type === 'magic') {
+          const magicPage = target.element;
+          applyThemeToPage(magicPage, themeClass);
+          const sourcePage = magicPage.__sourcePage instanceof Element ? magicPage.__sourcePage : null;
+          if (sourcePage) {
+            applyThemeToPage(sourcePage, themeClass);
+            syncThemeSelector(sourcePage);
+          } else {
+            syncThemeSelector(magicPage);
+          }
+        } else {
+          applyThemeToPage(target.element, themeClass);
+          syncThemeSelector(target.element);
         }
-        document.body.classList.add(this.value);
-        if (isReadingMode) {
-          document.body.classList.add('reading-mode');
-        }
+
+        scheduleCacheSave();
       });
 
       /* === EDICIÓN === */
@@ -6766,11 +7088,11 @@
     const title = (titleSpan?.textContent || h1?.textContent || 'tema').trim();
     const magicId = magicAnchorFor(page);
     const magicContent = document.getElementById(magicId);
-    
+
     const tempPage = page.cloneNode(true);
     tempPage.contentEditable = 'false';
 
-    const currentTheme = document.body.className.split(' ').find(c => c.startsWith('theme-')) || 'theme-blue';
+    const currentTheme = getPageTheme(page) || '';
 
     const htmlDoc = `<!DOCTYPE html>
 <html lang="es">
@@ -6782,7 +7104,7 @@
 ${document.querySelector('style').textContent}
   </style>
 </head>
-<body class="${currentTheme}">
+  <body class="${currentTheme}">
   ${magicContent ? '<div class="magic-content-container" style="display:none">' + magicContent.outerHTML + '</div>' : ''}
   ${tempPage.outerHTML}
 </body>
@@ -6947,6 +7269,18 @@ ${document.querySelector('style').textContent}
         const titleText = (tema.titulo || getTopicTitle(page) || '').trim() || `Tema ${exportSection.temas.length + 1}`;
         const magicId = magicAnchorFor(page);
         const magicEl = magicId ? document.getElementById(magicId) : null;
+        let magicZoomValue = null;
+        const magicZoomAttr = magicEl?.dataset?.magicZoom;
+        if (magicZoomAttr) {
+          const parsedZoom = parseFloat(magicZoomAttr);
+          if (!Number.isNaN(parsedZoom) && parsedZoom > 0) {
+            magicZoomValue = clampZoom(parsedZoom);
+          }
+        }
+        const magicZoomKey = magicId || '__magic-default__';
+        if (!magicZoomValue && magicZoomState.has(magicZoomKey)) {
+          magicZoomValue = clampZoom(magicZoomState.get(magicZoomKey));
+        }
 
         exportSection.temas.push({
           id: topicId,
@@ -6955,7 +7289,10 @@ ${document.querySelector('style').textContent}
           sectionId: page.dataset.sectionId,
           sectionName: page.dataset.sectionName,
           magicId: magicId || null,
-          magicHtml: magicEl ? magicEl.innerHTML : null
+          magicHtml: magicEl ? magicEl.innerHTML : null,
+          magicZoom: magicZoomValue,
+          zoom: getElementZoom(page),
+          themeClass: getPageTheme(page) || null
         });
       });
     });
@@ -6985,6 +7322,18 @@ ${document.querySelector('style').textContent}
 
       const magicId = magicAnchorFor(page);
       const magicEl = magicId ? document.getElementById(magicId) : null;
+      let magicZoomValue = null;
+      const magicZoomAttr = magicEl?.dataset?.magicZoom;
+      if (magicZoomAttr) {
+        const parsedZoom = parseFloat(magicZoomAttr);
+        if (!Number.isNaN(parsedZoom) && parsedZoom > 0) {
+          magicZoomValue = clampZoom(parsedZoom);
+        }
+      }
+      const magicZoomKey = magicId || '__magic-default__';
+      if (!magicZoomValue && magicZoomState.has(magicZoomKey)) {
+        magicZoomValue = clampZoom(magicZoomState.get(magicZoomKey));
+      }
 
       exportSection.temas.push({
         id: topicId,
@@ -6993,7 +7342,10 @@ ${document.querySelector('style').textContent}
         sectionId: sectionId,
         sectionName: sectionName,
         magicId: magicId || null,
-        magicHtml: magicEl ? magicEl.innerHTML : null
+        magicHtml: magicEl ? magicEl.innerHTML : null,
+        magicZoom: magicZoomValue,
+        zoom: getElementZoom(page),
+        themeClass: getPageTheme(page) || null
       });
     });
 
@@ -7023,6 +7375,7 @@ ${document.querySelector('style').textContent}
     }
 
     const { skipCacheSave = false, skipZoom = false } = options;
+    const fallbackZoom = typeof data?.zoom === 'number' ? clampZoom(data.zoom) : DEFAULT_PAGE_ZOOM;
 
     const mainContainer = document.body;
     const scriptTag = document.querySelector('script');
@@ -7065,8 +7418,16 @@ ${document.querySelector('style').textContent}
         page.dataset.sectionName = topicSectionName;
         page.dataset.topicId = topicId;
         page.innerHTML = typeof topicData?.html === 'string' ? topicData.html : '';
+        const topicZoom = typeof topicData?.zoom === 'number' ? clampZoom(topicData.zoom) : fallbackZoom;
+        page.dataset.zoom = String(topicZoom);
+        if (typeof topicData?.themeClass === 'string' && topicData.themeClass) {
+          page.dataset.themeClass = topicData.themeClass;
+        } else {
+          delete page.dataset.themeClass;
+        }
         mainContainer.insertBefore(page, scriptTag);
         afterContentSanitize(page);
+        initializePageState(page);
         page.contentEditable = isEditMode ? 'true' : 'false';
         attachPageListeners(page);
 
@@ -7086,6 +7447,14 @@ ${document.querySelector('style').textContent}
           if (typeof topicData.magicHtml === 'string') {
             magicTopic.innerHTML = topicData.magicHtml;
             afterContentSanitize(magicTopic);
+          }
+          if (typeof topicData.magicZoom === 'number') {
+            const clampedMagicZoom = clampZoom(topicData.magicZoom);
+            magicTopic.dataset.magicZoom = String(clampedMagicZoom);
+            const zoomKey = magicId || '__magic-default__';
+            magicZoomState.set(zoomKey, clampedMagicZoom);
+          } else {
+            delete magicTopic.dataset.magicZoom;
           }
         }
       });
@@ -7110,8 +7479,11 @@ ${document.querySelector('style').textContent}
     savedSelection = null;
     window.scrollTo({ top: 0 });
 
-    if (!skipZoom && typeof data.zoom === 'number') {
-      applyZoom(data.zoom, { skipCache: true });
+    if (!skipZoom) {
+      const activePage = pages[0] || null;
+      if (activePage) {
+        setActiveZoomTarget(activePage, 'page');
+      }
     }
 
     if (!skipCacheSave) {
