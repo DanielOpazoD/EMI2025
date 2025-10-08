@@ -3168,8 +3168,7 @@
       function syncMagicZoom() {
         if (!magic) return;
         if (isMagicViewActive) {
-          const scale = currentZoom ? (1 / currentZoom) : 1;
-          magic.style.setProperty('--magic-zoom', scale.toString());
+          magic.style.setProperty('--magic-zoom', '1');
         } else {
           magic.style.removeProperty('--magic-zoom');
         }
@@ -6298,6 +6297,14 @@
         hideTopicMenu();
       }
 
+      const escapeAttr = (value) => {
+        if (typeof value !== 'string') return '';
+        if (window.CSS && typeof window.CSS.escape === 'function') {
+          return window.CSS.escape(value);
+        }
+        return value.replace(/[^a-zA-Z0-9_\-]/g, (char) => `\\${char}`);
+      };
+
       function magicAnchorFor(page) {
         if (!page) return '';
 
@@ -6305,6 +6312,12 @@
         if (storedAnchor) {
           const storedEl = document.getElementById(storedAnchor);
           if (storedEl) {
+            if (storedEl.classList.contains('magic-topic')) {
+              const tid = (page.dataset.topicId || '').trim();
+              if (tid) {
+                storedEl.dataset.sourceTopicId = tid;
+              }
+            }
             return storedAnchor;
           }
           delete page.dataset.magicAnchorId;
@@ -6320,8 +6333,21 @@
           if (!candidate) continue;
           const el = document.getElementById(candidate);
           if (el) {
+            if (el.classList.contains('magic-topic')) {
+              el.dataset.sourceTopicId = tid;
+            }
             page.dataset.magicAnchorId = candidate;
             return candidate;
+          }
+        }
+
+        const container = document.querySelector('.magic-content-container');
+        if (container) {
+          const selector = `.magic-topic[data-source-topic-id="${escapeAttr(tid)}"]`;
+          const el = container.querySelector(selector);
+          if (el && el.id) {
+            page.dataset.magicAnchorId = el.id;
+            return el.id;
           }
         }
 
@@ -7118,9 +7144,14 @@ ${document.querySelector('style').textContent}
           topicId = generateUniqueId('magic-topic');
           topic.id = topicId;
         }
+        const sourceTopicId = (topic.dataset.sourceTopicId || '').trim();
+        if (sourceTopicId) {
+          topic.dataset.sourceTopicId = sourceTopicId;
+        }
         exportedMagicTopics.push({
           id: topicId,
-          html: topic.innerHTML
+          html: topic.innerHTML,
+          sourceTopicId: sourceTopicId || null
         });
       });
     }
@@ -7159,6 +7190,9 @@ ${document.querySelector('style').textContent}
         const titleText = (tema.titulo || getTopicTitle(page) || '').trim() || `Tema ${exportSection.temas.length + 1}`;
         const magicId = magicAnchorFor(page);
         const magicEl = magicId ? document.getElementById(magicId) : null;
+        if (magicEl && topicId) {
+          magicEl.dataset.sourceTopicId = topicId;
+        }
 
         const templateBlocks = serializeTemplateBlocks(page);
         const topicExport = {
@@ -7206,6 +7240,9 @@ ${document.querySelector('style').textContent}
 
       const magicId = magicAnchorFor(page);
       const magicEl = magicId ? document.getElementById(magicId) : null;
+      if (magicEl && topicId) {
+        magicEl.dataset.sourceTopicId = topicId;
+      }
 
       const templateBlocks = serializeTemplateBlocks(page);
       const topicExport = {
@@ -7336,6 +7373,7 @@ ${document.querySelector('style').textContent}
 
     const magicContainer = document.querySelector('.magic-content-container');
     const magicTopicMap = new Map();
+    const magicTopicBySource = new Map();
     if (magicContainer) {
       magicContainer.innerHTML = '';
       if (Array.isArray(data.magicTopics) && data.magicTopics.length) {
@@ -7344,6 +7382,7 @@ ${document.querySelector('style').textContent}
           if (!topicId) {
             topicId = generateUniqueId('magic-topic');
           }
+          const sourceTopicId = topicInfo?.sourceTopicId ? String(topicInfo.sourceTopicId).trim() : '';
           const magicTopic = document.createElement('div');
           magicTopic.id = topicId;
           magicTopic.className = 'magic-topic';
@@ -7351,6 +7390,10 @@ ${document.querySelector('style').textContent}
           magicContainer.appendChild(magicTopic);
           afterContentSanitize(magicTopic);
           magicTopicMap.set(topicId, magicTopic);
+          if (sourceTopicId) {
+            magicTopic.dataset.sourceTopicId = sourceTopicId;
+            magicTopicBySource.set(sourceTopicId, magicTopic);
+          }
         });
       } else if (typeof data.magicContainerHtml === 'string') {
         magicContainer.innerHTML = data.magicContainerHtml;
@@ -7364,6 +7407,11 @@ ${document.querySelector('style').textContent}
             if (trimmedId) {
               magicTopicMap.set(trimmedId, topic);
             }
+          }
+          const sourceTopicId = (topic.dataset.sourceTopicId || '').trim();
+          if (sourceTopicId) {
+            topic.dataset.sourceTopicId = sourceTopicId;
+            magicTopicBySource.set(sourceTopicId, topic);
           }
         });
       }
@@ -7382,7 +7430,8 @@ ${document.querySelector('style').textContent}
       const topics = Array.isArray(sectionData?.temas) ? sectionData.temas : [];
 
       topics.forEach(topicData => {
-        const topicId = topicData?.id ? String(topicData.id) : generateUniqueId('topic');
+        let topicId = topicData?.id ? String(topicData.id) : generateUniqueId('topic');
+        topicId = topicId.trim();
         const topicSectionName = topicData?.sectionName ? String(topicData.sectionName) : sectionName;
         const page = document.createElement('section');
         page.className = 'page';
@@ -7405,34 +7454,75 @@ ${document.querySelector('style').textContent}
 
         let resolvedMagicId = '';
         if (magicContainer) {
-          let magicId = '';
-          if (topicData?.magicId) {
-            magicId = String(topicData.magicId).trim();
-          } else if (typeof topicData?.magicHtml === 'string') {
-            magicId = `magic-topic-${topicId}`;
+          const desiredMagicId = topicData?.magicId ? String(topicData.magicId).trim() : '';
+          let magicTopic = desiredMagicId ? magicTopicMap.get(desiredMagicId) : null;
+
+          if (!magicTopic && desiredMagicId) {
+            const existing = document.getElementById(desiredMagicId);
+            if (existing && existing.classList.contains('magic-topic')) {
+              magicTopic = existing;
+              magicTopicMap.set(desiredMagicId, magicTopic);
+            }
           }
 
-          if (magicId) {
-            let magicTopic = magicTopicMap.get(magicId);
-            if (!magicTopic) {
-              magicTopic = document.createElement('div');
-              magicTopic.id = magicId;
-              magicTopic.className = 'magic-topic';
-              magicContainer.appendChild(magicTopic);
-              magicTopicMap.set(magicId, magicTopic);
+          if (!magicTopic) {
+            magicTopic = magicTopicBySource.get(topicId);
+          }
+
+          if (!magicTopic && typeof topicData?.magicHtml === 'string') {
+            let baseId = desiredMagicId || `magic-topic-${topicId}`;
+            baseId = baseId.trim();
+            if (!baseId) {
+              baseId = generateUniqueId('magic-topic');
+            }
+            let uniqueId = baseId;
+            while (uniqueId && (magicTopicMap.has(uniqueId) || document.getElementById(uniqueId))) {
+              uniqueId = `${baseId}-${Math.random().toString(36).slice(2, 6)}`;
+            }
+            magicTopic = document.createElement('div');
+            magicTopic.id = uniqueId;
+            magicTopic.className = 'magic-topic';
+            magicContainer.appendChild(magicTopic);
+            magicTopicMap.set(uniqueId, magicTopic);
+          }
+
+          if (magicTopic) {
+            if (!magicTopic.id) {
+              let fallbackId = desiredMagicId || `magic-topic-${topicId || generateUniqueId('magic-topic')}`;
+              fallbackId = (fallbackId || '').trim();
+              if (!fallbackId) {
+                fallbackId = generateUniqueId('magic-topic');
+              }
+              let finalId = fallbackId;
+              while (finalId && (magicTopicMap.has(finalId) || document.getElementById(finalId))) {
+                finalId = `${fallbackId}-${Math.random().toString(36).slice(2, 6)}`;
+              }
+              magicTopic.id = finalId;
             }
             if (typeof topicData.magicHtml === 'string') {
               magicTopic.innerHTML = topicData.magicHtml;
               afterContentSanitize(magicTopic);
             }
-            resolvedMagicId = magicId;
+            if (topicId) {
+              magicTopic.dataset.sourceTopicId = topicId;
+              magicTopicBySource.set(topicId, magicTopic);
+            }
+            if (!magicTopicMap.has(magicTopic.id)) {
+              magicTopicMap.set(magicTopic.id, magicTopic);
+            }
+            resolvedMagicId = magicTopic.id;
           }
         }
 
         if (resolvedMagicId) {
           page.dataset.magicAnchorId = resolvedMagicId;
         } else if (topicData?.magicId) {
-          page.dataset.magicAnchorId = String(topicData.magicId).trim();
+          const fallbackMagicId = String(topicData.magicId).trim();
+          if (fallbackMagicId) {
+            page.dataset.magicAnchorId = fallbackMagicId;
+          } else {
+            delete page.dataset.magicAnchorId;
+          }
         } else {
           delete page.dataset.magicAnchorId;
         }
@@ -7650,6 +7740,12 @@ ${document.querySelector('style').textContent}
               loadedMagicContainer.querySelectorAll('.magic-topic').forEach(topic => {
                 const clonedTopic = topic.cloneNode(true);
                 afterContentSanitize(clonedTopic);
+                const sourceTopicId = (clonedTopic.dataset.sourceTopicId || '').trim();
+                if (sourceTopicId) {
+                  clonedTopic.dataset.sourceTopicId = sourceTopicId;
+                } else {
+                  delete clonedTopic.dataset.sourceTopicId;
+                }
                 magicContainer.appendChild(clonedTopic);
               });
             }
