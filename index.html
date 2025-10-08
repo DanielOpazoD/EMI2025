@@ -12,6 +12,7 @@
       --theme-primary-light: #6ea8fe;
       --base-font-size: 10.5px;
       --zoom-level: 1;
+      --topbar-height: 36px;
       font-size: calc(var(--base-font-size) * var(--zoom-level));
     }
 
@@ -135,47 +136,47 @@
       left: 0;
       right: 0;
       z-index: 4000;
-      height: 3.43rem;
+      height: var(--topbar-height);
       background: #000;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 0.95rem;
+      padding: 0 10px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
-      font-size: 1.05rem;
+      font-size: 11px;
     }
 
     .topbar-left {
       position: absolute;
-      left: 0.95rem;
+      left: 10px;
       display: flex;
       align-items: center;
-      gap: 0.95rem;
+      gap: 10px;
     }
 
     .topbar-center {
       display: flex;
       align-items: center;
-      gap: 0.76rem;
-      font-size: 1.14rem;
+      gap: 8px;
+      font-size: 12px;
       flex-wrap: wrap;
       justify-content: center;
-      max-width: calc(100% - 12rem);
+      max-width: calc(100% - 190px);
     }
 
     .topbar-right {
       position: absolute;
-      right: 0.95rem;
+      right: 10px;
       display: flex;
       align-items: center;
-      gap: 0.95rem;
+      gap: 10px;
     }
 
     .topbar-topic {
       display: inline-block;
-      padding: 0.19rem 0.57rem;
-      border-radius: 0.38rem;
+      padding: 3px 9px;
+      border-radius: 6px;
       background: #222;
       color: #ddd;
       max-width: 60vw;
@@ -192,14 +193,14 @@
       background: #111;
       color: #fff;
       border: 1px solid #333;
-      padding: 0.38rem 0.76rem;
-      border-radius: 0.57rem;
-      font-size: 1.05rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
       cursor: pointer;
       transition: opacity .15s;
       display: flex;
       align-items: center;
-      gap: 0.38rem;
+      gap: 6px;
     }
 
     .topbar-btn:hover {
@@ -212,7 +213,7 @@
     }
 
     .topbar-btn-label {
-      font-size: 0.86rem;
+      font-size: 11px;
       display: none;
     }
 
@@ -225,22 +226,22 @@
     .zoom-controls {
       display: flex;
       align-items: center;
-      gap: 0.38rem;
+      gap: 6px;
     }
 
     .zoom-value {
-      min-width: 4.29rem;
+      min-width: 68px;
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 12px;
       background: #222;
-      padding: 0.19rem 0.38rem;
-      border-radius: 0.29rem;
+      padding: 3px 6px;
+      border-radius: 5px;
     }
 
     /* ===== Barra de herramientas mejorada ===== */
     .edit-toolbar {
       position: fixed;
-      top: 3.62rem;
+      top: calc(var(--topbar-height) + 8px);
       left: 0;
       right: 0;
       background: #fff;
@@ -961,11 +962,11 @@
     /* ===== Panel lateral ===== */
     .topic-panel {
       position: fixed;
-      top: 3.43rem;
+      top: var(--topbar-height);
       left: 0;
       width: 340px;
       max-width: 90vw;
-      height: calc(100vh - 3.43rem);
+      height: calc(100vh - var(--topbar-height));
       background: #fff;
       border-right: 1px solid #e5e7eb;
       box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
@@ -983,11 +984,11 @@
     /* ===== Tabla de contenidos ===== */
     .toc-panel {
       position: fixed;
-      top: 3.43rem;
+      top: var(--topbar-height);
       right: 0;
       width: 300px;
       max-width: 90vw;
-      height: calc(100vh - 3.43rem);
+      height: calc(100vh - var(--topbar-height));
       background: #fff;
       border-left: 1px solid #e5e7eb;
       box-shadow: -4px 4px 10px rgba(0, 0, 0, .08);
@@ -1066,11 +1067,25 @@
       padding: 8px 10px;
       border-bottom: 1px solid #e9ecef;
       background: #f8f9fa;
+      gap: 10px;
+    }
+
+    .panel-header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
     .panel-header strong {
       font-size: 1.238rem;
       color: #212529;
+      line-height: 1.1;
+    }
+
+    .panel-topic-count {
+      font-size: 0.857rem;
+      color: #6c757d;
+      font-weight: 500;
     }
 
     .panel-header-actions {
@@ -1200,10 +1215,10 @@
     .topic-list li {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 5px 10px 5px 30px;
-      border-bottom: 1px dashed #f8f9fa;
-      font-size: 0.952rem;
+      gap: 4px;
+      padding: 4px 10px 4px 24px;
+      border-bottom: 1px dashed #f0f2f4;
+      font-size: 0.9rem;
     }
 
     .topic-list li:hover {
@@ -1281,7 +1296,7 @@
 
     .panel-backdrop {
       position: fixed;
-      top: 3.43rem;
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       bottom: 0;
@@ -2102,7 +2117,7 @@
     /* ===== Visor Mágico ===== */
     .magic-view {
       position: fixed;
-      top: 3.43rem;
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       bottom: 0;
@@ -2172,6 +2187,146 @@
       line-height: 1.2
     }
 
+    /* ===== Notas flotantes ===== */
+    .floating-notes-layer {
+      position: fixed;
+      top: var(--topbar-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 3600;
+    }
+
+    body.reading-mode .floating-notes-layer {
+      top: 0;
+    }
+
+    .floating-note {
+      position: absolute;
+      width: 240px;
+      min-height: 140px;
+      border-radius: 10px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      pointer-events: auto;
+      backdrop-filter: saturate(120%);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .floating-note.dragging {
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.25);
+      transform: scale(1.02);
+    }
+
+    .floating-note-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .floating-note-header:active {
+      cursor: grabbing;
+    }
+
+    .floating-note-title {
+      font-weight: 600;
+      font-size: 0.98rem;
+      flex: 1;
+    }
+
+    .floating-note-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .floating-note-style-select {
+      font-size: 0.857rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      padding: 2px 6px;
+      background: #fff;
+      color: #212529;
+    }
+
+    .floating-note button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 2px;
+      color: inherit;
+    }
+
+    .floating-note button:hover {
+      opacity: 0.8;
+    }
+
+    .floating-note-body {
+      flex: 1;
+      font-size: 0.95rem;
+      line-height: 1.35;
+      outline: none;
+      border-radius: 6px;
+      padding: 4px;
+      cursor: text;
+      user-select: text;
+      min-height: 80px;
+      background: transparent;
+    }
+
+    .floating-note-body[contenteditable="true"]:focus {
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+    }
+
+    .floating-note-style-default {
+      background: #fffbe6;
+      border-color: #f2d479;
+      color: #5c4b1f;
+    }
+
+    .floating-note-style-sky {
+      background: #e8f4ff;
+      border-color: #a8d8ff;
+      color: #1b437f;
+    }
+
+    .floating-note-style-mint {
+      background: #e6fff3;
+      border-color: #9be7c4;
+      color: #1f5c3b;
+    }
+
+    .floating-note-style-rose {
+      background: #ffe8f3;
+      border-color: #f3b4cf;
+      color: #703049;
+    }
+
+    .floating-note-style-lilac {
+      background: #f1e9ff;
+      border-color: #cbb7f8;
+      color: #463271;
+    }
+
+    .floating-note-style-slate {
+      background: #eef1f5;
+      border-color: #c5ccd6;
+      color: #2f3947;
+    }
+
+    body.notes-hidden #floatingNotesLayer {
+      display: none !important;
+    }
+
     .magic-section {
       margin: 10px 0
     }
@@ -2232,7 +2387,8 @@
       .edit-toolbar,
       .image-toolbar,
       .reading-mode-exit,
-      .magic-icon {
+      .magic-icon,
+      #floatingNotesLayer {
         display: none !important;
       }
 
@@ -2370,6 +2526,14 @@
       <div class="toolbar-separator"></div>
 
       <div class="toolbar-group">
+        <span class="toolbar-label">NOTAS</span>
+        <button id="addFloatingNoteBtn" title="Nota flotante">🗒️</button>
+        <button id="toggleNotesBtn" title="Mostrar/Ocultar notas">👁️</button>
+      </div>
+
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group">
         <span class="toolbar-label">TEMA</span>
         <select id="themeSelect" title="Esquema">
           <option value="theme-blue">Azul</option>
@@ -2420,11 +2584,6 @@
         <span class="size-display" id="widthDisplay">100% (200px)</span>
         <button type="button" class="image-size-btn" id="imageWidthIncrease" title="Aumentar tamaño">+</button>
       </div>
-    </div>
-    <div class="image-toolbar-row">
-      <label>Alto:</label>
-      <input type="range" id="imageHeightSlider" min="50" max="900" step="1">
-      <span class="size-display" id="heightDisplay">auto</span>
     </div>
     <div class="image-toolbar-row">
       <button id="cropImageBtn" title="Recortar imagen" style="flex: 1;">✂️ Recortar</button>
@@ -2652,7 +2811,10 @@
   <!-- Panel de navegación -->
   <aside id="topic-panel" class="topic-panel">
     <div class="panel-header">
-      <strong>Navegación</strong>
+      <div class="panel-header-info">
+        <strong>Navegación</strong>
+        <span class="panel-topic-count" id="panelTopicCount">0 temas</span>
+      </div>
       <div class="panel-header-actions">
         <button class="panel-header-btn" id="editPanelBtn" title="Editar secciones">✏️</button>
         <button class="panel-header-btn" id="addSectionBtn" title="Nueva sección">➕</button>
@@ -2681,6 +2843,8 @@
   <aside id="magic-view" class="magic-view">
   </aside>
 
+  <div id="floatingNotesLayer" class="floating-notes-layer"></div>
+
   <!-- Contenido mágico -->
   <div class="magic-content-container" style="display:none"></div>
 
@@ -2699,6 +2863,9 @@
       let lastRegularZoom = 1;
       let zoomBeforeMagic = null;
       let isMagicViewActive = false;
+      let activeMagicSource = null;
+      let activeMagicWrapper = null;
+      let activeMagicPage = null;
       let allSectionsExpanded = true;
       let savedSelection = null;
       let tableMenuAPI = null;
@@ -2716,6 +2883,20 @@
       const IMAGE_MAX_WIDTH = 1600;
       const IMAGE_RESIZE_STEP = 0.1;
 
+      const NOTE_STYLE_PRESETS = [
+        { id: 'default', name: 'Post-it amarillo', className: 'floating-note-style-default' },
+        { id: 'sky', name: 'Azul cielo', className: 'floating-note-style-sky' },
+        { id: 'mint', name: 'Verde menta', className: 'floating-note-style-mint' },
+        { id: 'rose', name: 'Rosa suave', className: 'floating-note-style-rose' },
+        { id: 'lilac', name: 'Lavanda', className: 'floating-note-style-lilac' },
+        { id: 'slate', name: 'Gris pizarra', className: 'floating-note-style-slate' }
+      ];
+
+      let floatingNotesHidden = false;
+      let floatingNoteZIndex = 10;
+      let floatingNoteCreationOffset = 0;
+      const floatingNoteDragState = { note: null, pointerId: null, offsetX: 0, offsetY: 0 };
+
       const CACHE_STORAGE_KEY = 'emi2025-editor-cache-v1';
 
       let sections = [];
@@ -2728,6 +2909,7 @@
       const panel = document.getElementById('topic-panel');
       const tocPanel = document.getElementById('toc-panel');
       const sectionsContainer = document.getElementById('sectionsContainer');
+      const panelTopicCount = document.getElementById('panelTopicCount');
       const plusBtn = document.querySelector('.topbar-plus');
       const panelClose = document.querySelectorAll('.panel-close');
       const tocClose = document.getElementById('tocClose');
@@ -2736,6 +2918,9 @@
       const specialtySpan = document.getElementById('specialtyTitle');
       const modalOverlay = document.getElementById('modalOverlay');
       const modalContent = document.getElementById('modalContent');
+      const floatingNotesLayer = document.getElementById('floatingNotesLayer');
+      const addFloatingNoteBtn = document.getElementById('addFloatingNoteBtn');
+      const toggleNotesBtn = document.getElementById('toggleNotesBtn');
       
       const editBtn = document.getElementById('editBtn');
       const saveHtmlBtn = document.getElementById('saveHtmlBtn');
@@ -2763,8 +2948,6 @@
       const imageWidthIncreaseBtn = document.getElementById('imageWidthIncrease');
       const imageWidthDecreaseBtn = document.getElementById('imageWidthDecrease');
       const widthDisplay = document.getElementById('widthDisplay');
-      const heightSlider = document.getElementById('imageHeightSlider');
-      const heightDisplay = document.getElementById('heightDisplay');
       const imageCropModal = document.getElementById('imageCropModal');
       const imageCropStage = document.getElementById('imageCropStage');
       const imageCropPreview = document.getElementById('imageCropPreview');
@@ -3998,7 +4181,7 @@
       }
 
       function getCurrentMagicPage() {
-        return document.querySelector('.magic-page[contenteditable="true"]');
+        return document.querySelector('.magic-page');
       }
 
       /* === HABILITAR PEGADO DE HTML === */
@@ -5101,7 +5284,7 @@
             magicIcon.addEventListener('click', (e) => {
               e.stopPropagation();
               closePanel();
-              activateMagicTopic(magicAnchorFor(page), getTitle());
+              activateMagicTopic(magicAnchorFor(page), getTitle(), page);
             });
             magicIcon.dataset.bound = 'true';
           }
@@ -5399,24 +5582,6 @@
 
         updateWidthDisplayForImage(img);
 
-        if (heightSlider && heightDisplay) {
-          if (img.style.height && img.style.height !== 'auto') {
-            const parsedHeight = parseInt(img.style.height) || img.height || 200;
-            const sliderMax = parseInt(heightSlider.max || '900', 10);
-            const sliderMin = parseInt(heightSlider.min || '50', 10);
-            const clampedHeight = Math.max(sliderMin, Math.min(sliderMax, parsedHeight));
-            heightSlider.value = clampedHeight;
-            heightDisplay.textContent = parsedHeight + 'px';
-          } else {
-            const autoHeight = img.height || 200;
-            const sliderMax = parseInt(heightSlider.max || '900', 10);
-            const sliderMin = parseInt(heightSlider.min || '50', 10);
-            const clampedAuto = Math.max(sliderMin, Math.min(sliderMax, autoHeight));
-            heightSlider.value = clampedAuto;
-            heightDisplay.textContent = 'auto';
-          }
-        }
-
         if (cropImageBtn) {
           cropImageBtn.disabled = false;
         }
@@ -5695,23 +5860,302 @@
         toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
       });
 
+      /* === NOTAS FLOTANTES === */
+      function getFloatingNoteStyle(styleId) {
+        return NOTE_STYLE_PRESETS.find(preset => preset.id === styleId) || NOTE_STYLE_PRESETS[0];
+      }
+
+      function applyFloatingNoteStyle(note, styleId) {
+        if (!note) return;
+        const preset = getFloatingNoteStyle(styleId);
+        NOTE_STYLE_PRESETS.forEach(presetOption => {
+          if (presetOption.className) {
+            note.classList.remove(presetOption.className);
+          }
+        });
+        if (preset?.className) {
+          note.classList.add(preset.className);
+        }
+        note.dataset.style = preset?.id || 'default';
+      }
+
+      function bringNoteToFront(note) {
+        if (!note) return;
+        floatingNoteZIndex += 1;
+        note.style.zIndex = String(floatingNoteZIndex);
+      }
+
+      function clampNotePosition(note, left, top) {
+        if (!floatingNotesLayer) {
+          return { left: left || 0, top: top || 0 };
+        }
+        const layerRect = floatingNotesLayer.getBoundingClientRect();
+        const computedStyle = window.getComputedStyle(floatingNotesLayer);
+        const topOffset = Number.parseFloat(computedStyle.top || '0') || 0;
+        const layerWidth = layerRect.width || window.innerWidth;
+        const layerHeight = layerRect.height || Math.max(0, window.innerHeight - topOffset);
+        const noteRect = note.getBoundingClientRect();
+        const noteWidth = note.offsetWidth || noteRect.width || 240;
+        const noteHeight = note.offsetHeight || noteRect.height || 140;
+        const maxLeft = Math.max(0, layerWidth - noteWidth);
+        const maxTop = Math.max(0, layerHeight - noteHeight);
+        const clampedLeft = Math.min(Math.max(Number.isFinite(left) ? left : 0, 0), maxLeft);
+        const clampedTop = Math.min(Math.max(Number.isFinite(top) ? top : 0, 0), maxTop);
+        return { left: clampedLeft, top: clampedTop };
+      }
+
+      function positionFloatingNote(note, left, top) {
+        if (!note) return;
+        const applyPosition = () => {
+          const coords = clampNotePosition(note, left, top);
+          note.style.left = `${coords.left}px`;
+          note.style.top = `${coords.top}px`;
+          note.dataset.left = String(coords.left);
+          note.dataset.top = String(coords.top);
+        };
+
+        if ((note.offsetWidth || note.getBoundingClientRect().width) === 0) {
+          requestAnimationFrame(applyPosition);
+        } else {
+          applyPosition();
+        }
+      }
+
+      function refreshToggleNotesButton() {
+        if (!toggleNotesBtn) return;
+        toggleNotesBtn.classList.toggle('active', !floatingNotesHidden);
+        toggleNotesBtn.setAttribute('aria-pressed', floatingNotesHidden ? 'false' : 'true');
+        toggleNotesBtn.title = floatingNotesHidden ? 'Mostrar notas flotantes' : 'Ocultar notas flotantes';
+        toggleNotesBtn.textContent = floatingNotesHidden ? '🙈' : '👁️';
+      }
+
+      function setFloatingNotesVisibility(hidden) {
+        floatingNotesHidden = !!hidden;
+        document.body.classList.toggle('notes-hidden', floatingNotesHidden);
+        refreshToggleNotesButton();
+        if (!floatingNotesHidden) {
+          clampAllFloatingNotes();
+        }
+      }
+
+      function setFloatingNotesEditable(editable) {
+        if (!floatingNotesLayer) return;
+        const bodies = floatingNotesLayer.querySelectorAll('.floating-note-body');
+        bodies.forEach(body => {
+          body.contentEditable = editable ? 'true' : 'false';
+        });
+      }
+
+      function startFloatingNoteDrag(note, event) {
+        if (!note || !floatingNotesLayer) return;
+        floatingNoteDragState.note = note;
+        floatingNoteDragState.pointerId = event.pointerId;
+        const rect = note.getBoundingClientRect();
+        floatingNoteDragState.offsetX = event.clientX - rect.left;
+        floatingNoteDragState.offsetY = event.clientY - rect.top;
+        note.classList.add('dragging');
+        bringNoteToFront(note);
+        try {
+          note.setPointerCapture(event.pointerId);
+        } catch (err) {
+          // Ignore pointer capture errors
+        }
+        event.preventDefault();
+      }
+
+      function handleFloatingNotePointerMove(event) {
+        const state = floatingNoteDragState;
+        if (!state.note || state.pointerId !== event.pointerId || !floatingNotesLayer) {
+          return;
+        }
+        const layerRect = floatingNotesLayer.getBoundingClientRect();
+        const newLeft = event.clientX - layerRect.left - state.offsetX;
+        const newTop = event.clientY - layerRect.top - state.offsetY;
+        positionFloatingNote(state.note, newLeft, newTop);
+        event.preventDefault();
+      }
+
+      function endFloatingNoteDrag(event) {
+        const state = floatingNoteDragState;
+        if (!state.note) return;
+        if (event && state.pointerId !== undefined && event.pointerId !== state.pointerId) {
+          return;
+        }
+        try {
+          state.note.releasePointerCapture(state.pointerId);
+        } catch (err) {
+          // Ignore errors when releasing pointer capture
+        }
+        state.note.classList.remove('dragging');
+        floatingNoteDragState.note = null;
+        floatingNoteDragState.pointerId = null;
+      }
+
+      function clearFloatingNotes() {
+        if (!floatingNotesLayer) return;
+        floatingNotesLayer.innerHTML = '';
+        floatingNoteCreationOffset = 0;
+        floatingNoteZIndex = 10;
+      }
+
+      function clampAllFloatingNotes() {
+        if (!floatingNotesLayer) return;
+        floatingNotesLayer.querySelectorAll('.floating-note').forEach(note => {
+          const left = Number.parseFloat(note.dataset.left || note.style.left || '0');
+          const top = Number.parseFloat(note.dataset.top || note.style.top || '0');
+          const coords = clampNotePosition(note, left, top);
+          note.style.left = `${coords.left}px`;
+          note.style.top = `${coords.top}px`;
+          note.dataset.left = String(coords.left);
+          note.dataset.top = String(coords.top);
+        });
+      }
+
+      function createFloatingNote(data = {}) {
+        if (!floatingNotesLayer) return null;
+        const note = document.createElement('div');
+        note.className = 'floating-note';
+
+        let noteId = data.id ? String(data.id).trim() : '';
+        if (!noteId) {
+          noteId = generateUniqueId('floating-note');
+        }
+        note.dataset.noteId = noteId;
+
+        const styleId = data.style && getFloatingNoteStyle(String(data.style).trim())
+          ? String(data.style).trim()
+          : 'default';
+        applyFloatingNoteStyle(note, styleId);
+
+        const header = document.createElement('div');
+        header.className = 'floating-note-header';
+
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'floating-note-title';
+        titleSpan.textContent = 'Nota flotante';
+
+        const actions = document.createElement('div');
+        actions.className = 'floating-note-actions';
+
+        const styleSelect = document.createElement('select');
+        styleSelect.className = 'floating-note-style-select';
+        NOTE_STYLE_PRESETS.forEach(preset => {
+          const option = document.createElement('option');
+          option.value = preset.id;
+          option.textContent = preset.name;
+          styleSelect.appendChild(option);
+        });
+        styleSelect.value = styleId;
+        styleSelect.addEventListener('change', (event) => {
+          applyFloatingNoteStyle(note, event.target.value);
+        });
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.title = 'Eliminar nota';
+        deleteBtn.textContent = '✖️';
+        deleteBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          note.remove();
+        });
+
+        actions.appendChild(styleSelect);
+        actions.appendChild(deleteBtn);
+
+        header.appendChild(titleSpan);
+        header.appendChild(actions);
+
+        header.addEventListener('pointerdown', (event) => {
+          if (event.button !== 0) return;
+          if (event.target.closest('select, button')) return;
+          startFloatingNoteDrag(note, event);
+        });
+
+        header.addEventListener('dblclick', () => {
+          bringNoteToFront(note);
+        });
+
+        const body = document.createElement('div');
+        body.className = 'floating-note-body';
+        body.spellcheck = true;
+        body.contentEditable = isEditMode ? 'true' : 'false';
+        if (typeof data.html === 'string') {
+          body.innerHTML = data.html;
+        } else {
+          body.innerHTML = '';
+        }
+        body.addEventListener('focus', () => {
+          bringNoteToFront(note);
+        });
+
+        note.appendChild(header);
+        note.appendChild(body);
+        floatingNotesLayer.appendChild(note);
+
+        const parsedLeft = Number.parseFloat(data.left);
+        const parsedTop = Number.parseFloat(data.top);
+        const defaultOffset = (floatingNoteCreationOffset += 40);
+        const fallbackLeft = 40 + (defaultOffset % 120);
+        const fallbackTop = 40 + (defaultOffset % 160);
+        const initialLeft = Number.isFinite(parsedLeft) ? parsedLeft : fallbackLeft;
+        const initialTop = Number.isFinite(parsedTop) ? parsedTop : fallbackTop;
+
+        positionFloatingNote(note, initialLeft, initialTop);
+        bringNoteToFront(note);
+
+        if (data.focus !== false && isEditMode) {
+          setTimeout(() => body.focus(), 0);
+        }
+
+        return note;
+      }
+
+      function restoreFloatingNotes(notes = [], hidden = false) {
+        clearFloatingNotes();
+        if (Array.isArray(notes)) {
+          notes.forEach(noteData => {
+            if (!noteData || typeof noteData !== 'object') return;
+            createFloatingNote({
+              id: noteData.id,
+              style: noteData.style,
+              html: typeof noteData.html === 'string' ? noteData.html : '',
+              left: noteData.left,
+              top: noteData.top,
+              focus: false
+            });
+          });
+        }
+        setFloatingNotesVisibility(hidden);
+      }
+
+      window.addEventListener('pointermove', handleFloatingNotePointerMove);
+      window.addEventListener('pointerup', endFloatingNoteDrag);
+      window.addEventListener('pointercancel', endFloatingNoteDrag);
+      window.addEventListener('resize', clampAllFloatingNotes);
+
+      refreshToggleNotesButton();
+
+      addFloatingNoteBtn?.addEventListener('click', () => {
+        if (!floatingNotesLayer) return;
+        if (floatingNotesHidden) {
+          setFloatingNotesVisibility(false);
+        }
+        const note = createFloatingNote({ focus: true });
+        if (note && isEditMode) {
+          enableHtmlPaste();
+        }
+      });
+
+      toggleNotesBtn?.addEventListener('click', () => {
+        setFloatingNotesVisibility(!floatingNotesHidden);
+      });
+
       imageWidthIncreaseBtn?.addEventListener('click', () => {
         changeSelectedImageWidth(1 + IMAGE_RESIZE_STEP);
       });
 
       imageWidthDecreaseBtn?.addEventListener('click', () => {
         changeSelectedImageWidth(1 - IMAGE_RESIZE_STEP);
-      });
-
-      heightSlider?.addEventListener('input', (e) => {
-        if (selectedImage) {
-          const height = parseInt(e.target.value);
-          selectedImage.style.height = height + 'px';
-          if (heightDisplay) {
-            heightDisplay.textContent = height + 'px';
-          }
-          repositionImageToolbar();
-        }
       });
 
       templateBgColorInput?.addEventListener('input', (e) => {
@@ -6362,7 +6806,82 @@
         return '';
       }
 
+      function ensureMagicTopicSource(anchorId, pageRef) {
+        let resolvedId = typeof anchorId === 'string' ? anchorId.trim() : '';
+        let src = resolvedId ? document.getElementById(resolvedId) : null;
+
+        if (src && !src.classList.contains('magic-topic')) {
+          src = null;
+        }
+
+        if (!src && pageRef) {
+          const container = document.querySelector('.magic-content-container');
+          if (container) {
+            const topicId = (pageRef.dataset.topicId || '').trim();
+            let baseId = resolvedId || (topicId ? `magic-topic-${topicId}` : '');
+            if (!baseId) {
+              baseId = generateUniqueId('magic-topic');
+            }
+            let candidateId = baseId;
+            while (candidateId && document.getElementById(candidateId)) {
+              candidateId = `${baseId}-${Math.random().toString(36).slice(2, 6)}`;
+            }
+            src = document.createElement('div');
+            src.id = candidateId;
+            src.className = 'magic-topic';
+            if (topicId) {
+              src.dataset.sourceTopicId = topicId;
+            }
+            container.appendChild(src);
+            pageRef.dataset.magicAnchorId = candidateId;
+            resolvedId = candidateId;
+          }
+        }
+
+        if (src && !src.id) {
+          let baseId = resolvedId || generateUniqueId('magic-topic');
+          let uniqueId = baseId;
+          while (uniqueId && document.getElementById(uniqueId)) {
+            uniqueId = `${baseId}-${Math.random().toString(36).slice(2, 6)}`;
+          }
+          src.id = uniqueId;
+          resolvedId = uniqueId;
+          if (pageRef) {
+            pageRef.dataset.magicAnchorId = uniqueId;
+          }
+        }
+
+        return { source: src, anchorId: resolvedId };
+      }
+
+      function persistMagicEdits() {
+        if (!activeMagicWrapper && !activeMagicSource) {
+          return;
+        }
+
+        if (activeMagicWrapper && !document.contains(activeMagicWrapper)) {
+          activeMagicWrapper = null;
+        }
+
+        if (!activeMagicSource && activeMagicWrapper && activeMagicPage) {
+          const { source } = ensureMagicTopicSource('', activeMagicPage);
+          activeMagicSource = source || null;
+        }
+
+        if (activeMagicSource && !document.contains(activeMagicSource)) {
+          activeMagicSource = null;
+        }
+
+        if (!activeMagicSource || !activeMagicWrapper) {
+          return;
+        }
+
+        activeMagicSource.innerHTML = activeMagicWrapper.innerHTML;
+        afterContentSanitize(activeMagicSource);
+      }
+
       function closeMagicView() {
+        persistMagicEdits();
         if (isMagicViewActive) {
           const restoreZoom = zoomBeforeMagic ?? lastRegularZoom ?? 1;
           isMagicViewActive = false;
@@ -6374,10 +6893,14 @@
         magic.classList.remove('open');
         magic.style.removeProperty('--magic-zoom');
         zoomBeforeMagic = null;
+        activeMagicSource = null;
+        activeMagicWrapper = null;
+        activeMagicPage = null;
       }
 
-      function activateMagicTopic(anchorId, title) {
+      function activateMagicTopic(anchorId, title, pageRef = null) {
         if (!magic) return;
+        persistMagicEdits();
         if (!isMagicViewActive) {
           zoomBeforeMagic = currentZoom;
         }
@@ -6393,13 +6916,16 @@
         h.textContent = title || 'Tema';
         magicPage.appendChild(h);
 
-        const src = anchorId ? document.getElementById(anchorId) : null;
+        const { source: src } = ensureMagicTopicSource(anchorId, pageRef);
         const wrapper = document.createElement('div');
         wrapper.innerHTML = src ? src.innerHTML : '<p>No hay contenido adicional.</p>';
         afterContentSanitize(wrapper);
 
         magicPage.appendChild(wrapper);
         magic.appendChild(magicPage);
+        activeMagicSource = src;
+        activeMagicWrapper = wrapper;
+        activeMagicPage = pageRef || null;
 
         if (isEditMode) {
           magicPage.contentEditable = 'true';
@@ -6407,9 +6933,6 @@
         }
 
         magic.querySelector('.magic-close')?.addEventListener('click', () => {
-          if (isEditMode && src) {
-            src.innerHTML = wrapper.innerHTML;
-          }
           closeMagicView();
         });
         syncMagicZoom();
@@ -6419,8 +6942,10 @@
       }
 
       function buildSectionsPanel() {
+        if (!sectionsContainer) return;
         sectionsContainer.innerHTML = '';
         globalTopicCounter = 1;
+        let totalTopics = 0;
         
         sections.forEach((section, sectionIdx) => {
           const sectionDiv = document.createElement('div');
@@ -6449,6 +6974,7 @@
           const countSpan = document.createElement('span');
           countSpan.className = 'section-count';
           countSpan.textContent = `(${section.temas.length})`;
+          totalTopics += section.temas.length;
           
           const actionsDiv = document.createElement('div');
           actionsDiv.className = 'section-actions';
@@ -6544,6 +7070,11 @@
           sectionDiv.appendChild(topicList);
           sectionsContainer.appendChild(sectionDiv);
         });
+
+        if (panelTopicCount) {
+          const label = totalTopics === 1 ? '1 tema' : `${totalTopics} temas`;
+          panelTopicCount.textContent = label;
+        }
       }
 
       function togglePanelEditMode() {
@@ -6614,6 +7145,9 @@
         if (magicContainer) {
           magicContainer.innerHTML = '';
         }
+        clearFloatingNotes();
+        setFloatingNotesVisibility(false);
+        setFloatingNotesEditable(isEditMode);
         buildSectionsPanel();
         buildTableOfContents();
         setActivePage(null);
@@ -6763,6 +7297,9 @@
 
       /* === EDICIÓN === */
       function toggleEditMode() {
+        if (isEditMode) {
+          persistMagicEdits();
+        }
         isEditMode = !isEditMode;
         hideTopicMenu();
 
@@ -6770,6 +7307,7 @@
           pages.forEach(page => page.contentEditable = 'true');
           const magicPage = getCurrentMagicPage();
           if (magicPage) magicPage.contentEditable = 'true';
+          setFloatingNotesEditable(true);
           editToolbar.classList.add('show');
           editBtn.classList.add('active');
           editBtn.textContent = '✏️';
@@ -6780,6 +7318,7 @@
           pages.forEach(page => page.contentEditable = 'false');
           const magicPages = document.querySelectorAll('.magic-page');
           magicPages.forEach(mp => mp.contentEditable = 'false');
+          setFloatingNotesEditable(false);
           editToolbar.classList.remove('show');
           editBtn.classList.remove('active');
           editBtn.textContent = '✏️';
@@ -7139,11 +7678,13 @@ ${document.querySelector('style').textContent}
   }
 
   function collectDocumentData() {
+    persistMagicEdits();
     const magicContainer = document.querySelector('.magic-content-container');
     const sectionMap = new Map();
     const seenPages = new Set();
     const exportedSections = [];
     const exportedMagicTopics = [];
+    const exportedNotes = [];
 
     if (magicContainer) {
       magicContainer.querySelectorAll('.magic-topic').forEach(topic => {
@@ -7270,11 +7811,34 @@ ${document.querySelector('style').textContent}
       exportSection.temas.push(topicExport);
     });
 
+    if (floatingNotesLayer) {
+      floatingNotesLayer.querySelectorAll('.floating-note').forEach(note => {
+        if (!note) return;
+        let noteId = (note.dataset.noteId || '').trim();
+        if (!noteId) {
+          noteId = generateUniqueId('floating-note');
+          note.dataset.noteId = noteId;
+        }
+        const body = note.querySelector('.floating-note-body');
+        const left = Number.parseFloat(note.dataset.left || note.style.left || '0');
+        const top = Number.parseFloat(note.dataset.top || note.style.top || '0');
+        exportedNotes.push({
+          id: noteId,
+          html: body ? body.innerHTML : '',
+          style: note.dataset.style || 'default',
+          left: Number.isFinite(left) ? left : 0,
+          top: Number.isFinite(top) ? top : 0
+        });
+      });
+    }
+
     return {
       specialty: getDocumentTitle() || '',
       sections: exportedSections,
       magicContainerHtml: magicContainer ? magicContainer.innerHTML : '',
-      magicTopics: exportedMagicTopics
+      magicTopics: exportedMagicTopics,
+      floatingNotes: exportedNotes,
+      notesHidden: floatingNotesHidden
     };
   }
 
@@ -7544,6 +8108,9 @@ ${document.querySelector('style').textContent}
     allSectionsExpanded = sections.every(section => !section.collapsed);
     globalTopicCounter = 1;
 
+    restoreFloatingNotes(Array.isArray(data.floatingNotes) ? data.floatingNotes : [], !!data.notesHidden);
+    setFloatingNotesEditable(isEditMode);
+
     pages.forEach(page => io.observe(page));
     setupMagicIcons();
     initializeSections();
@@ -7610,6 +8177,7 @@ ${document.querySelector('style').textContent}
 
   /* === GUARDAR HTML === */
   saveHtmlBtn?.addEventListener('click', () => {
+    persistMagicEdits();
     const wasEditing = isEditMode;
     if (wasEditing) {
       pages.forEach(page => page.contentEditable = 'false');
