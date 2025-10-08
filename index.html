@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resumen – Endocrinología</title>
+  <title>Resumen – Especialidad</title>
   <style>
     /* ===== Variables de tema ===== */
     :root {
@@ -11,6 +11,11 @@
       --theme-primary-dark: #0b5ed7;
       --theme-primary-light: #6ea8fe;
       --zoom-level: 1;
+      --base-font-size: 10.5px;
+    }
+
+    html {
+      font-size: calc(var(--base-font-size) * var(--zoom-level));
     }
 
     body.theme-blue {
@@ -45,7 +50,7 @@
       margin: 0;
       padding: 0;
       line-height: 1.3;
-      font-size: 10.5px;
+      font-size: 1rem;
       transition: all 0.3s ease;
     }
 
@@ -75,7 +80,7 @@
       border-radius: 50%;
       width: 48px;
       height: 48px;
-      font-size: 20px;
+      font-size: calc(20px * var(--zoom-level));
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       z-index: 5000;
@@ -101,7 +106,7 @@
       left: 0;
       right: 0;
       z-index: 4000;
-      height: 36px;
+      height: calc(36px * var(--zoom-level));
       background: #000;
       color: #fff;
       display: flex;
@@ -120,11 +125,19 @@
       gap: 10px;
     }
 
+    .topbar-right {
+      position: absolute;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .topbar-center {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 12px;
+      font-size: calc(12px * var(--zoom-level));
       flex-wrap: wrap;
       justify-content: center;
       max-width: 90%;
@@ -148,7 +161,7 @@
       border: 1px solid #333;
       padding: 4px 8px;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       cursor: pointer;
       transition: opacity .15s;
       display: flex;
@@ -166,7 +179,7 @@
     }
 
     .topbar-btn-label {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       display: none;
     }
 
@@ -185,7 +198,7 @@
     .zoom-value {
       min-width: 45px;
       text-align: center;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       background: #222;
       padding: 2px 4px;
       border-radius: 3px;
@@ -194,7 +207,7 @@
     /* ===== Barra de herramientas mejorada ===== */
     .edit-toolbar {
       position: fixed;
-      top: calc(38px / var(--zoom-level));
+      top: calc(38px * var(--zoom-level));
       left: 0;
       right: 0;
       background: #fff;
@@ -226,7 +239,7 @@
       border-radius: 3px;
       background: #fff;
       cursor: pointer;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       line-height: 1.2;
     }
 
@@ -242,7 +255,7 @@
 
     .edit-toolbar select {
       min-width: 70px;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
     }
 
     .toolbar-separator {
@@ -263,7 +276,7 @@
     }
 
     .toolbar-label {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       color: #6c757d;
       font-weight: 600;
       margin-right: 3px;
@@ -360,7 +373,7 @@
       border-radius: 3px;
       background: #fff;
       cursor: pointer;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       transition: all 0.15s;
     }
 
@@ -375,7 +388,7 @@
     }
 
     .image-toolbar label {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       color: #6c757d;
       font-weight: 600;
       min-width: 40px;
@@ -387,7 +400,7 @@
     }
 
     .image-toolbar .size-display {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       color: #495057;
       min-width: 60px;
       text-align: right;
@@ -442,7 +455,7 @@
     }
 
     .template-toolbar label {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       color: #6c757d;
       font-weight: 600;
       min-width: 64px;
@@ -464,7 +477,7 @@
     }
 
     .template-toolbar .size-display {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       color: #495057;
       min-width: 52px;
       text-align: right;
@@ -476,7 +489,7 @@
       border-radius: 3px;
       background: #fff;
       cursor: pointer;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       transition: all 0.15s;
     }
 
@@ -619,14 +632,14 @@
 
     .modal-header h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: calc(18px * var(--zoom-level));
       color: var(--theme-primary);
     }
 
     .modal-close {
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: calc(24px * var(--zoom-level));
       cursor: pointer;
       color: #6c757d;
       line-height: 1;
@@ -650,7 +663,7 @@
       border: 1px solid #dee2e6;
       background: #fff;
       cursor: pointer;
-      font-size: 14px;
+      font-size: calc(14px * var(--zoom-level));
     }
 
     .modal-btn.primary {
@@ -670,7 +683,7 @@
       padding: 8px;
       border: 1px solid #ced4da;
       border-radius: 4px;
-      font-size: 14px;
+      font-size: calc(14px * var(--zoom-level));
       margin-bottom: 10px;
       box-sizing: border-box;
     }
@@ -681,7 +694,7 @@
       border: 1px solid #ced4da;
       border-radius: 4px;
       font-family: monospace;
-      font-size: 12px;
+      font-size: calc(12px * var(--zoom-level));
       min-height: 200px;
       resize: vertical;
       box-sizing: border-box;
@@ -732,7 +745,7 @@
     .image-crop-close {
       border: none;
       background: transparent;
-      font-size: 20px;
+      font-size: calc(20px * var(--zoom-level));
       cursor: pointer;
       color: #495057;
     }
@@ -768,7 +781,7 @@
     }
 
     .image-crop-instructions {
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       color: #6c757d;
       margin: 0;
       text-align: center;
@@ -776,7 +789,7 @@
     }
 
     .image-crop-size {
-      font-size: 12px;
+      font-size: calc(12px * var(--zoom-level));
       color: #495057;
     }
 
@@ -791,7 +804,7 @@
       border: 1px solid #ced4da;
       background: #fff;
       cursor: pointer;
-      font-size: 12px;
+      font-size: calc(12px * var(--zoom-level));
       transition: background 0.2s ease;
     }
 
@@ -822,13 +835,13 @@
     }
 
     .stat-label {
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       color: #6c757d;
       margin-bottom: 4px;
     }
 
     .stat-value {
-      font-size: 20px;
+      font-size: calc(20px * var(--zoom-level));
       font-weight: 600;
       color: #212529;
     }
@@ -855,12 +868,12 @@
 
     .template-card h4 {
       margin: 0 0 8px 0;
-      font-size: 12px;
+      font-size: calc(12px * var(--zoom-level));
       color: var(--theme-primary);
     }
 
     .template-preview {
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       color: #6c757d;
       border: 1px dashed #dee2e6;
       padding: 6px;
@@ -926,7 +939,7 @@
     }
 
     .toc-header strong {
-      font-size: 13px;
+      font-size: calc(13px * var(--zoom-level));
       color: #212529;
     }
 
@@ -950,21 +963,21 @@
     }
 
     .toc-item.h1 {
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       font-weight: 600;
       color: var(--theme-primary);
       margin-top: 8px;
     }
 
     .toc-item.h2 {
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       font-weight: 500;
       color: #495057;
       padding-left: 20px;
     }
 
     .toc-item.h3 {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       color: #6c757d;
       padding-left: 32px;
     }
@@ -979,7 +992,7 @@
     }
 
     .panel-header strong {
-      font-size: 13px;
+      font-size: calc(13px * var(--zoom-level));
       color: #212529;
     }
 
@@ -994,7 +1007,7 @@
       border-radius: 4px;
       padding: 3px 6px;
       cursor: pointer;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       color: #495057;
     }
 
@@ -1024,7 +1037,7 @@
       background: #fff;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
     }
 
     .panel-action-btn:hover {
@@ -1046,13 +1059,13 @@
       padding: 6px 10px;
       background: #f8f9fa;
       font-weight: 600;
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       gap: 6px;
       border-bottom: 1px solid #e9ecef;
     }
 
     .section-toggle {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       transition: transform 0.2s;
       cursor: pointer;
       user-select: none;
@@ -1083,7 +1096,7 @@
       background: #fff;
       border-radius: 3px;
       cursor: pointer;
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
     }
 
     .section-action-btn:hover {
@@ -1091,7 +1104,7 @@
     }
 
     .section-count {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       color: #6c757d;
       font-weight: normal;
     }
@@ -1113,7 +1126,7 @@
       gap: 6px;
       padding: 5px 10px 5px 30px;
       border-bottom: 1px dashed #f8f9fa;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
     }
 
     .topic-list li:hover {
@@ -1132,7 +1145,7 @@
     }
 
     .topic-list .topic-action {
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       border: 1px solid #d0d7de;
       background: #fff;
       border-radius: 3px;
@@ -1175,7 +1188,7 @@
       border: none;
       text-align: left;
       padding: 8px 14px;
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       color: #212529;
       cursor: pointer;
       width: 100%;
@@ -1191,7 +1204,7 @@
 
     .panel-backdrop {
       position: fixed;
-      top: 36px;
+      top: calc(36px * var(--zoom-level));
       left: 0;
       right: 0;
       bottom: 0;
@@ -1210,9 +1223,9 @@
 
     /* ===== Páginas con zoom CORREGIDO ===== */
     .page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 12mm;
+      width: calc(210mm * var(--zoom-level));
+      min-height: calc(297mm * var(--zoom-level));
+      padding: calc(12mm * var(--zoom-level));
       margin: calc(56px * var(--zoom-level)) auto calc(20px * var(--zoom-level));
       box-sizing: border-box;
       background: #fff;
@@ -1220,8 +1233,6 @@
       page-break-after: always;
       overflow-wrap: break-word;
       position: relative;
-      transform: scale(var(--zoom-level));
-      transform-origin: top center;
     }
 
     .page[contenteditable="true"] {
@@ -1231,7 +1242,7 @@
 
     /* ===== Icono mágico en el título ===== */
     h1 {
-      font-size: 18px;
+      font-size: calc(18px * var(--zoom-level));
       color: var(--theme-primary);
       margin: 0 0 6px 0;
       padding-bottom: 3px;
@@ -1252,16 +1263,16 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 24px;
-      height: 24px;
-      font-size: 16px;
+      width: calc(24px * var(--zoom-level));
+      height: calc(24px * var(--zoom-level));
+      font-size: calc(16px * var(--zoom-level));
       cursor: pointer;
       background: rgba(0, 0, 0, 0.05);
       border: none;
       border-radius: 50%;
       transition: all 0.3s ease;
       flex-shrink: 0;
-      margin-left: 8px;
+      margin-left: calc(8px * var(--zoom-level));
     }
 
     .magic-icon:hover {
@@ -1271,7 +1282,7 @@
     }
 
     h2 {
-      font-size: 13px;
+      font-size: calc(13px * var(--zoom-level));
       color: var(--theme-primary-dark);
       margin: 8px 0 3px 0;
       font-weight: 600;
@@ -1279,7 +1290,7 @@
     }
 
     h3 {
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       color: var(--theme-primary);
       margin: 6px 0 2px 0;
       font-weight: 600;
@@ -1287,7 +1298,7 @@
     }
 
     h4 {
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       color: var(--theme-primary-dark);
       margin: 6px 0 2px 0;
       font-weight: 600;
@@ -1314,7 +1325,7 @@
     }
 
     .small-text {
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       color: #6c757d
     }
 
@@ -1382,7 +1393,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: calc(14px * var(--zoom-level));
       line-height: 1;
       transition: background 0.2s ease;
     }
@@ -1418,7 +1429,7 @@
       border-collapse: collapse;
       width: 100%;
       max-width: 100%;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       margin: 6px 0;
       line-height: 1.25;
       table-layout: fixed
@@ -1464,7 +1475,7 @@
       box-shadow: 0 12px 40px rgba(15, 23, 42, 0.18);
       display: none;
       flex-direction: column;
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       color: #212529;
       z-index: 4100;
       max-height: calc(100vh - 40px);
@@ -1494,12 +1505,12 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      font-size: 10px;
+      font-size: calc(10px * var(--zoom-level));
       color: #6c757d;
     }
 
     .table-menu-size {
-      font-size: 13px;
+      font-size: calc(13px * var(--zoom-level));
       font-weight: 600;
       color: #0d6efd;
     }
@@ -1514,7 +1525,7 @@
     .table-menu input,
     .table-menu select {
       font-family: inherit;
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
     }
 
     .table-menu button {
@@ -1555,7 +1566,7 @@
       height: 28px;
       border-radius: 50%;
       padding: 0;
-      font-size: 16px;
+      font-size: calc(16px * var(--zoom-level));
       line-height: 1;
       display: flex;
       align-items: center;
@@ -1584,7 +1595,7 @@
       border-radius: 10px 10px 0 0;
       border-bottom: none;
       background: #f1f3f5;
-      font-size: 13px;
+      font-size: calc(13px * var(--zoom-level));
       padding: 8px 0;
     }
 
@@ -1623,7 +1634,7 @@
 
     .table-menu-section h4 {
       margin: 0;
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       font-weight: 700;
       letter-spacing: 0.03em;
       text-transform: uppercase;
@@ -1679,7 +1690,7 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
-      font-size: 9px;
+      font-size: calc(9px * var(--zoom-level));
       font-weight: 600;
       text-transform: uppercase;
     }
@@ -1692,7 +1703,7 @@
     }
 
     .table-slider-row label {
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       color: #6c757d;
       font-weight: 600;
     }
@@ -1749,7 +1760,7 @@
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: 11px;
+      font-size: calc(11px * var(--zoom-level));
       color: #495057;
     }
 
@@ -1883,23 +1894,21 @@
     .magic-close {
       background: transparent;
       border: none;
-      font-size: 22px;
+      font-size: calc(22px * var(--zoom-level));
       line-height: 1;
       color: #444;
       cursor: pointer
     }
 
     .magic-page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 12mm;
+      width: calc(210mm * var(--zoom-level));
+      min-height: calc(297mm * var(--zoom-level));
+      padding: calc(12mm * var(--zoom-level));
       margin: calc(20px * var(--zoom-level)) auto;
       background: #fff;
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
       box-sizing: border-box;
       overflow-wrap: break-word;
-      transform: scale(var(--zoom-level));
-      transform-origin: top center;
     }
 
     .magic-page[contenteditable="true"] {
@@ -1912,7 +1921,7 @@
     }
 
     .magic-title {
-      font-size: 18px;
+      font-size: calc(18px * var(--zoom-level));
       color: var(--theme-primary);
       margin: 0 0 6px 0;
       padding-bottom: 3px;
@@ -1926,7 +1935,7 @@
 
     .magic-section h4 {
       margin: 0 0 6px 0;
-      font-size: 12px;
+      font-size: calc(12px * var(--zoom-level));
       color: var(--theme-primary-dark);
     }
 
@@ -1934,7 +1943,7 @@
       border-collapse: collapse;
       width: 100%;
       max-width: 100%;
-      font-size: 9.5px;
+      font-size: calc(9.5px * var(--zoom-level));
       line-height: 1.15;
       margin: 6px 0;
       background: #ffffff;
@@ -2010,14 +2019,14 @@
   </style>
 </head>
 <body class="theme-blue">
-  <!-- build:topics {"especialidad":"Endocrinología","secciones":[{"id":"seccion-1","nombre":"Endocrinología","temas":[{"id":"sindrome-metabolico","titulo":"Síndrome Metabólico"},{"id":"diabetes-mellitus-2","titulo":"Diabetes Mellitus tipo II"}]}]} -->
-  
+  <!-- build:topics {"especialidad":"","secciones":[]} -->
+
   <div class="topbar">
     <div class="topbar-left">
       <button class="topbar-btn topbar-plus" title="Abrir panel de navegación"><span>☰</span> <span class="topbar-btn-label">Menú</span></button>
     </div>
     <div class="topbar-center">
-      <span id="specialtyTitle" class="topbar-topic" title="Especialidad">Endocrinología</span>
+      <span id="specialtyTitle" class="topbar-topic" title="Especialidad">Especialidad</span>
       <div class="zoom-controls">
         <button class="topbar-btn" id="zoomOutBtn" title="Reducir zoom">-</button>
         <span class="zoom-value" id="zoomValue">100%</span>
@@ -2034,6 +2043,9 @@
       <button class="topbar-btn" id="exportMarkdownBtn" title="Exportar a Markdown"><span>⬇️</span> <span class="topbar-btn-label">MD</span></button>
       <button class="topbar-btn" id="copyHtmlBtn" title="Copiar HTML completo"><span>📋</span> <span class="topbar-btn-label">Copiar</span></button>
       <button class="topbar-btn" id="printCurrentBtn" title="Imprimir documento"><span>🖨️</span> <span class="topbar-btn-label">Imprimir</span></button>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" id="saveLocalBtn" title="Guardar en este dispositivo"><span>💽</span> <span class="topbar-btn-label">Guardar local</span></button>
     </div>
   </div>
 
@@ -2141,13 +2153,13 @@
     </div>
     <div class="image-toolbar-row">
       <label for="imageAltInput">Alt:</label>
-      <input type="text" id="imageAltInput" placeholder="Texto alternativo" style="flex:1; font-size: 11px; padding: 4px;">
+      <input type="text" id="imageAltInput" placeholder="Texto alternativo" style="flex:1; font-size: calc(11px * var(--zoom-level)); padding: 4px;">
       <button id="applyAltBtn" title="Aplicar texto alternativo">Aplicar</button>
     </div>
     <div class="image-toolbar-row">
       <label for="imageFrameToggle">Marco:</label>
       <input type="checkbox" id="imageFrameToggle" style="margin-right: 6px;">
-      <span style="font-size: 10px; color: #495057;">Agregar marco</span>
+      <span style="font-size: calc(10px * var(--zoom-level)); color: #495057;">Agregar marco</span>
     </div>
     <div class="image-toolbar-row">
       <button id="wrapFigureBtn" title="Agregar figura" style="flex:1;">➕ Cuadro</button>
@@ -2387,22 +2399,12 @@
 
   <!-- Contenido mágico -->
   <div class="magic-content-container" style="display:none">
-    <div id="magic-sindrome-metabolico" class="magic-topic">
+    <div id="magic-ejemplo" class="magic-topic">
       <section class="magic-section"><h4>Contenido de ejemplo</h4>
         <p>Este es contenido mágico de ejemplo.</p>
       </section>
     </div>
   </div>
-
-  <!-- Páginas -->
-  <section class="page" data-topic-id="sindrome-metabolico" data-section-id="seccion-1">
-    <h1>
-      <span>Síndrome Metabólico</span>
-      <span class="magic-icon" title="Ver contenido mágico">✨</span>
-    </h1>
-    <h2>Definición</h2>
-    <p>El síndrome metabólico (SM) es un conjunto de alteraciones metabólicas interrelacionadas.</p>
-  </section>
 
   <script>
     (function() {
@@ -2426,16 +2428,30 @@
         scaleX: 1,
         scaleY: 1
       };
-      
-      let sections = [
-        {
-          id: 'seccion-1',
-          nombre: 'Endocrinología',
-          collapsed: false,
-          temas: []
+
+      const LOCAL_STORAGE_KEY = 'emi2025-local-cache-v1';
+      const LOCAL_ZOOM_KEY = 'emi2025-zoom-level';
+      const BASE_FONT_SIZE = 10.5;
+      const MIN_ZOOM = 0.5;
+      const MAX_ZOOM = 2;
+      const canUseLocalStorage = (() => {
+        try {
+          const testKey = '__emi2025-cache-test__';
+          window.localStorage.setItem(testKey, testKey);
+          window.localStorage.removeItem(testKey);
+          return true;
+        } catch (error) {
+          console.warn('LocalStorage no disponible:', error);
+          return false;
         }
-      ];
-      
+      })();
+      let isRestoringFromCache = false;
+      let autoSaveTimeoutId = null;
+
+      document.documentElement.style.setProperty('--base-font-size', `${BASE_FONT_SIZE}px`);
+
+      let sections = [];
+
       const panel = document.getElementById('topic-panel');
       const tocPanel = document.getElementById('toc-panel');
       const sectionsContainer = document.getElementById('sectionsContainer');
@@ -2462,6 +2478,7 @@
       const readingModeBtn = document.getElementById('readingModeBtn');
       const readingModeExit = document.getElementById('readingModeExit');
       const exportMarkdownBtn = document.getElementById('exportMarkdownBtn');
+      const saveLocalBtn = document.getElementById('saveLocalBtn');
       const imageToolbar = document.getElementById('imageToolbar');
       const imageAltInput = document.getElementById('imageAltInput');
       const applyAltBtn = document.getElementById('applyAltBtn');
@@ -2642,6 +2659,7 @@
         buildSectionsPanel();
         buildTableOfContents();
         setupMagicIcons();
+        requestAutoSave();
         return true;
       }
 
@@ -2675,6 +2693,7 @@
         page.dataset.sectionName = targetSection.nombre;
         initializeSections();
         buildSectionsPanel();
+        requestAutoSave();
         return true;
       }
 
@@ -2689,6 +2708,7 @@
         initializeSections();
         buildSectionsPanel();
         buildTableOfContents();
+        requestAutoSave();
         return true;
       }
 
@@ -2711,6 +2731,7 @@
         buildSectionsPanel();
         buildTableOfContents();
         clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        requestAutoSave();
         return clone;
       }
 
@@ -2764,11 +2785,33 @@
       });
 
       /* === ZOOM === */
-      function updateZoom(delta) {
-        currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
+      function applyZoom(level, options = {}) {
+        const numericLevel = typeof level === 'number' ? level : parseFloat(level);
+        const clamped = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, Number.isFinite(numericLevel) ? numericLevel : 1));
+        currentZoom = clamped;
         document.documentElement.style.setProperty('--zoom-level', currentZoom);
-        zoomValue.textContent = Math.round(currentZoom * 100) + '%';
+        if (zoomValue) {
+          zoomValue.textContent = Math.round(currentZoom * 100) + '%';
+        }
+        if (!options.skipStorage && canUseLocalStorage) {
+          try {
+            localStorage.setItem(LOCAL_ZOOM_KEY, String(currentZoom));
+          } catch (error) {
+            console.warn('No se pudo guardar el nivel de zoom en caché:', error);
+          }
+        }
       }
+
+      function updateZoom(delta) {
+        applyZoom(currentZoom + delta);
+        requestAutoSave();
+      }
+
+      const storedZoomValue = canUseLocalStorage ? parseFloat(localStorage.getItem(LOCAL_ZOOM_KEY)) : NaN;
+      if (!Number.isNaN(storedZoomValue)) {
+        currentZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, storedZoomValue));
+      }
+      applyZoom(currentZoom, { skipStorage: true });
 
       zoomInBtn?.addEventListener('click', () => updateZoom(0.1));
       zoomOutBtn?.addEventListener('click', () => updateZoom(-0.1));
@@ -4398,6 +4441,12 @@
 
       setupMagicIcons();
 
+      const restoredFromCache = restoreFromLocalCache();
+      if (!restoredFromCache) {
+        buildSectionsPanel();
+        buildTableOfContents();
+      }
+
       /* === MODO LECTURA === */
       function toggleReadingMode() {
         isReadingMode = !isReadingMode;
@@ -5675,6 +5724,7 @@
         document.body.classList.toggle('panel-edit-mode', isPanelEditMode);
         editPanelBtn.classList.toggle('active', isPanelEditMode);
         buildSectionsPanel();
+        requestAutoSave();
       }
 
       function toggleAllSections() {
@@ -5683,6 +5733,7 @@
         buildSectionsPanel();
         const btn = document.getElementById('toggleAllBtn');
         btn.textContent = allSectionsExpanded ? '⊟' : '⊞';
+        requestAutoSave();
       }
 
       function renameSection(section) {
@@ -5693,6 +5744,7 @@
             tema.page.dataset.sectionName = section.nombre;
           });
           buildSectionsPanel();
+          requestAutoSave();
         }
       }
 
@@ -5706,6 +5758,7 @@
         pages = pages.filter(p => p.dataset.sectionId !== section.id);
         sections = sections.filter(s => s.id !== section.id);
         buildSectionsPanel();
+        requestAutoSave();
       }
 
       function addNewSection() {
@@ -5718,14 +5771,16 @@
           collapsed: false,
           temas: []
         };
-        
+
         sections.push(newSection);
         buildSectionsPanel();
+        requestAutoSave();
       }
 
       function sortSectionsAlpha() {
         sections.sort((a, b) => a.nombre.localeCompare(b.nombre));
         buildSectionsPanel();
+        requestAutoSave();
       }
 
       function sortSectionsNumeric() {
@@ -5735,6 +5790,7 @@
           return numA - numB;
         });
         buildSectionsPanel();
+        requestAutoSave();
       }
 
       function printSection(section) {
@@ -6323,6 +6379,70 @@ ${document.querySelector('style').textContent}
     };
   }
 
+  function requestAutoSave() {
+    if (!canUseLocalStorage || isRestoringFromCache) return;
+    if (autoSaveTimeoutId) {
+      clearTimeout(autoSaveTimeoutId);
+    }
+    autoSaveTimeoutId = window.setTimeout(() => {
+      saveToLocalCache(false);
+    }, 1200);
+  }
+
+  function saveToLocalCache(showFeedback = false) {
+    if (!canUseLocalStorage) {
+      if (showFeedback) {
+        alert('El guardado local no está disponible en este navegador.');
+      }
+      return false;
+    }
+
+    try {
+      const data = collectDocumentData();
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+      autoSaveTimeoutId = null;
+
+      if (showFeedback && saveLocalBtn) {
+        const previousHtml = saveLocalBtn.innerHTML;
+        saveLocalBtn.innerHTML = '<span>✅</span> <span class="topbar-btn-label">Guardado</span>';
+        window.setTimeout(() => {
+          saveLocalBtn.innerHTML = previousHtml;
+        }, 2000);
+      }
+      return true;
+    } catch (error) {
+      console.error('Error al guardar en caché:', error);
+      if (showFeedback) {
+        alert('No se pudo guardar el contenido localmente: ' + error.message);
+      }
+      autoSaveTimeoutId = null;
+      return false;
+    }
+  }
+
+  function restoreFromLocalCache() {
+    if (!canUseLocalStorage) return false;
+
+    const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!raw) return false;
+
+    try {
+      const data = JSON.parse(raw);
+      if (!data || typeof data !== 'object') {
+        return false;
+      }
+
+      isRestoringFromCache = true;
+      importSectionsData(data);
+      isRestoringFromCache = false;
+      return true;
+    } catch (error) {
+      console.warn('No se pudo restaurar la información almacenada:', error);
+      isRestoringFromCache = false;
+      return false;
+    }
+  }
+
   function downloadJsonFile(data, filename) {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -6421,6 +6541,9 @@ ${document.querySelector('style').textContent}
     hideTemplateToolbar();
     savedSelection = null;
     window.scrollTo({ top: 0 });
+    if (!isRestoringFromCache) {
+      requestAutoSave();
+    }
   }
 
   exportDataBtn?.addEventListener('click', () => {
@@ -6470,6 +6593,39 @@ ${document.querySelector('style').textContent}
       event.target.value = '';
     }
   });
+
+  saveLocalBtn?.addEventListener('click', () => {
+    const saved = saveToLocalCache(true);
+    if (saved) {
+      requestAutoSave();
+    }
+  });
+
+  if (canUseLocalStorage) {
+    document.addEventListener('input', requestAutoSave, true);
+    document.addEventListener('change', requestAutoSave, true);
+
+    const mutationObserver = new MutationObserver(() => {
+      if (!isRestoringFromCache) {
+        requestAutoSave();
+      }
+    });
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true
+    });
+
+    window.addEventListener('beforeunload', () => {
+      try {
+        saveToLocalCache(false);
+      } catch (error) {
+        console.warn('No se pudo guardar la información antes de salir:', error);
+      }
+    });
+  }
 
   /* === GUARDAR HTML === */
   saveHtmlBtn?.addEventListener('click', () => {
