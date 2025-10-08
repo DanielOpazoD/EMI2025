@@ -11,30 +11,97 @@
       --theme-primary-dark: #0b5ed7;
       --theme-primary-light: #6ea8fe;
       --zoom-level: 1;
+      --base-font-size: 10.5px;
+      --dynamic-font-size: 10.5px;
+      --topbar-height: 52px;
     }
 
-    body.theme-blue {
+    html {
+      font-size: var(--dynamic-font-size, 10.5px);
+    }
+
+    .theme-blue {
       --theme-primary: #0d6efd;
       --theme-primary-dark: #0b5ed7;
       --theme-primary-light: #6ea8fe;
     }
 
-    body.theme-green {
+    .theme-green {
       --theme-primary: #198754;
       --theme-primary-dark: #157347;
       --theme-primary-light: #75b798;
     }
 
-    body.theme-purple {
+    .theme-purple {
       --theme-primary: #6f42c1;
       --theme-primary-dark: #59359a;
       --theme-primary-light: #9d7cd4;
     }
 
-    body.theme-orange {
+    .theme-orange {
       --theme-primary: #fd7e14;
       --theme-primary-dark: #dc6502;
       --theme-primary-light: #fda861;
+    }
+
+    .theme-teal {
+      --theme-primary: #0f766e;
+      --theme-primary-dark: #0c5c56;
+      --theme-primary-light: #2dd4bf;
+    }
+
+    .theme-rose {
+      --theme-primary: #e35d6a;
+      --theme-primary-dark: #c54d59;
+      --theme-primary-light: #f29aa3;
+    }
+
+    .theme-amber {
+      --theme-primary: #f0ad4e;
+      --theme-primary-dark: #d99636;
+      --theme-primary-light: #f6cd85;
+    }
+
+    .theme-slate {
+      --theme-primary: #495057;
+      --theme-primary-dark: #343a40;
+      --theme-primary-light: #adb5bd;
+    }
+
+    .theme-sky {
+      --theme-primary: #0ea5e9;
+      --theme-primary-dark: #0284c7;
+      --theme-primary-light: #7dd3fc;
+    }
+
+    .theme-lilac {
+      --theme-primary: #a855f7;
+      --theme-primary-dark: #7e22ce;
+      --theme-primary-light: #cba9fb;
+    }
+
+    .theme-mint {
+      --theme-primary: #10b981;
+      --theme-primary-dark: #0f9d68;
+      --theme-primary-light: #6ee7b7;
+    }
+
+    .theme-coral {
+      --theme-primary: #f97361;
+      --theme-primary-dark: #e05a47;
+      --theme-primary-light: #fbb7ab;
+    }
+
+    .theme-sand {
+      --theme-primary: #d3a15d;
+      --theme-primary-dark: #b27f3f;
+      --theme-primary-light: #f2d3a5;
+    }
+
+    .theme-ink {
+      --theme-primary: #1f3a93;
+      --theme-primary-dark: #152968;
+      --theme-primary-light: #6c87d6;
     }
 
     /* ===== Base ===== */
@@ -45,7 +112,7 @@
       margin: 0;
       padding: 0;
       line-height: 1.3;
-      font-size: 10.5px;
+      font-size: 1rem;
       transition: all 0.3s ease;
     }
 
@@ -101,15 +168,15 @@
       left: 0;
       right: 0;
       z-index: 4000;
-      height: 36px;
+      height: var(--topbar-height);
       background: #000;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 10px;
+      padding: 0 16px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
-      font-size: calc(11px * var(--zoom-level));
+      font-size: 14px;
     }
 
     .topbar-left {
@@ -123,37 +190,53 @@
     .topbar-center {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
+      gap: 10px;
+      font-size: 14px;
       flex-wrap: wrap;
       justify-content: center;
       max-width: 90%;
     }
 
+    .topbar-right {
+      position: absolute;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .topbar-topic {
       display: inline-block;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 5px 12px;
+      border-radius: 6px;
       background: #222;
       color: #ddd;
       max-width: 60vw;
       white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis
+      text-overflow: ellipsis;
+      font-size: 14px;
     }
 
     .topbar-btn {
       background: #111;
       color: #fff;
       border: 1px solid #333;
-      padding: 4px 8px;
+      padding: 7px 12px;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 14px;
       cursor: pointer;
       transition: opacity .15s;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
+    }
+
+    .topbar-btn.dirty::after {
+      content: '*';
+      margin-left: 2px;
+      color: #ffc107;
+      font-weight: 700;
     }
 
     .topbar-btn:hover {
@@ -166,7 +249,7 @@
     }
 
     .topbar-btn-label {
-      font-size: 9px;
+      font-size: 12px;
       display: none;
     }
 
@@ -179,32 +262,32 @@
     .zoom-controls {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
     }
 
     .zoom-value {
-      min-width: 45px;
+      min-width: 52px;
       text-align: center;
-      font-size: 10px;
+      font-size: 14px;
       background: #222;
-      padding: 2px 4px;
-      border-radius: 3px;
+      padding: 4px 8px;
+      border-radius: 4px;
     }
 
     /* ===== Barra de herramientas mejorada ===== */
     .edit-toolbar {
       position: fixed;
-      top: calc(38px / var(--zoom-level));
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       background: #fff;
       border-bottom: 1px solid #dee2e6;
-      padding: 6px 10px;
+      padding: 10px 18px;
       box-shadow: 0 2px 8px rgba(0,0,0,.12);
       display: none;
       z-index: 3500;
       justify-content: center;
-      font-size: calc(10px * var(--zoom-level));
+      font-size: 13px;
     }
 
     .edit-toolbar.show {
@@ -214,20 +297,20 @@
     .toolbar-content {
       display: flex;
       flex-wrap: wrap;
-      gap: 3px;
+      gap: 6px;
       align-items: center;
       justify-content: center;
       max-width: 1400px;
     }
 
     .edit-toolbar button, .edit-toolbar select {
-      padding: 3px 6px;
+      padding: 5px 9px;
       border: 1px solid #ced4da;
       border-radius: 3px;
       background: #fff;
       cursor: pointer;
-      font-size: 10px;
-      line-height: 1.2;
+      font-size: 13px;
+      line-height: 1.25;
     }
 
     .edit-toolbar button:hover {
@@ -241,8 +324,8 @@
     }
 
     .edit-toolbar select {
-      min-width: 70px;
-      font-size: 10px;
+      min-width: 90px;
+      font-size: 13px;
     }
 
     .toolbar-separator {
@@ -254,16 +337,16 @@
 
     .toolbar-group {
       display: flex;
-      gap: 3px;
+      gap: 6px;
       align-items: center;
-      padding: 2px;
+      padding: 2px 3px;
       background: #f8f9fa;
       border-radius: 3px;
       position: relative;
     }
 
     .toolbar-label {
-      font-size: 9px;
+      font-size: 10px;
       color: #6c757d;
       font-weight: 600;
       margin-right: 3px;
@@ -482,6 +565,32 @@
 
     .template-toolbar button:hover {
       background: #f8f9fa;
+    }
+
+    .template-toolbar .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .template-toolbar .button-group button {
+      flex: 1;
+      min-width: 90px;
+      white-space: nowrap;
+    }
+
+    .template-toolbar select,
+    .template-toolbar input[type="number"] {
+      font-size: 10px;
+      padding: 3px 6px;
+      border: 1px solid #ced4da;
+      border-radius: 3px;
+      background: #fff;
+      min-width: 120px;
+    }
+
+    .template-toolbar input[type="number"] {
+      width: 60px;
     }
 
     .template-toolbar .template-color-palette {
@@ -1191,7 +1300,7 @@
 
     .panel-backdrop {
       position: fixed;
-      top: 36px;
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       bottom: 0;
@@ -1210,18 +1319,17 @@
 
     /* ===== Páginas con zoom CORREGIDO ===== */
     .page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 12mm;
-      margin: calc(56px * var(--zoom-level)) auto calc(20px * var(--zoom-level));
+      width: calc(210mm * var(--page-zoom, 1));
+      min-height: calc(297mm * var(--page-zoom, 1));
+      padding: calc(12mm * var(--page-zoom, 1));
+      margin: calc(56px * var(--page-zoom, 1)) auto calc(20px * var(--page-zoom, 1));
       box-sizing: border-box;
       background: #fff;
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
       page-break-after: always;
       overflow-wrap: break-word;
       position: relative;
-      transform: scale(var(--zoom-level));
-      transform-origin: top center;
+      font-size: var(--page-font-size, var(--dynamic-font-size, var(--base-font-size)));
     }
 
     .page[contenteditable="true"] {
@@ -1333,6 +1441,57 @@
       padding: 6px 10px;
       margin: 6px 0;
       border-radius: 0 4px 4px 0
+    }
+
+    .box.note-style-base {
+      background-color: #ffffff;
+      border-color: #d9dee6;
+      border-left-color: var(--theme-primary);
+      color: #212529;
+    }
+
+    .box.note-style-sky {
+      background-color: #f4f8ff;
+      border-color: #cbd9f6;
+      border-left-color: #4c6ef5;
+      color: #1f3b75;
+    }
+
+    .box.note-style-emerald {
+      background-color: #f3fbf6;
+      border-color: #c6dfcf;
+      border-left-color: #2f8f54;
+      color: #27553a;
+    }
+
+    .box.note-style-sunset {
+      background-color: #fff7ed;
+      border-color: #f1d5b8;
+      border-left-color: #d9822b;
+      color: #6a4415;
+    }
+
+    .box.note-style-rose {
+      background-color: #fff3f7;
+      border-color: #f3cad7;
+      border-left-color: #d63384;
+      color: #6b2146;
+    }
+
+    .box.note-style-slate {
+      background-color: #f8f9fb;
+      border-color: #d4d8de;
+      border-left-color: #6c757d;
+      color: #2f3236;
+    }
+
+    .note-spacer {
+      min-height: 0.85em;
+      margin: 6px 0;
+    }
+
+    .note-spacer:empty::after {
+      content: '\00a0';
     }
 
     .pearl {
@@ -1759,48 +1918,140 @@
     }
 
     .table-theme-default {
-      background: linear-gradient(135deg, #fff, #f1f3f5);
+      background: linear-gradient(180deg, #ffffff 20%, #f1f3f5 100%);
       color: #212529;
     }
 
     .table-theme-ocean {
-      background: linear-gradient(135deg, #0d6efd, #6ea8fe);
-      color: #fff;
+      background: linear-gradient(180deg, #ffffff 20%, #e7f1ff 100%);
+      color: #1d4ed8;
     }
 
     .table-theme-forest {
-      background: linear-gradient(135deg, #198754, #75b798);
-      color: #fff;
+      background: linear-gradient(180deg, #ffffff 20%, #e9f6ef 100%);
+      color: #2f6f51;
     }
 
     .table-theme-sunset {
-      background: linear-gradient(135deg, #fd7e14, #fda861);
-      color: #fff;
+      background: linear-gradient(180deg, #ffffff 20%, #fff1e4 100%);
+      color: #b35a15;
     }
 
     .table-theme-violet {
-      background: linear-gradient(135deg, #6f42c1, #9d7cd4);
-      color: #fff;
+      background: linear-gradient(180deg, #ffffff 20%, #f3ecff 100%);
+      color: #5a3ea3;
     }
 
-    table.table-theme-ocean thead th {
-      background: rgba(13, 110, 253, 0.15);
-      color: #0b5ed7;
+    .table-theme-sage {
+      background: linear-gradient(180deg, #ffffff 20%, #f5f9f3 100%);
+      color: #3c6b2f;
     }
 
-    table.table-theme-forest thead th {
-      background: rgba(25, 135, 84, 0.15);
-      color: #157347;
+    .table-theme-sand {
+      background: linear-gradient(180deg, #ffffff 20%, #fef6e7 100%);
+      color: #b8872a;
     }
 
-    table.table-theme-sunset thead th {
-      background: rgba(253, 126, 20, 0.18);
-      color: #dc6502;
+    .table-theme-rose {
+      background: linear-gradient(180deg, #ffffff 20%, #fff0f3 100%);
+      color: #a94064;
     }
 
-    table.table-theme-violet thead th {
-      background: rgba(111, 66, 193, 0.15);
-      color: #59359a;
+    .table-theme-sky {
+      background: linear-gradient(180deg, #ffffff 20%, #eef5ff 100%);
+      color: #3162c6;
+    }
+
+    table[class*="table-theme-"] {
+      --table-head-bg: #f1f3f5;
+      --table-head-color: #212529;
+      --table-head-border: #dee2e6;
+      --table-row-base: #ffffff;
+      --table-row-alt: #f9fbfc;
+      --table-border-color: #dee2e6;
+    }
+
+    table[class*="table-theme-"] thead th {
+      background: var(--table-head-bg, #f1f3f5);
+      color: var(--table-head-color, #212529);
+      border-color: var(--table-head-border, #dee2e6);
+    }
+
+    table[class*="table-theme-"] tbody tr:nth-child(odd) > * {
+      background: var(--table-row-base, #ffffff);
+    }
+
+    table[class*="table-theme-"] tbody tr:nth-child(even) > * {
+      background: var(--table-row-alt, #f9fbfc);
+    }
+
+    table[class*="table-theme-"] th,
+    table[class*="table-theme-"] td {
+      border-color: var(--table-border-color, #dee2e6);
+    }
+
+    table.table-theme-ocean {
+      --table-head-bg: #e7f1ff;
+      --table-head-color: #1d4ed8;
+      --table-head-border: #c5d9ff;
+      --table-row-alt: #f6f9ff;
+      --table-border-color: #cfdcf5;
+    }
+
+    table.table-theme-forest {
+      --table-head-bg: #e9f6ef;
+      --table-head-color: #2f6f51;
+      --table-head-border: #c6e3d3;
+      --table-row-alt: #f6fbf7;
+      --table-border-color: #c9e0d3;
+    }
+
+    table.table-theme-sunset {
+      --table-head-bg: #fff1e4;
+      --table-head-color: #b35a15;
+      --table-head-border: #f4d2b4;
+      --table-row-alt: #fff8f0;
+      --table-border-color: #efd6bc;
+    }
+
+    table.table-theme-violet {
+      --table-head-bg: #f3ecff;
+      --table-head-color: #5a3ea3;
+      --table-head-border: #d8ccf3;
+      --table-row-alt: #f9f5ff;
+      --table-border-color: #dcd3f2;
+    }
+
+    table.table-theme-sage {
+      --table-head-bg: #f0f7ed;
+      --table-head-color: #3c6b2f;
+      --table-head-border: #cfddc8;
+      --table-row-alt: #f7faf5;
+      --table-border-color: #d7e3cf;
+    }
+
+    table.table-theme-sand {
+      --table-head-bg: #fef3dd;
+      --table-head-color: #b8872a;
+      --table-head-border: #f1ddb3;
+      --table-row-alt: #fef8eb;
+      --table-border-color: #f0dec1;
+    }
+
+    table.table-theme-rose {
+      --table-head-bg: #ffe8ee;
+      --table-head-color: #a94064;
+      --table-head-border: #f4c8d5;
+      --table-row-alt: #fff3f7;
+      --table-border-color: #f2ced9;
+    }
+
+    table.table-theme-sky {
+      --table-head-bg: #edf4ff;
+      --table-head-color: #3162c6;
+      --table-head-border: #cddcf7;
+      --table-row-alt: #f7faff;
+      --table-border-color: #d4e0f7;
     }
 
     .table-resize-handle {
@@ -1855,7 +2106,7 @@
     /* ===== Visor Mágico ===== */
     .magic-view {
       position: fixed;
-      top: 36px;
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       bottom: 0;
@@ -1890,15 +2141,16 @@
     }
 
     .magic-page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 12mm;
-      margin: calc(20px * var(--zoom-level)) auto;
+      width: calc(210mm * var(--page-zoom, 1));
+      min-height: calc(297mm * var(--page-zoom, 1));
+      padding: calc(12mm * var(--page-zoom, 1));
+      margin: calc(20px * var(--page-zoom, 1)) auto;
       background: #fff;
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
       box-sizing: border-box;
       overflow-wrap: break-word;
-      transform: scale(var(--zoom-level));
+      font-size: var(--page-font-size, var(--dynamic-font-size, var(--base-font-size)));
+      transform: scale(var(--page-zoom, 1));
       transform-origin: top center;
     }
 
@@ -2009,8 +2261,8 @@
     }
   </style>
 </head>
-<body class="theme-blue">
-  <!-- build:topics {"especialidad":"Endocrinología","secciones":[{"id":"seccion-1","nombre":"Endocrinología","temas":[{"id":"sindrome-metabolico","titulo":"Síndrome Metabólico"},{"id":"diabetes-mellitus-2","titulo":"Diabetes Mellitus tipo II"}]}]} -->
+<body>
+  <!-- build:topics {"especialidad":"Endocrinología","secciones":[]} -->
   
   <div class="topbar">
     <div class="topbar-left">
@@ -2028,12 +2280,15 @@
       <button class="topbar-btn" id="statsBtn" title="Estadísticas"><span>📊</span> <span class="topbar-btn-label">Stats</span></button>
       <button class="topbar-btn" id="loadHtmlBtn" title="Cargar archivo HTML"><span>📂</span> <span class="topbar-btn-label">Abrir</span></button>
       <button class="topbar-btn" id="editBtn" title="Modo edición"><span>✏️</span> <span class="topbar-btn-label">Editar</span></button>
-      <button class="topbar-btn" id="saveHtmlBtn" style="display:none;" title="Guardar como HTML"><span>💾</span> <span class="topbar-btn-label">Guardar</span></button>
       <button class="topbar-btn" id="exportDataBtn" title="Exportar secciones y temas" aria-label="Exportar secciones y temas"><span>📤</span></button>
       <button class="topbar-btn" id="importDataBtn" title="Importar secciones y temas" aria-label="Importar secciones y temas"><span>📥</span></button>
       <button class="topbar-btn" id="exportMarkdownBtn" title="Exportar a Markdown"><span>⬇️</span> <span class="topbar-btn-label">MD</span></button>
       <button class="topbar-btn" id="copyHtmlBtn" title="Copiar HTML completo"><span>📋</span> <span class="topbar-btn-label">Copiar</span></button>
       <button class="topbar-btn" id="printCurrentBtn" title="Imprimir documento"><span>🖨️</span> <span class="topbar-btn-label">Imprimir</span></button>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" id="saveCacheBtn" title="Guardar en este dispositivo">💾 Guardar</button>
+      <button class="topbar-btn" id="saveHtmlBtn" style="display:none;" title="Guardar como HTML"><span>💾</span> <span class="topbar-btn-label">Descargar</span></button>
     </div>
   </div>
 
@@ -2116,10 +2371,21 @@
       <div class="toolbar-group">
         <span class="toolbar-label">TEMA</span>
         <select id="themeSelect" title="Esquema">
+          <option value="">Predeterminado</option>
           <option value="theme-blue">Azul</option>
           <option value="theme-green">Verde</option>
           <option value="theme-purple">Morado</option>
           <option value="theme-orange">Naranja</option>
+          <option value="theme-teal">Turquesa</option>
+          <option value="theme-rose">Rosa</option>
+          <option value="theme-amber">Ámbar</option>
+          <option value="theme-slate">Pizarra</option>
+          <option value="theme-sky">Cielo</option>
+          <option value="theme-lilac">Lila</option>
+          <option value="theme-mint">Menta</option>
+          <option value="theme-coral">Coral</option>
+          <option value="theme-sand">Arena</option>
+          <option value="theme-ink">Tinta</option>
         </select>
         <button id="duplicateTopicBtn" title="Duplicar">📑</button>
         <button id="exportTopicBtn" title="Exportar">💾</button>
@@ -2212,17 +2478,29 @@
             <button type="button" class="table-theme-option active" data-table-theme="">
               <span class="table-theme-sample table-theme-default">Base</span>
             </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-sky">
+              <span class="table-theme-sample table-theme-sky">Cielo</span>
+            </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-ocean">
-              <span class="table-theme-sample table-theme-ocean">Océano</span>
+              <span class="table-theme-sample table-theme-ocean">Azul</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-sage">
+              <span class="table-theme-sample table-theme-sage">Salvia</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-forest">
-              <span class="table-theme-sample table-theme-forest">Bosque</span>
+              <span class="table-theme-sample table-theme-forest">Verde</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-sand">
+              <span class="table-theme-sample table-theme-sand">Arena</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-sunset">
-              <span class="table-theme-sample table-theme-sunset">Atardecer</span>
+              <span class="table-theme-sample table-theme-sunset">Ámbar</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-rose">
+              <span class="table-theme-sample table-theme-rose">Rosa</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-violet">
-              <span class="table-theme-sample table-theme-violet">Violeta</span>
+              <span class="table-theme-sample table-theme-violet">Lavanda</span>
             </button>
           </div>
         </div>
@@ -2313,9 +2591,21 @@
       <input type="color" id="templateTextColor" value="#212529">
       <button id="templateResetTextColorBtn" title="Restablecer color">Restablecer</button>
     </div>
+    <div class="template-toolbar-row compact" id="templateNoteStyleRow" style="display:none;">
+      <label for="templateNoteStyle">Estilo:</label>
+      <select id="templateNoteStyle"></select>
+    </div>
+    <div class="template-toolbar-row compact" id="templateSpacerRow" style="display:none;">
+      <label>Espacios:</label>
+      <div class="button-group">
+        <button id="templateAddSpaceAbove" type="button">↑ Arriba</button>
+        <button id="templateAddSpaceBelow" type="button">↓ Abajo</button>
+      </div>
+    </div>
     <div class="template-toolbar-row">
       <label for="templateBorderWidth">Borde:</label>
       <input type="range" id="templateBorderWidth" min="0" max="12" step="1">
+      <input type="number" id="templateBorderWidthNumber" min="0" max="12" step="1" value="1">
       <span class="size-display" id="templateBorderWidthDisplay">1px</span>
     </div>
     <div class="template-toolbar-row compact" id="templateBorderColorRow">
@@ -2386,23 +2676,9 @@
   </aside>
 
   <!-- Contenido mágico -->
-  <div class="magic-content-container" style="display:none">
-    <div id="magic-sindrome-metabolico" class="magic-topic">
-      <section class="magic-section"><h4>Contenido de ejemplo</h4>
-        <p>Este es contenido mágico de ejemplo.</p>
-      </section>
-    </div>
-  </div>
+  <div class="magic-content-container" style="display:none"></div>
 
   <!-- Páginas -->
-  <section class="page" data-topic-id="sindrome-metabolico" data-section-id="seccion-1">
-    <h1>
-      <span>Síndrome Metabólico</span>
-      <span class="magic-icon" title="Ver contenido mágico">✨</span>
-    </h1>
-    <h2>Definición</h2>
-    <p>El síndrome metabólico (SM) es un conjunto de alteraciones metabólicas interrelacionadas.</p>
-  </section>
 
   <script>
     (function() {
@@ -2426,15 +2702,183 @@
         scaleX: 1,
         scaleY: 1
       };
-      
-      let sections = [
-        {
-          id: 'seccion-1',
-          nombre: 'Endocrinología',
-          collapsed: false,
-          temas: []
-        }
+
+      const BASE_FONT_SIZE = 10.5;
+      const MIN_ZOOM_LEVEL = 0.5;
+      const MAX_ZOOM_LEVEL = 2;
+      const ZOOM_STEP = 0.1;
+      const DEFAULT_PAGE_ZOOM = 1;
+      const THEME_CLASSES = [
+        'theme-blue',
+        'theme-green',
+        'theme-purple',
+        'theme-orange',
+        'theme-teal',
+        'theme-rose',
+        'theme-amber',
+        'theme-slate',
+        'theme-sky',
+        'theme-lilac',
+        'theme-mint',
+        'theme-coral',
+        'theme-sand',
+        'theme-ink'
       ];
+      const LOCAL_CACHE_KEY = 'emi2025-local-cache';
+      const LOCAL_CACHE_VERSION = 1;
+      const LOCAL_ZOOM_KEY = 'emi2025-zoom-level';
+      const STORAGE_AVAILABLE = (() => {
+        try {
+          const testKey = '__emi2025-cache-test__';
+          window.localStorage.setItem(testKey, '1');
+          window.localStorage.removeItem(testKey);
+          return true;
+        } catch (error) {
+          console.warn('Almacenamiento local no disponible:', error);
+          return false;
+        }
+      })();
+
+      let cacheSaveTimeout = null;
+      let manualSaveFeedbackTimeout = null;
+      let hasPendingChanges = false;
+      let saveCacheBtnDefaultText = '💾 Guardar';
+
+      let sections = [];
+      let saveCacheBtn = null;
+      let activeZoomTarget = null;
+      const magicZoomState = new Map();
+
+      THEME_CLASSES.forEach(cls => document.body.classList.remove(cls));
+
+      function detachPageListeners(page) {
+        if (!page) return;
+        if (page.__cacheObserver) {
+          page.__cacheObserver.disconnect();
+          delete page.__cacheObserver;
+        }
+        if (page.__cacheInputHandler) {
+          page.removeEventListener('input', page.__cacheInputHandler);
+          delete page.__cacheInputHandler;
+        }
+        if (page.__cacheBlurHandler) {
+          page.removeEventListener('blur', page.__cacheBlurHandler);
+          delete page.__cacheBlurHandler;
+        }
+        delete page.dataset.cacheBound;
+      }
+
+      function attachPageListeners(page) {
+        if (!page || page.dataset.cacheBound === 'true') return;
+        const inputHandler = () => scheduleCacheSave();
+        const blurHandler = () => scheduleCacheSave({ delay: 0 });
+        page.addEventListener('input', inputHandler);
+        page.addEventListener('blur', blurHandler);
+        const observer = new MutationObserver(() => {
+          if (!page.isConnected) {
+            observer.disconnect();
+            return;
+          }
+          scheduleCacheSave();
+        });
+        observer.observe(page, { childList: true, characterData: true, subtree: true });
+        page.__cacheObserver = observer;
+        page.__cacheInputHandler = inputHandler;
+        page.__cacheBlurHandler = blurHandler;
+        page.dataset.cacheBound = 'true';
+      }
+
+      function markDirty() {
+        if (!STORAGE_AVAILABLE) return;
+        hasPendingChanges = true;
+        saveCacheBtn?.classList.add('dirty');
+      }
+
+      function clearDirty() {
+        hasPendingChanges = false;
+        saveCacheBtn?.classList.remove('dirty');
+      }
+
+      function scheduleCacheSave(options = {}) {
+        if (!STORAGE_AVAILABLE) return;
+        const { delay = 800, immediate = false, skipDirtyMark = false } = options;
+        if (!skipDirtyMark) {
+          markDirty();
+        }
+        if (cacheSaveTimeout) {
+          clearTimeout(cacheSaveTimeout);
+          cacheSaveTimeout = null;
+        }
+        if (immediate) {
+          persistDocumentToCache();
+          return;
+        }
+        cacheSaveTimeout = window.setTimeout(() => {
+          cacheSaveTimeout = null;
+          persistDocumentToCache();
+        }, Math.max(0, delay));
+      }
+
+      function persistDocumentToCache(options = {}) {
+        if (!STORAGE_AVAILABLE) return false;
+        if (cacheSaveTimeout) {
+          clearTimeout(cacheSaveTimeout);
+          cacheSaveTimeout = null;
+        }
+        try {
+          const data = collectDocumentData();
+          data.zoom = currentZoom;
+          const payload = {
+            version: LOCAL_CACHE_VERSION,
+            savedAt: new Date().toISOString(),
+            data
+          };
+          window.localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(payload));
+          window.localStorage.setItem(LOCAL_ZOOM_KEY, String(currentZoom));
+          clearDirty();
+          if (options.notify && saveCacheBtn) {
+            saveCacheBtn.textContent = '✅ Guardado';
+            saveCacheBtn.classList.remove('dirty');
+            if (manualSaveFeedbackTimeout) {
+              clearTimeout(manualSaveFeedbackTimeout);
+            }
+            manualSaveFeedbackTimeout = window.setTimeout(() => {
+              saveCacheBtn.textContent = saveCacheBtnDefaultText;
+              if (hasPendingChanges) {
+                saveCacheBtn.classList.add('dirty');
+              }
+            }, 2000);
+          }
+          return true;
+        } catch (error) {
+          console.error('Error al guardar localmente:', error);
+          if (options.notify) {
+            alert('No se pudo guardar localmente: ' + error.message);
+          }
+          return false;
+        }
+      }
+
+      function loadDocumentFromCacheOnStartup() {
+        if (!STORAGE_AVAILABLE) return;
+        try {
+          const raw = window.localStorage.getItem(LOCAL_CACHE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed?.data && Array.isArray(parsed.data.sections)) {
+              importSectionsData(parsed.data, { skipCacheSave: true });
+              clearDirty();
+              return;
+            }
+          }
+          const storedZoom = parseFloat(window.localStorage.getItem(LOCAL_ZOOM_KEY));
+          if (!Number.isNaN(storedZoom)) {
+            applyZoom(storedZoom, { skipCache: true, skipPersist: true });
+          }
+        } catch (error) {
+          console.error('No se pudo restaurar la información local:', error);
+        }
+      }
       
       const panel = document.getElementById('topic-panel');
       const tocPanel = document.getElementById('toc-panel');
@@ -2444,10 +2888,23 @@
       const tocClose = document.getElementById('tocClose');
       const panelBackdrop = document.getElementById('panel-backdrop');
       const magic = document.getElementById('magic-view');
+      const magicContainerRoot = document.querySelector('.magic-content-container');
       const specialtySpan = document.getElementById('specialtyTitle');
       const modalOverlay = document.getElementById('modalOverlay');
       const modalContent = document.getElementById('modalContent');
-      
+
+      saveCacheBtn = document.getElementById('saveCacheBtn');
+      if (saveCacheBtn) {
+        const label = saveCacheBtn.textContent?.trim();
+        if (label) {
+          saveCacheBtnDefaultText = saveCacheBtn.textContent;
+        }
+        if (!STORAGE_AVAILABLE) {
+          saveCacheBtn.setAttribute('disabled', 'true');
+          saveCacheBtn.title = 'El almacenamiento local no está disponible en este navegador.';
+        }
+      }
+
       const editBtn = document.getElementById('editBtn');
       const saveHtmlBtn = document.getElementById('saveHtmlBtn');
       const loadHtmlBtn = document.getElementById('loadHtmlBtn');
@@ -2497,7 +2954,13 @@
       const templateMarginBottomSlider = document.getElementById('templateMarginBottom');
       const templateMarginBottomDisplay = document.getElementById('templateMarginBottomDisplay');
       const templateBorderWidthSlider = document.getElementById('templateBorderWidth');
+      const templateBorderWidthNumber = document.getElementById('templateBorderWidthNumber');
       const templateBorderWidthDisplay = document.getElementById('templateBorderWidthDisplay');
+      const templateNoteStyleRow = document.getElementById('templateNoteStyleRow');
+      const templateNoteStyleSelect = document.getElementById('templateNoteStyle');
+      const templateSpacerRow = document.getElementById('templateSpacerRow');
+      const templateAddSpaceAboveBtn = document.getElementById('templateAddSpaceAbove');
+      const templateAddSpaceBelowBtn = document.getElementById('templateAddSpaceBelow');
       const templateDeleteBtn = document.getElementById('templateDeleteBtn');
 
       const templateBackgroundPaletteColors = ['#ffffff', '#f8f9fa', '#fef9e7', '#fff3cd', '#fde2e4', '#f8d7da', '#e7f3ff', '#d1e7dd', '#e9ecef'];
@@ -2509,6 +2972,75 @@
       initPalette(templateTextPalette, templateTextPaletteColors, color => applyTemplateTextColor(color));
       initPalette(templateBorderPalette, templateBorderPaletteColors, color => applyTemplateBorderColor(color));
       initPalette(templateAccentPalette, templateAccentPaletteColors, color => applyTemplateAccentColor(color));
+
+      const noteStylePresets = {
+        base: {
+          label: 'Base neutra',
+          className: 'note-style-base',
+          background: '#ffffff',
+          borderColor: '#d9dee6',
+          accentColor: 'var(--theme-primary)',
+          textColor: '#212529'
+        },
+        sky: {
+          label: 'Azul suave',
+          className: 'note-style-sky',
+          background: '#f4f8ff',
+          borderColor: '#cbd9f6',
+          accentColor: '#4c6ef5',
+          textColor: '#1f3b75'
+        },
+        emerald: {
+          label: 'Verde suave',
+          className: 'note-style-emerald',
+          background: '#f3fbf6',
+          borderColor: '#c6dfcf',
+          accentColor: '#2f8f54',
+          textColor: '#27553a'
+        },
+        sunset: {
+          label: 'Ámbar suave',
+          className: 'note-style-sunset',
+          background: '#fff7ed',
+          borderColor: '#f1d5b8',
+          accentColor: '#d9822b',
+          textColor: '#6a4415'
+        },
+        rose: {
+          label: 'Rosa suave',
+          className: 'note-style-rose',
+          background: '#fff3f7',
+          borderColor: '#f3cad7',
+          accentColor: '#d63384',
+          textColor: '#6b2146'
+        },
+        slate: {
+          label: 'Gris suave',
+          className: 'note-style-slate',
+          background: '#f8f9fb',
+          borderColor: '#d4d8de',
+          accentColor: '#6c757d',
+          textColor: '#2f3236'
+        }
+      };
+
+      const notePresetKeys = Object.keys(noteStylePresets);
+
+      if (templateNoteStyleSelect) {
+        templateNoteStyleSelect.innerHTML = '';
+        notePresetKeys.forEach(key => {
+          const option = document.createElement('option');
+          option.value = key;
+          option.textContent = noteStylePresets[key].label;
+          templateNoteStyleSelect.appendChild(option);
+        });
+        const customOption = document.createElement('option');
+        customOption.value = 'custom';
+        customOption.textContent = 'Personalizado';
+        templateNoteStyleSelect.appendChild(customOption);
+        templateNoteStyleSelect.value = 'custom';
+      }
+
       const alignButtons = {
         left: document.getElementById('alignLeftBtn'),
         center: document.getElementById('alignCenterBtn'),
@@ -2519,6 +3051,7 @@
       const zoomInBtn = document.getElementById('zoomInBtn');
       const zoomOutBtn = document.getElementById('zoomOutBtn');
       const zoomValue = document.getElementById('zoomValue');
+      const themeSelect = document.getElementById('themeSelect');
       const highlightPalette = document.getElementById('highlightPalette');
       const textColorPalette = document.getElementById('textColorPalette');
       const insertTemplateBtn = document.getElementById('insertTemplateBtn');
@@ -2586,6 +3119,41 @@
         return (titleSpan?.textContent || h1?.textContent || '').trim();
       }
 
+      function getPageTheme(page) {
+        if (!page) return '';
+        if (page.dataset.themeClass) {
+          return page.dataset.themeClass;
+        }
+        const themeClass = Array.from(page.classList).find(cls => cls.startsWith('theme-'));
+        if (themeClass) {
+          page.dataset.themeClass = themeClass;
+          return themeClass;
+        }
+        return '';
+      }
+
+      function applyThemeToPage(page, themeClass) {
+        if (!page) return;
+        THEME_CLASSES.forEach(cls => page.classList.remove(cls));
+        if (themeClass) {
+          page.classList.add(themeClass);
+          page.dataset.themeClass = themeClass;
+        } else {
+          delete page.dataset.themeClass;
+        }
+      }
+
+      function initializePageState(page) {
+        if (!page) return;
+        const storedZoom = parseFloat(page.dataset.zoom);
+        const initialZoom = !Number.isNaN(storedZoom) && storedZoom > 0
+          ? clampZoom(storedZoom)
+          : DEFAULT_PAGE_ZOOM;
+        applyZoomToElement(page, initialZoom);
+        const currentTheme = getPageTheme(page);
+        applyThemeToPage(page, currentTheme);
+      }
+
       function showTopicMenu(event, tema) {
         if (!tema || !tema.page) return;
         hideTopicMenu();
@@ -2642,6 +3210,7 @@
         buildSectionsPanel();
         buildTableOfContents();
         setupMagicIcons();
+        scheduleCacheSave();
         return true;
       }
 
@@ -2675,6 +3244,7 @@
         page.dataset.sectionName = targetSection.nombre;
         initializeSections();
         buildSectionsPanel();
+        scheduleCacheSave();
         return true;
       }
 
@@ -2684,11 +3254,13 @@
         if (!confirm(`¿Eliminar "${title}"?`)) {
           return false;
         }
+        detachPageListeners(page);
         page.remove();
         pages = pages.filter(p => p !== page);
         initializeSections();
         buildSectionsPanel();
         buildTableOfContents();
+        scheduleCacheSave();
         return true;
       }
 
@@ -2703,14 +3275,20 @@
         const newId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
         clone.dataset.topicId = newId;
         clone.contentEditable = isEditMode ? 'true' : 'false';
+        applyZoomToElement(clone, getElementZoom(page));
+        applyThemeToPage(clone, getPageTheme(page));
         page.parentNode.insertBefore(clone, page.nextSibling);
         pages = [...document.querySelectorAll('.page')];
+        initializePageState(clone);
+        attachPageListeners(clone);
         setupMagicIcons();
         io.observe(clone);
         initializeSections();
         buildSectionsPanel();
         buildTableOfContents();
         clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setActiveZoomTarget(clone, 'page');
+        scheduleCacheSave();
         return clone;
       }
 
@@ -2764,14 +3342,117 @@
       });
 
       /* === ZOOM === */
-      function updateZoom(delta) {
-        currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
-        document.documentElement.style.setProperty('--zoom-level', currentZoom);
-        zoomValue.textContent = Math.round(currentZoom * 100) + '%';
+      function clampZoom(value) {
+        return Math.max(MIN_ZOOM_LEVEL, Math.min(MAX_ZOOM_LEVEL, value));
       }
 
-      zoomInBtn?.addEventListener('click', () => updateZoom(0.1));
-      zoomOutBtn?.addEventListener('click', () => updateZoom(-0.1));
+      function getElementZoom(element) {
+        if (!element) return DEFAULT_PAGE_ZOOM;
+        const stored = parseFloat(element.dataset.zoom);
+        if (!Number.isNaN(stored) && stored > 0) {
+          return clampZoom(stored);
+        }
+        return DEFAULT_PAGE_ZOOM;
+      }
+
+      function applyZoomToElement(element, zoom) {
+        if (!element) return;
+        const clamped = clampZoom(zoom);
+        element.style.setProperty('--page-zoom', clamped);
+        element.style.setProperty('--page-font-size', `${BASE_FONT_SIZE * clamped}px`);
+        element.dataset.zoom = String(clamped);
+      }
+
+      function setGlobalZoomState(zoom, options = {}) {
+        const { skipPersist = false } = options;
+        const clamped = clampZoom(zoom);
+        currentZoom = clamped;
+        document.documentElement.style.setProperty('--zoom-level', clamped);
+        document.documentElement.style.setProperty('--dynamic-font-size', `${BASE_FONT_SIZE * clamped}px`);
+        if (zoomValue) {
+          zoomValue.textContent = Math.round(clamped * 100) + '%';
+        }
+        if (!skipPersist && STORAGE_AVAILABLE) {
+          try {
+            window.localStorage.setItem(LOCAL_ZOOM_KEY, String(clamped));
+          } catch (error) {
+            console.warn('No se pudo guardar el nivel de zoom:', error);
+          }
+        }
+      }
+
+      function syncThemeSelector(page) {
+        if (!themeSelect) return;
+        const theme = getPageTheme(page);
+        const option = Array.from(themeSelect.options || []).find(opt => opt.value === theme);
+        themeSelect.value = option ? option.value : '';
+      }
+
+      function setActiveZoomTarget(element, type = 'page', options = {}) {
+        if (!element) return;
+        const { skipTheme = false } = options;
+        activeZoomTarget = { element, type };
+        const zoom = getElementZoom(element);
+        applyZoomToElement(element, zoom);
+        setGlobalZoomState(zoom, { skipPersist: true });
+        if (type === 'page' && !skipTheme) {
+          syncThemeSelector(element);
+        }
+      }
+
+      function getActiveZoomTarget() {
+        if (activeZoomTarget && activeZoomTarget.element && activeZoomTarget.element.isConnected) {
+          return activeZoomTarget;
+        }
+        const fallback = getCurrentPage();
+        if (fallback) {
+          setActiveZoomTarget(fallback, 'page');
+          return activeZoomTarget;
+        }
+        return null;
+      }
+
+      function applyZoom(value, options = {}) {
+        const { skipCache = false, skipPersist = false } = options;
+        const clamped = clampZoom(value);
+        const target = getActiveZoomTarget();
+        if (!target) {
+          setGlobalZoomState(clamped, { skipPersist });
+          if (!skipCache) {
+            scheduleCacheSave({ skipDirtyMark: false });
+          }
+          return;
+        }
+        const { element, type } = target;
+        if (type === 'magic') {
+          applyZoomToElement(element, clamped);
+          const sourceId = element.dataset.sourceId || '';
+          const zoomKey = sourceId || '__magic-default__';
+          magicZoomState.set(zoomKey, clamped);
+          const source = sourceId ? document.getElementById(sourceId) : null;
+          if (source) {
+            source.dataset.magicZoom = String(clamped);
+          }
+        } else {
+          applyZoomToElement(element, clamped);
+        }
+        setGlobalZoomState(clamped, { skipPersist });
+        if (!skipCache) {
+          scheduleCacheSave({ skipDirtyMark: false });
+        }
+      }
+
+      function updateZoom(delta) {
+        applyZoom(currentZoom + delta);
+      }
+
+      zoomInBtn?.addEventListener('click', () => updateZoom(ZOOM_STEP));
+      zoomOutBtn?.addEventListener('click', () => updateZoom(-ZOOM_STEP));
+
+      saveCacheBtn?.addEventListener('click', () => {
+        if (!STORAGE_AVAILABLE) return;
+        persistDocumentToCache({ notify: true });
+      });
 
       /* === UTILIDADES === */
       function saveCurrentSelection() {
@@ -2917,22 +3598,113 @@
       function getTemplateTarget(block) {
         if (!block) return null;
         if (block.classList && block.classList.contains('box')) return block;
-        return block.querySelector('.box') || block;
-      }
+      return block.querySelector('.box') || block;
+    }
 
-      function setPaletteActive(container, value) {
-        if (!container) return;
-        const normalized = normalizeColorToHex(value || '', '').toLowerCase();
-        container.querySelectorAll('.template-color-swatch').forEach(swatch => {
-          const swatchValue = normalizeColorToHex(swatch.dataset.value || '', '').toLowerCase();
-          swatch.classList.toggle('active', normalized && swatchValue === normalized);
-        });
-      }
+    function setPaletteActive(container, value) {
+      if (!container) return;
+      const normalized = normalizeColorToHex(value || '', '').toLowerCase();
+      container.querySelectorAll('.template-color-swatch').forEach(swatch => {
+        const swatchValue = normalizeColorToHex(swatch.dataset.value || '', '').toLowerCase();
+        swatch.classList.toggle('active', normalized && swatchValue === normalized);
+      });
+    }
 
-      function updateBorderWidthDataset(block, baseWidth, accentExtra) {
-        if (!block) return;
-        if (Number.isFinite(baseWidth)) {
-          block.dataset.borderWidth = String(baseWidth);
+    function clearNotePresetClass(target) {
+      if (!target || !target.classList) return;
+      notePresetKeys?.forEach(key => {
+        const className = noteStylePresets[key]?.className;
+        if (className) {
+          target.classList.remove(className);
+        }
+      });
+    }
+
+    function setNotePreset(block, presetKey) {
+      if (!block) return;
+      if (presetKey && noteStylePresets[presetKey]) {
+        block.dataset.notePreset = presetKey;
+      } else {
+        block.dataset.notePreset = 'custom';
+      }
+      if (templateNoteStyleSelect && block === selectedTemplateBlock) {
+        const value = presetKey && noteStylePresets[presetKey] ? presetKey : 'custom';
+        templateNoteStyleSelect.value = value;
+      }
+    }
+
+    function applyNotePreset(presetKey, options = {}) {
+      const block = options.block || selectedTemplateBlock;
+      if (!block) return;
+      const target = getTemplateTarget(block);
+      if (!target || !target.classList.contains('box')) return;
+      const preset = noteStylePresets[presetKey];
+      clearNotePresetClass(target);
+      if (preset) {
+        target.classList.add(preset.className);
+        target.style.backgroundColor = preset.background;
+        target.style.borderColor = preset.borderColor;
+        target.style.borderLeftColor = preset.accentColor;
+        target.style.color = preset.textColor;
+        if (target.dataset) {
+          target.dataset.notePreset = presetKey;
+        }
+        block.dataset.bgColor = preset.background;
+        block.dataset.textColor = preset.textColor;
+        block.dataset.borderColor = preset.borderColor;
+        block.dataset.accentColor = preset.accentColor;
+        setNotePreset(block, presetKey);
+        updateTemplateToolbarState(block);
+      } else {
+        if (target.dataset) {
+          delete target.dataset.notePreset;
+        }
+        setNotePreset(block, 'custom');
+        updateTemplateToolbarState(block);
+      }
+    }
+
+    function markNoteAsCustom(block) {
+      if (!block) return;
+      const target = getTemplateTarget(block);
+      if (target?.dataset) {
+        delete target.dataset.notePreset;
+      }
+      block.dataset.notePreset = 'custom';
+      if (templateNoteStyleSelect && block === selectedTemplateBlock) {
+        templateNoteStyleSelect.value = 'custom';
+      }
+    }
+
+    function insertNoteSpacer(position) {
+      if (!selectedTemplateBlock || !isEditMode) return;
+      const reference = selectedTemplateBlock;
+      const parent = reference.parentNode;
+      if (!parent) return;
+      const spacer = document.createElement('p');
+      spacer.className = 'note-spacer';
+      spacer.innerHTML = '<br>';
+      if (position === 'before') {
+        parent.insertBefore(spacer, reference);
+      } else {
+        parent.insertBefore(spacer, reference.nextSibling);
+      }
+      const range = document.createRange();
+      range.selectNodeContents(spacer);
+      range.collapse(false);
+      const selection = window.getSelection();
+      if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+      scheduleCacheSave({ delay: 0 });
+      repositionTemplateToolbar();
+    }
+
+    function updateBorderWidthDataset(block, baseWidth, accentExtra) {
+      if (!block) return;
+      if (Number.isFinite(baseWidth)) {
+        block.dataset.borderWidth = String(baseWidth);
         }
         if (Number.isFinite(accentExtra)) {
           block.dataset.borderAccentExtra = String(accentExtra);
@@ -2990,82 +3762,134 @@
         if (!selectedTemplateBlock) return;
         const target = getTemplateTarget(selectedTemplateBlock);
         if (!target) return;
-        if (!color || color === 'transparent') {
-          target.style.backgroundColor = 'transparent';
-          delete selectedTemplateBlock.dataset.bgColor;
-          if (templateBgColorInput) {
-            templateBgColorInput.value = '#ffffff';
-          }
-          setPaletteActive(templateBgPalette, '');
-        } else {
-          target.style.backgroundColor = color;
-          selectedTemplateBlock.dataset.bgColor = color;
-          if (templateBgColorInput) {
-            templateBgColorInput.value = normalizeColorToHex(color, '#ffffff');
-          }
-          setPaletteActive(templateBgPalette, color);
+      if (!color || color === 'transparent') {
+        target.style.backgroundColor = 'transparent';
+        delete selectedTemplateBlock.dataset.bgColor;
+        if (templateBgColorInput) {
+          templateBgColorInput.value = '#ffffff';
         }
-        repositionTemplateToolbar();
+        setPaletteActive(templateBgPalette, '');
+        if (target.classList.contains('box')) {
+          clearNotePresetClass(target);
+          markNoteAsCustom(selectedTemplateBlock);
+        }
+      } else {
+        target.style.backgroundColor = color;
+        selectedTemplateBlock.dataset.bgColor = color;
+        if (templateBgColorInput) {
+          templateBgColorInput.value = normalizeColorToHex(color, '#ffffff');
+        }
+        setPaletteActive(templateBgPalette, color);
+        if (target.classList.contains('box')) {
+          clearNotePresetClass(target);
+          markNoteAsCustom(selectedTemplateBlock);
+        }
       }
+      repositionTemplateToolbar();
+      scheduleCacheSave();
+    }
 
       function applyTemplateTextColor(color) {
         if (!selectedTemplateBlock) return;
         const target = getTemplateTarget(selectedTemplateBlock);
         if (!target) return;
-        if (!color) {
-          target.style.color = '';
-          delete selectedTemplateBlock.dataset.textColor;
-          if (templateTextColorInput) {
-            templateTextColorInput.value = '#212529';
-          }
-          setPaletteActive(templateTextPalette, '');
-        } else {
-          target.style.color = color;
-          selectedTemplateBlock.dataset.textColor = color;
-          if (templateTextColorInput) {
-            templateTextColorInput.value = normalizeColorToHex(color, '#212529');
-          }
-          setPaletteActive(templateTextPalette, color);
+      if (!color) {
+        target.style.color = '';
+        delete selectedTemplateBlock.dataset.textColor;
+        if (templateTextColorInput) {
+          templateTextColorInput.value = '#212529';
         }
+        setPaletteActive(templateTextPalette, '');
+      } else {
+        target.style.color = color;
+        selectedTemplateBlock.dataset.textColor = color;
+        if (templateTextColorInput) {
+          templateTextColorInput.value = normalizeColorToHex(color, '#212529');
+        }
+        setPaletteActive(templateTextPalette, color);
       }
+      if (target.classList.contains('box')) {
+        markNoteAsCustom(selectedTemplateBlock);
+      }
+      scheduleCacheSave();
+    }
 
       function applyTemplateBorderColor(color) {
         if (!selectedTemplateBlock) return;
         const target = getTemplateTarget(selectedTemplateBlock);
         if (!target || !target.classList.contains('box')) return;
-        const normalized = color || '#ced4da';
-        target.style.borderStyle = 'solid';
-        target.style.borderColor = normalized;
-        selectedTemplateBlock.dataset.borderColor = normalized;
-        if (templateBorderColorInput) {
-          templateBorderColorInput.value = normalizeColorToHex(normalized, '#ced4da');
-        }
-        setPaletteActive(templateBorderPalette, normalized);
-        if (selectedTemplateBlock.dataset.accentColor) {
-          target.style.borderLeftColor = selectedTemplateBlock.dataset.accentColor;
-        }
-        updateTemplateToolbarState(selectedTemplateBlock);
+      const normalized = color || '#ced4da';
+      target.style.borderStyle = 'solid';
+      target.style.borderColor = normalized;
+      selectedTemplateBlock.dataset.borderColor = normalized;
+      if (templateBorderColorInput) {
+        templateBorderColorInput.value = normalizeColorToHex(normalized, '#ced4da');
       }
+      setPaletteActive(templateBorderPalette, normalized);
+      if (selectedTemplateBlock.dataset.accentColor) {
+        target.style.borderLeftColor = selectedTemplateBlock.dataset.accentColor;
+      }
+      updateTemplateToolbarState(selectedTemplateBlock);
+      if (target.classList.contains('box')) {
+        markNoteAsCustom(selectedTemplateBlock);
+      }
+      scheduleCacheSave();
+    }
 
-      function applyTemplateAccentColor(color) {
-        if (!selectedTemplateBlock) return;
-        const target = getTemplateTarget(selectedTemplateBlock);
+    function applyTemplateAccentColor(color) {
+      if (!selectedTemplateBlock) return;
+      const target = getTemplateTarget(selectedTemplateBlock);
         if (!target || !target.classList.contains('box')) return;
-        const normalized = color || selectedTemplateBlock.dataset.borderColor || '#0d6efd';
-        target.style.borderLeftColor = normalized;
-        selectedTemplateBlock.dataset.accentColor = normalized;
-        if (templateAccentColorInput) {
-          templateAccentColorInput.value = normalizeColorToHex(normalized, '#0d6efd');
-        }
-        setPaletteActive(templateAccentPalette, normalized);
-        updateTemplateToolbarState(selectedTemplateBlock);
+      const normalized = color || selectedTemplateBlock.dataset.borderColor || '#0d6efd';
+      target.style.borderLeftColor = normalized;
+      selectedTemplateBlock.dataset.accentColor = normalized;
+      if (templateAccentColorInput) {
+        templateAccentColorInput.value = normalizeColorToHex(normalized, '#0d6efd');
       }
+      setPaletteActive(templateAccentPalette, normalized);
+      updateTemplateToolbarState(selectedTemplateBlock);
+      if (target.classList.contains('box')) {
+        markNoteAsCustom(selectedTemplateBlock);
+      }
+      scheduleCacheSave();
+    }
 
       function updateTemplateToolbarState(block) {
         if (!block || !templateToolbar) return;
         const target = getTemplateTarget(block);
         const computed = window.getComputedStyle(target || block);
         const isNote = target && target.classList && target.classList.contains('box');
+
+        if (isNote && notePresetKeys && noteStylePresets) {
+          let presetCandidate = block.dataset.notePreset;
+          const targetPreset = target?.dataset?.notePreset;
+          if (targetPreset && noteStylePresets[targetPreset]) {
+            presetCandidate = targetPreset;
+          }
+          if (!presetCandidate || (presetCandidate !== 'custom' && !noteStylePresets[presetCandidate])) {
+            const detectedPreset = notePresetKeys.find(key => target.classList.contains(noteStylePresets[key].className));
+            if (detectedPreset) {
+              presetCandidate = detectedPreset;
+            }
+          }
+          block.dataset.notePreset = presetCandidate || 'custom';
+        }
+
+        if (templateNoteStyleRow) {
+          templateNoteStyleRow.style.display = isNote ? 'flex' : 'none';
+        }
+
+        if (templateSpacerRow) {
+          templateSpacerRow.style.display = isNote ? 'flex' : 'none';
+        }
+
+        if (templateNoteStyleSelect) {
+          templateNoteStyleSelect.disabled = !isNote;
+          const presetValue = block.dataset.notePreset && (block.dataset.notePreset === 'custom' || noteStylePresets[block.dataset.notePreset])
+            ? block.dataset.notePreset
+            : (isNote ? 'custom' : 'custom');
+          templateNoteStyleSelect.value = presetValue;
+        }
 
         if (templateBgColorInput) {
           const bgValue = block.dataset.bgColor || target?.style.backgroundColor || computed.backgroundColor;
@@ -3111,8 +3935,15 @@
           if (!isNote) {
             templateBorderWidthSlider.disabled = true;
             templateBorderWidthDisplay.textContent = '—';
+            if (templateBorderWidthNumber) {
+              templateBorderWidthNumber.disabled = true;
+              templateBorderWidthNumber.value = '';
+            }
           } else {
             templateBorderWidthSlider.disabled = false;
+            if (templateBorderWidthNumber) {
+              templateBorderWidthNumber.disabled = false;
+            }
             const sliderMax = parseInt(templateBorderWidthSlider.max || '12', 10);
             const sliderMin = parseInt(templateBorderWidthSlider.min || '0', 10);
             const storedWidth = block.dataset.borderWidth !== undefined ? parseInt(block.dataset.borderWidth, 10) : null;
@@ -3127,6 +3958,9 @@
             const clampedWidth = Math.max(sliderMin, Math.min(sliderMax, baseWidth));
             templateBorderWidthSlider.value = clampedWidth;
             templateBorderWidthDisplay.textContent = baseWidth + 'px';
+            if (templateBorderWidthNumber) {
+              templateBorderWidthNumber.value = clampedWidth;
+            }
             updateBorderWidthDataset(block, baseWidth, accentExtra);
           }
         }
@@ -4313,6 +5147,8 @@
         if (!p.dataset.sectionId) {
           p.dataset.sectionId = 'seccion-1';
         }
+        initializePageState(p);
+        attachPageListeners(p);
       });
       
       document.querySelectorAll('.magic-topic').forEach(m => afterContentSanitize(m));
@@ -4374,7 +5210,7 @@
             magicIcon.addEventListener('click', (e) => {
               e.stopPropagation();
               closePanel();
-              activateMagicTopic(magicAnchorFor(page), getTitle());
+              activateMagicTopic(magicAnchorFor(page), getTitle(), page);
             });
             magicIcon.dataset.bound = 'true';
           }
@@ -4397,6 +5233,8 @@
       }
 
       setupMagicIcons();
+
+      setActiveZoomTarget(getCurrentPage() || pages[0] || null, 'page');
 
       /* === MODO LECTURA === */
       function toggleReadingMode() {
@@ -4979,7 +5817,26 @@
         if (templateBorderWidthDisplay) {
           templateBorderWidthDisplay.textContent = width + 'px';
         }
+        if (templateBorderWidthNumber) {
+          templateBorderWidthNumber.value = width;
+        }
+        markNoteAsCustom(selectedTemplateBlock);
         updateBorderWidthDataset(selectedTemplateBlock, width, Math.max(0, accentExtra));
+        scheduleCacheSave();
+      });
+
+      templateBorderWidthNumber?.addEventListener('input', (e) => {
+        if (!selectedTemplateBlock || !templateBorderWidthSlider) return;
+        const min = parseInt(templateBorderWidthSlider.min || '0', 10);
+        const max = parseInt(templateBorderWidthSlider.max || '12', 10);
+        let value = parseInt(e.target.value, 10);
+        if (!Number.isFinite(value)) {
+          value = min;
+        }
+        value = Math.max(min, Math.min(max, value));
+        templateBorderWidthSlider.value = value;
+        const inputEvent = new Event('input', { bubbles: true });
+        templateBorderWidthSlider.dispatchEvent(inputEvent);
       });
 
       templateFontSizeSlider?.addEventListener('input', (e) => {
@@ -4991,6 +5848,35 @@
           templateFontSizeDisplay.textContent = size + '%';
         }
         repositionTemplateToolbar();
+      });
+
+      templateNoteStyleSelect?.addEventListener('change', (e) => {
+        if (!selectedTemplateBlock) return;
+        const target = getTemplateTarget(selectedTemplateBlock);
+        if (!target || !target.classList.contains('box')) {
+          return;
+        }
+        const value = e.target.value;
+        if (value === 'custom') {
+          markNoteAsCustom(selectedTemplateBlock);
+          updateTemplateToolbarState(selectedTemplateBlock);
+          scheduleCacheSave();
+          return;
+        }
+        if (noteStylePresets[value]) {
+          applyNotePreset(value);
+          scheduleCacheSave();
+        }
+      });
+
+      templateAddSpaceAboveBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        insertNoteSpacer('before');
+      });
+
+      templateAddSpaceBelowBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        insertNoteSpacer('after');
       });
 
       templateMarginTopSlider?.addEventListener('input', (e) => {
@@ -5385,15 +6271,15 @@
         const templates = [
           {
             name: 'Nota Importante',
-            html: '<div class="box" style="border-left-color: #dc3545;"><strong>Nota importante:</strong> Escribe tu contenido aquí.</div>'
+            html: '<div class="box note-style-rose" data-note-preset="rose"><strong>Nota importante:</strong> Escribe tu contenido aquí.</div>'
           },
           {
             name: 'Perla Clínica',
-            html: '<div class="box pearl">Escribe tu perla clínica aquí.</div>'
+            html: '<div class="box pearl note-style-sunset" data-note-preset="sunset">Escribe tu perla clínica aquí.</div>'
           },
           {
             name: 'Cuadro Informativo',
-            html: '<div class="box"><strong>Título:</strong><p>Contenido del cuadro informativo.</p></div>'
+            html: '<div class="box note-style-base" data-note-preset="base"><strong>Título:</strong><p>Contenido del cuadro informativo.</p></div>'
           },
           {
             name: 'Separador Simple',
@@ -5409,11 +6295,11 @@
           },
           {
             name: 'Nota de Advertencia',
-            html: '<div class="box" style="background: #fff3cd; border-left-color: #ffc107;"><strong>⚠️ Advertencia:</strong> Contenido importante de advertencia.</div>'
+            html: '<div class="box note-style-sunset" data-note-preset="sunset"><strong>⚠️ Advertencia:</strong> Contenido importante de advertencia.</div>'
           },
           {
             name: 'Nota de Éxito',
-            html: '<div class="box" style="background: #d1e7dd; border-left-color: #198754;"><strong>✓ Éxito:</strong> Información positiva o exitosa.</div>'
+            html: '<div class="box note-style-emerald" data-note-preset="emerald"><strong>✓ Éxito:</strong> Información positiva o exitosa.</div>'
           },
           {
             name: 'Lista de Verificación',
@@ -5429,7 +6315,7 @@
           },
           {
             name: 'Definición',
-            html: '<div class="box" style="background: #e7f3ff;"><strong>Definición:</strong> Término a definir - explicación del término.</div>'
+            html: '<div class="box note-style-sky" data-note-preset="sky"><strong>Definición:</strong> Término a definir - explicación del término.</div>'
           }
         ];
 
@@ -5496,44 +6382,121 @@
         hideTopicMenu();
       }
 
-      function magicAnchorFor(page) {
+      function magicAnchorFor(page, options = {}) {
+        if (!page) return '';
+        const { createIfMissing = false } = options;
+        const container = magicContainerRoot || document.querySelector('.magic-content-container');
+        if (!container) return '';
+
+        const ensureExistingTopic = (id) => {
+          if (!id) return null;
+          const el = document.getElementById(id);
+          return el || null;
+        };
+
+        let magicId = page.dataset.magicId || '';
+        if (magicId) {
+          const existing = ensureExistingTopic(magicId);
+          if (existing) {
+            return magicId;
+          }
+          delete page.dataset.magicId;
+          magicId = '';
+        }
+
         const tid = page.dataset.topicId || '';
-        if (!tid) return '';
-        
-        if (document.getElementById(`magic-topic-${tid}`)) {
-          return `magic-topic-${tid}`;
+        const candidates = [];
+        if (tid) {
+          candidates.push(`magic-topic-${tid}`, `magic-${tid}`, tid);
         }
-        if (document.getElementById(`magic-${tid}`)) {
-          return `magic-${tid}`;
+
+        for (const candidate of candidates) {
+          const existing = ensureExistingTopic(candidate);
+          if (existing) {
+            page.dataset.magicId = candidate;
+            return candidate;
+          }
         }
-        if (document.getElementById(tid)) {
-          return tid;
+
+        if (!createIfMissing) {
+          return '';
         }
-        return '';
+
+        let topicId = tid;
+        if (!topicId) {
+          topicId = generateUniqueId('topic');
+          page.dataset.topicId = topicId;
+        }
+
+        const newId = `magic-topic-${topicId}`;
+        let topicEl = ensureExistingTopic(newId);
+        if (!topicEl) {
+          topicEl = document.createElement('div');
+          topicEl.id = newId;
+          topicEl.className = 'magic-topic';
+          container.appendChild(topicEl);
+          afterContentSanitize(topicEl);
+        }
+        page.dataset.magicId = newId;
+        return newId;
       }
 
       function closeMagicView() {
         document.body.classList.remove('magic-open');
+        const fallbackPage = getCurrentPage() || pages[0] || null;
+        if (fallbackPage) {
+          setActiveZoomTarget(fallbackPage, 'page');
+        }
       }
 
-      function activateMagicTopic(anchorId, title) {
+      function activateMagicTopic(anchorId, title, sourcePage = null) {
         magic.innerHTML =
           '<div class="magic-header"><strong>✨ Visor del tema</strong><button class="magic-close">&times;</button></div>';
         const magicPage = document.createElement('div');
         magicPage.className = 'magic-page';
+
+        let resolvedAnchorId = anchorId || '';
+        let src = resolvedAnchorId ? document.getElementById(resolvedAnchorId) : null;
+        if ((!src || !resolvedAnchorId) && sourcePage) {
+          resolvedAnchorId = magicAnchorFor(sourcePage, { createIfMissing: true });
+          src = resolvedAnchorId ? document.getElementById(resolvedAnchorId) : null;
+        }
+
+        if (sourcePage && resolvedAnchorId) {
+          sourcePage.dataset.magicId = resolvedAnchorId;
+        }
+
+        const zoomKey = resolvedAnchorId || '__magic-default__';
+        magicPage.dataset.sourceId = resolvedAnchorId || '';
+        magicPage.__sourcePage = sourcePage || null;
 
         const h = document.createElement('h1');
         h.className = 'magic-title';
         h.textContent = title || 'Tema';
         magicPage.appendChild(h);
 
-        const src = anchorId ? document.getElementById(anchorId) : null;
         const wrapper = document.createElement('div');
         wrapper.innerHTML = src ? src.innerHTML : '<p>No hay contenido adicional.</p>';
         afterContentSanitize(wrapper);
 
+        let initialMagicZoom = DEFAULT_PAGE_ZOOM;
+        const storedZoomAttr = src?.dataset?.magicZoom;
+        const storedZoomValue = storedZoomAttr ? parseFloat(storedZoomAttr) : NaN;
+        if (!Number.isNaN(storedZoomValue) && storedZoomValue > 0) {
+          initialMagicZoom = clampZoom(storedZoomValue);
+        } else if (magicZoomState.has(zoomKey)) {
+          initialMagicZoom = clampZoom(magicZoomState.get(zoomKey));
+        }
+
         magicPage.appendChild(wrapper);
         magic.appendChild(magicPage);
+        if (sourcePage) {
+          const sourceTheme = getPageTheme(sourcePage);
+          applyThemeToPage(magicPage, sourceTheme);
+        } else {
+          applyThemeToPage(magicPage, '');
+        }
+        applyZoomToElement(magicPage, initialMagicZoom);
 
         if (isEditMode) {
           magicPage.contentEditable = 'true';
@@ -5544,10 +6507,19 @@
           if (isEditMode && src) {
             src.innerHTML = wrapper.innerHTML;
           }
+          if (src) {
+            const stored = parseFloat(magicPage.dataset.zoom);
+            const zoomToPersist = !Number.isNaN(stored) && stored > 0 ? clampZoom(stored) : DEFAULT_PAGE_ZOOM;
+            src.dataset.magicZoom = String(zoomToPersist);
+            magicZoomState.set(zoomKey, zoomToPersist);
+          }
+          magicPage.__sourcePage = null;
           closeMagicView();
         });
 
         document.body.classList.add('magic-open');
+        setActiveZoomTarget(magicPage, 'magic', { skipTheme: true });
+        syncThemeSelector(sourcePage || magicPage);
       }
 
       function buildSectionsPanel() {
@@ -5565,18 +6537,19 @@
           const toggle = document.createElement('span');
           toggle.className = 'section-toggle';
           toggle.textContent = '▼';
-          toggle.addEventListener('click', () => {
-            section.collapsed = !section.collapsed;
-            sectionDiv.classList.toggle('collapsed');
-          });
-          
+
           const nameSpan = document.createElement('span');
           nameSpan.className = 'section-name';
           nameSpan.textContent = section.nombre;
-          nameSpan.addEventListener('click', () => {
+
+          const toggleSectionState = () => {
             section.collapsed = !section.collapsed;
             sectionDiv.classList.toggle('collapsed');
-          });
+            scheduleCacheSave();
+          };
+
+          toggle.addEventListener('click', toggleSectionState);
+          nameSpan.addEventListener('click', toggleSectionState);
           
           const countSpan = document.createElement('span');
           countSpan.className = 'section-count';
@@ -5631,38 +6604,49 @@
           section.temas.forEach(tema => {
             const li = document.createElement('li');
             li.dataset.topicId = tema.id;
-            
+
             const numSpan = document.createElement('span');
             numSpan.className = 'topic-number';
             numSpan.textContent = globalTopicCounter + '.';
             globalTopicCounter++;
-            
-          const btnMain = document.createElement('button');
-          btnMain.className = 'topic-action';
-          btnMain.title = 'Ir al tema';
-          btnMain.textContent = '📄';
-          btnMain.addEventListener('click', () => {
-            closeMagicView();
-            closePanel();
-            tema.page.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          });
 
-          const titleSpan = document.createElement('span');
-          titleSpan.className = 'topic-title';
-          titleSpan.textContent = tema.titulo;
-          titleSpan.title = 'Doble clic para opciones del tema';
-          titleSpan.addEventListener('dblclick', (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            showTopicMenu(event, tema);
-          });
-          titleSpan.addEventListener('click', (event) => event.stopPropagation());
+            const btnMagic = document.createElement('button');
+            btnMagic.className = 'topic-action';
+            btnMagic.title = 'Abrir sección mágica';
+            btnMagic.textContent = '✨';
+            btnMagic.addEventListener('click', () => {
+              closePanel();
+              activateMagicTopic(magicAnchorFor(tema.page), tema.titulo, tema.page);
+            });
 
-          li.appendChild(numSpan);
-          li.appendChild(btnMain);
-          li.appendChild(titleSpan);
-          topicList.appendChild(li);
-        });
+            const btnMain = document.createElement('button');
+            btnMain.className = 'topic-action';
+            btnMain.title = 'Ir al tema';
+            btnMain.textContent = '📄';
+            btnMain.addEventListener('click', () => {
+              closeMagicView();
+              closePanel();
+              tema.page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              setActiveZoomTarget(tema.page, 'page');
+            });
+
+            const titleSpan = document.createElement('span');
+            titleSpan.className = 'topic-title';
+            titleSpan.textContent = tema.titulo;
+            titleSpan.title = 'Doble clic para opciones del tema';
+            titleSpan.addEventListener('dblclick', (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              showTopicMenu(event, tema);
+            });
+            titleSpan.addEventListener('click', (event) => event.stopPropagation());
+
+            li.appendChild(numSpan);
+            li.appendChild(btnMain);
+            li.appendChild(btnMagic);
+            li.appendChild(titleSpan);
+            topicList.appendChild(li);
+          });
           
           sectionDiv.appendChild(sectionHeader);
           sectionDiv.appendChild(topicList);
@@ -5693,19 +6677,22 @@
             tema.page.dataset.sectionName = section.nombre;
           });
           buildSectionsPanel();
+          scheduleCacheSave();
         }
       }
 
       function deleteSection(section) {
         if (!confirm(`¿Eliminar toda la sección "${section.nombre}" con ${section.temas.length} tema(s)?`)) return;
-        
+
         section.temas.forEach(tema => {
+          detachPageListeners(tema.page);
           tema.page.remove();
         });
-        
+
         pages = pages.filter(p => p.dataset.sectionId !== section.id);
         sections = sections.filter(s => s.id !== section.id);
         buildSectionsPanel();
+        scheduleCacheSave();
       }
 
       function addNewSection() {
@@ -5721,11 +6708,13 @@
         
         sections.push(newSection);
         buildSectionsPanel();
+        scheduleCacheSave();
       }
 
       function sortSectionsAlpha() {
         sections.sort((a, b) => a.nombre.localeCompare(b.nombre));
         buildSectionsPanel();
+        scheduleCacheSave();
       }
 
       function sortSectionsNumeric() {
@@ -5735,6 +6724,7 @@
           return numA - numB;
         });
         buildSectionsPanel();
+        scheduleCacheSave();
       }
 
       function printSection(section) {
@@ -5800,7 +6790,8 @@
         const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (!visible) return;
         const tid = visible.target.dataset.topicId || '';
-        sectionsContainer.querySelectorAll('li').forEach(li => 
+        setActiveZoomTarget(visible.target, 'page');
+        sectionsContainer.querySelectorAll('li').forEach(li =>
           li.classList.toggle('active', li.dataset.topicId === tid)
         );
       }, { root: null, threshold: [0.5, 0.75, 1] });
@@ -5840,15 +6831,27 @@
       });
 
       /* === TEMA DE COLORES === */
-      document.getElementById('themeSelect')?.addEventListener('change', function() {
-        const oldTheme = document.body.className.split(' ').find(c => c.startsWith('theme-'));
-        if (oldTheme) {
-          document.body.classList.remove(oldTheme);
+      themeSelect?.addEventListener('change', function() {
+        const themeClass = this.value || '';
+        const target = getActiveZoomTarget();
+        if (!target || !target.element) return;
+
+        if (target.type === 'magic') {
+          const magicPage = target.element;
+          applyThemeToPage(magicPage, themeClass);
+          const sourcePage = magicPage.__sourcePage instanceof Element ? magicPage.__sourcePage : null;
+          if (sourcePage) {
+            applyThemeToPage(sourcePage, themeClass);
+            syncThemeSelector(sourcePage);
+          } else {
+            syncThemeSelector(magicPage);
+          }
+        } else {
+          applyThemeToPage(target.element, themeClass);
+          syncThemeSelector(target.element);
         }
-        document.body.classList.add(this.value);
-        if (isReadingMode) {
-          document.body.classList.add('reading-mode');
-        }
+
+        scheduleCacheSave();
       });
 
       /* === EDICIÓN === */
@@ -6085,11 +7088,11 @@
     const title = (titleSpan?.textContent || h1?.textContent || 'tema').trim();
     const magicId = magicAnchorFor(page);
     const magicContent = document.getElementById(magicId);
-    
+
     const tempPage = page.cloneNode(true);
     tempPage.contentEditable = 'false';
 
-    const currentTheme = document.body.className.split(' ').find(c => c.startsWith('theme-')) || 'theme-blue';
+    const currentTheme = getPageTheme(page) || '';
 
     const htmlDoc = `<!DOCTYPE html>
 <html lang="es">
@@ -6101,7 +7104,7 @@
 ${document.querySelector('style').textContent}
   </style>
 </head>
-<body class="${currentTheme}">
+  <body class="${currentTheme}">
   ${magicContent ? '<div class="magic-content-container" style="display:none">' + magicContent.outerHTML + '</div>' : ''}
   ${tempPage.outerHTML}
 </body>
@@ -6266,6 +7269,18 @@ ${document.querySelector('style').textContent}
         const titleText = (tema.titulo || getTopicTitle(page) || '').trim() || `Tema ${exportSection.temas.length + 1}`;
         const magicId = magicAnchorFor(page);
         const magicEl = magicId ? document.getElementById(magicId) : null;
+        let magicZoomValue = null;
+        const magicZoomAttr = magicEl?.dataset?.magicZoom;
+        if (magicZoomAttr) {
+          const parsedZoom = parseFloat(magicZoomAttr);
+          if (!Number.isNaN(parsedZoom) && parsedZoom > 0) {
+            magicZoomValue = clampZoom(parsedZoom);
+          }
+        }
+        const magicZoomKey = magicId || '__magic-default__';
+        if (!magicZoomValue && magicZoomState.has(magicZoomKey)) {
+          magicZoomValue = clampZoom(magicZoomState.get(magicZoomKey));
+        }
 
         exportSection.temas.push({
           id: topicId,
@@ -6274,7 +7289,10 @@ ${document.querySelector('style').textContent}
           sectionId: page.dataset.sectionId,
           sectionName: page.dataset.sectionName,
           magicId: magicId || null,
-          magicHtml: magicEl ? magicEl.innerHTML : null
+          magicHtml: magicEl ? magicEl.innerHTML : null,
+          magicZoom: magicZoomValue,
+          zoom: getElementZoom(page),
+          themeClass: getPageTheme(page) || null
         });
       });
     });
@@ -6304,6 +7322,18 @@ ${document.querySelector('style').textContent}
 
       const magicId = magicAnchorFor(page);
       const magicEl = magicId ? document.getElementById(magicId) : null;
+      let magicZoomValue = null;
+      const magicZoomAttr = magicEl?.dataset?.magicZoom;
+      if (magicZoomAttr) {
+        const parsedZoom = parseFloat(magicZoomAttr);
+        if (!Number.isNaN(parsedZoom) && parsedZoom > 0) {
+          magicZoomValue = clampZoom(parsedZoom);
+        }
+      }
+      const magicZoomKey = magicId || '__magic-default__';
+      if (!magicZoomValue && magicZoomState.has(magicZoomKey)) {
+        magicZoomValue = clampZoom(magicZoomState.get(magicZoomKey));
+      }
 
       exportSection.temas.push({
         id: topicId,
@@ -6312,14 +7342,18 @@ ${document.querySelector('style').textContent}
         sectionId: sectionId,
         sectionName: sectionName,
         magicId: magicId || null,
-        magicHtml: magicEl ? magicEl.innerHTML : null
+        magicHtml: magicEl ? magicEl.innerHTML : null,
+        magicZoom: magicZoomValue,
+        zoom: getElementZoom(page),
+        themeClass: getPageTheme(page) || null
       });
     });
 
     return {
       specialty: specialtySpan?.textContent || '',
       sections: exportedSections,
-      magicContainerHtml: magicContainer ? magicContainer.innerHTML : ''
+      magicContainerHtml: magicContainer ? magicContainer.innerHTML : '',
+      zoom: currentZoom
     };
   }
 
@@ -6335,10 +7369,13 @@ ${document.querySelector('style').textContent}
     URL.revokeObjectURL(url);
   }
 
-  function importSectionsData(data) {
+  function importSectionsData(data, options = {}) {
     if (!data || !Array.isArray(data.sections)) {
       throw new Error('El archivo no contiene secciones válidas.');
     }
+
+    const { skipCacheSave = false, skipZoom = false } = options;
+    const fallbackZoom = typeof data?.zoom === 'number' ? clampZoom(data.zoom) : DEFAULT_PAGE_ZOOM;
 
     const mainContainer = document.body;
     const scriptTag = document.querySelector('script');
@@ -6347,7 +7384,10 @@ ${document.querySelector('style').textContent}
     }
 
     io.disconnect();
-    pages.forEach(page => page.remove());
+    pages.forEach(page => {
+      detachPageListeners(page);
+      page.remove();
+    });
 
     if (specialtySpan && typeof data.specialty === 'string') {
       specialtySpan.textContent = data.specialty;
@@ -6378,9 +7418,18 @@ ${document.querySelector('style').textContent}
         page.dataset.sectionName = topicSectionName;
         page.dataset.topicId = topicId;
         page.innerHTML = typeof topicData?.html === 'string' ? topicData.html : '';
+        const topicZoom = typeof topicData?.zoom === 'number' ? clampZoom(topicData.zoom) : fallbackZoom;
+        page.dataset.zoom = String(topicZoom);
+        if (typeof topicData?.themeClass === 'string' && topicData.themeClass) {
+          page.dataset.themeClass = topicData.themeClass;
+        } else {
+          delete page.dataset.themeClass;
+        }
         mainContainer.insertBefore(page, scriptTag);
         afterContentSanitize(page);
+        initializePageState(page);
         page.contentEditable = isEditMode ? 'true' : 'false';
+        attachPageListeners(page);
 
         const title = (topicData?.titulo && String(topicData.titulo).trim()) || getTopicTitle(page) || `Tema ${sectionInfo.temas.length + 1}`;
         sectionInfo.temas.push({ id: topicId, titulo: title, page });
@@ -6398,6 +7447,14 @@ ${document.querySelector('style').textContent}
           if (typeof topicData.magicHtml === 'string') {
             magicTopic.innerHTML = topicData.magicHtml;
             afterContentSanitize(magicTopic);
+          }
+          if (typeof topicData.magicZoom === 'number') {
+            const clampedMagicZoom = clampZoom(topicData.magicZoom);
+            magicTopic.dataset.magicZoom = String(clampedMagicZoom);
+            const zoomKey = magicId || '__magic-default__';
+            magicZoomState.set(zoomKey, clampedMagicZoom);
+          } else {
+            delete magicTopic.dataset.magicZoom;
           }
         }
       });
@@ -6421,6 +7478,17 @@ ${document.querySelector('style').textContent}
     hideTemplateToolbar();
     savedSelection = null;
     window.scrollTo({ top: 0 });
+
+    if (!skipZoom) {
+      const activePage = pages[0] || null;
+      if (activePage) {
+        setActiveZoomTarget(activePage, 'page');
+      }
+    }
+
+    if (!skipCacheSave) {
+      scheduleCacheSave();
+    }
   }
 
   exportDataBtn?.addEventListener('click', () => {
@@ -6578,12 +7646,12 @@ ${document.querySelector('style').textContent}
           }
 
           loadedPages.forEach(page => {
-            const clonedPage = page.cloneNode(true);
-            afterContentSanitize(clonedPage);
+          const clonedPage = page.cloneNode(true);
+          afterContentSanitize(clonedPage);
 
-            if (!clonedPage.dataset.sectionId) {
-              clonedPage.dataset.sectionId = importedSectionId;
-            }
+          if (!clonedPage.dataset.sectionId) {
+            clonedPage.dataset.sectionId = importedSectionId;
+          }
             if (!clonedPage.dataset.sectionName) {
               clonedPage.dataset.sectionName = importedSectionName;
             }
@@ -6599,9 +7667,10 @@ ${document.querySelector('style').textContent}
             }
             existingTopicIds.add(topicId);
 
-            clonedPage.contentEditable = isEditMode ? 'true' : 'false';
-            mainContainer.insertBefore(clonedPage, scriptTag);
-          });
+          clonedPage.contentEditable = isEditMode ? 'true' : 'false';
+          mainContainer.insertBefore(clonedPage, scriptTag);
+          attachPageListeners(clonedPage);
+        });
 
           const magicContainer = document.querySelector('.magic-content-container');
           if (magicContainer) {
@@ -6660,6 +7729,7 @@ ${document.querySelector('style').textContent}
         if (!p.dataset.topicId) {
           p.dataset.topicId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         }
+        attachPageListeners(p);
         io.observe(p);
       });
 
@@ -6681,6 +7751,7 @@ ${document.querySelector('style').textContent}
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      scheduleCacheSave();
     } catch (error) {
       console.error('Error al cargar el archivo:', error);
       alert('Error al cargar archivos: ' + error.message);
@@ -6703,6 +7774,17 @@ ${document.querySelector('style').textContent}
       alert('No se pudo copiar el HTML');
     }
   });
+
+  applyZoom(currentZoom, { skipCache: true, skipPersist: true });
+  loadDocumentFromCacheOnStartup();
+
+  if (STORAGE_AVAILABLE) {
+    window.addEventListener('beforeunload', () => {
+      if (hasPendingChanges) {
+        persistDocumentToCache();
+      }
+    });
+  }
 
 })();
   </script>
