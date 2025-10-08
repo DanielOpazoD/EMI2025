@@ -11,6 +11,12 @@
       --theme-primary-dark: #0b5ed7;
       --theme-primary-light: #6ea8fe;
       --zoom-level: 1;
+      --base-font-size: 10.5px;
+      --dynamic-font-size: 10.5px;
+    }
+
+    html {
+      font-size: var(--dynamic-font-size, 10.5px);
     }
 
     body.theme-blue {
@@ -45,7 +51,7 @@
       margin: 0;
       padding: 0;
       line-height: 1.3;
-      font-size: 10.5px;
+      font-size: 1rem;
       transition: all 0.3s ease;
     }
 
@@ -101,7 +107,7 @@
       left: 0;
       right: 0;
       z-index: 4000;
-      height: 36px;
+      height: calc(36px * var(--zoom-level));
       background: #000;
       color: #fff;
       display: flex;
@@ -130,6 +136,14 @@
       max-width: 90%;
     }
 
+    .topbar-right {
+      position: absolute;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .topbar-topic {
       display: inline-block;
       padding: 2px 6px;
@@ -154,6 +168,13 @@
       display: flex;
       align-items: center;
       gap: 4px;
+    }
+
+    .topbar-btn.dirty::after {
+      content: '*';
+      margin-left: 2px;
+      color: #ffc107;
+      font-weight: 700;
     }
 
     .topbar-btn:hover {
@@ -194,7 +215,7 @@
     /* ===== Barra de herramientas mejorada ===== */
     .edit-toolbar {
       position: fixed;
-      top: calc(38px / var(--zoom-level));
+      top: calc(38px * var(--zoom-level));
       left: 0;
       right: 0;
       background: #fff;
@@ -1210,9 +1231,9 @@
 
     /* ===== Páginas con zoom CORREGIDO ===== */
     .page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 12mm;
+      width: calc(210mm * var(--zoom-level));
+      min-height: calc(297mm * var(--zoom-level));
+      padding: calc(12mm * var(--zoom-level));
       margin: calc(56px * var(--zoom-level)) auto calc(20px * var(--zoom-level));
       box-sizing: border-box;
       background: #fff;
@@ -1220,8 +1241,6 @@
       page-break-after: always;
       overflow-wrap: break-word;
       position: relative;
-      transform: scale(var(--zoom-level));
-      transform-origin: top center;
     }
 
     .page[contenteditable="true"] {
@@ -2009,8 +2028,8 @@
     }
   </style>
 </head>
-<body class="theme-blue">
-  <!-- build:topics {"especialidad":"Endocrinología","secciones":[{"id":"seccion-1","nombre":"Endocrinología","temas":[{"id":"sindrome-metabolico","titulo":"Síndrome Metabólico"},{"id":"diabetes-mellitus-2","titulo":"Diabetes Mellitus tipo II"}]}]} -->
+<body>
+  <!-- build:topics {"especialidad":"Endocrinología","secciones":[]} -->
   
   <div class="topbar">
     <div class="topbar-left">
@@ -2028,12 +2047,15 @@
       <button class="topbar-btn" id="statsBtn" title="Estadísticas"><span>📊</span> <span class="topbar-btn-label">Stats</span></button>
       <button class="topbar-btn" id="loadHtmlBtn" title="Cargar archivo HTML"><span>📂</span> <span class="topbar-btn-label">Abrir</span></button>
       <button class="topbar-btn" id="editBtn" title="Modo edición"><span>✏️</span> <span class="topbar-btn-label">Editar</span></button>
-      <button class="topbar-btn" id="saveHtmlBtn" style="display:none;" title="Guardar como HTML"><span>💾</span> <span class="topbar-btn-label">Guardar</span></button>
       <button class="topbar-btn" id="exportDataBtn" title="Exportar secciones y temas" aria-label="Exportar secciones y temas"><span>📤</span></button>
       <button class="topbar-btn" id="importDataBtn" title="Importar secciones y temas" aria-label="Importar secciones y temas"><span>📥</span></button>
       <button class="topbar-btn" id="exportMarkdownBtn" title="Exportar a Markdown"><span>⬇️</span> <span class="topbar-btn-label">MD</span></button>
       <button class="topbar-btn" id="copyHtmlBtn" title="Copiar HTML completo"><span>📋</span> <span class="topbar-btn-label">Copiar</span></button>
       <button class="topbar-btn" id="printCurrentBtn" title="Imprimir documento"><span>🖨️</span> <span class="topbar-btn-label">Imprimir</span></button>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" id="saveCacheBtn" title="Guardar en este dispositivo">💾 Guardar</button>
+      <button class="topbar-btn" id="saveHtmlBtn" style="display:none;" title="Guardar como HTML"><span>💾</span> <span class="topbar-btn-label">Descargar</span></button>
     </div>
   </div>
 
@@ -2386,23 +2408,9 @@
   </aside>
 
   <!-- Contenido mágico -->
-  <div class="magic-content-container" style="display:none">
-    <div id="magic-sindrome-metabolico" class="magic-topic">
-      <section class="magic-section"><h4>Contenido de ejemplo</h4>
-        <p>Este es contenido mágico de ejemplo.</p>
-      </section>
-    </div>
-  </div>
+  <div class="magic-content-container" style="display:none"></div>
 
   <!-- Páginas -->
-  <section class="page" data-topic-id="sindrome-metabolico" data-section-id="seccion-1">
-    <h1>
-      <span>Síndrome Metabólico</span>
-      <span class="magic-icon" title="Ver contenido mágico">✨</span>
-    </h1>
-    <h2>Definición</h2>
-    <p>El síndrome metabólico (SM) es un conjunto de alteraciones metabólicas interrelacionadas.</p>
-  </section>
 
   <script>
     (function() {
@@ -2426,15 +2434,165 @@
         scaleX: 1,
         scaleY: 1
       };
-      
-      let sections = [
-        {
-          id: 'seccion-1',
-          nombre: 'Endocrinología',
-          collapsed: false,
-          temas: []
+
+      const BASE_FONT_SIZE = 10.5;
+      const MIN_ZOOM_LEVEL = 0.5;
+      const MAX_ZOOM_LEVEL = 2;
+      const ZOOM_STEP = 0.1;
+      const LOCAL_CACHE_KEY = 'emi2025-local-cache';
+      const LOCAL_CACHE_VERSION = 1;
+      const LOCAL_ZOOM_KEY = 'emi2025-zoom-level';
+      const STORAGE_AVAILABLE = (() => {
+        try {
+          const testKey = '__emi2025-cache-test__';
+          window.localStorage.setItem(testKey, '1');
+          window.localStorage.removeItem(testKey);
+          return true;
+        } catch (error) {
+          console.warn('Almacenamiento local no disponible:', error);
+          return false;
         }
-      ];
+      })();
+
+      let cacheSaveTimeout = null;
+      let manualSaveFeedbackTimeout = null;
+      let hasPendingChanges = false;
+      let saveCacheBtnDefaultText = '💾 Guardar';
+
+      let sections = [];
+      let saveCacheBtn = null;
+
+      function detachPageListeners(page) {
+        if (!page) return;
+        if (page.__cacheObserver) {
+          page.__cacheObserver.disconnect();
+          delete page.__cacheObserver;
+        }
+        if (page.__cacheInputHandler) {
+          page.removeEventListener('input', page.__cacheInputHandler);
+          delete page.__cacheInputHandler;
+        }
+        if (page.__cacheBlurHandler) {
+          page.removeEventListener('blur', page.__cacheBlurHandler);
+          delete page.__cacheBlurHandler;
+        }
+        delete page.dataset.cacheBound;
+      }
+
+      function attachPageListeners(page) {
+        if (!page || page.dataset.cacheBound === 'true') return;
+        const inputHandler = () => scheduleCacheSave();
+        const blurHandler = () => scheduleCacheSave({ delay: 0 });
+        page.addEventListener('input', inputHandler);
+        page.addEventListener('blur', blurHandler);
+        const observer = new MutationObserver(() => {
+          if (!page.isConnected) {
+            observer.disconnect();
+            return;
+          }
+          scheduleCacheSave();
+        });
+        observer.observe(page, { childList: true, characterData: true, subtree: true });
+        page.__cacheObserver = observer;
+        page.__cacheInputHandler = inputHandler;
+        page.__cacheBlurHandler = blurHandler;
+        page.dataset.cacheBound = 'true';
+      }
+
+      function markDirty() {
+        if (!STORAGE_AVAILABLE) return;
+        hasPendingChanges = true;
+        saveCacheBtn?.classList.add('dirty');
+      }
+
+      function clearDirty() {
+        hasPendingChanges = false;
+        saveCacheBtn?.classList.remove('dirty');
+      }
+
+      function scheduleCacheSave(options = {}) {
+        if (!STORAGE_AVAILABLE) return;
+        const { delay = 800, immediate = false, skipDirtyMark = false } = options;
+        if (!skipDirtyMark) {
+          markDirty();
+        }
+        if (cacheSaveTimeout) {
+          clearTimeout(cacheSaveTimeout);
+          cacheSaveTimeout = null;
+        }
+        if (immediate) {
+          persistDocumentToCache();
+          return;
+        }
+        cacheSaveTimeout = window.setTimeout(() => {
+          cacheSaveTimeout = null;
+          persistDocumentToCache();
+        }, Math.max(0, delay));
+      }
+
+      function persistDocumentToCache(options = {}) {
+        if (!STORAGE_AVAILABLE) return false;
+        if (cacheSaveTimeout) {
+          clearTimeout(cacheSaveTimeout);
+          cacheSaveTimeout = null;
+        }
+        try {
+          const data = collectDocumentData();
+          data.zoom = currentZoom;
+          const payload = {
+            version: LOCAL_CACHE_VERSION,
+            savedAt: new Date().toISOString(),
+            data
+          };
+          window.localStorage.setItem(LOCAL_CACHE_KEY, JSON.stringify(payload));
+          window.localStorage.setItem(LOCAL_ZOOM_KEY, String(currentZoom));
+          clearDirty();
+          if (options.notify && saveCacheBtn) {
+            saveCacheBtn.textContent = '✅ Guardado';
+            saveCacheBtn.classList.remove('dirty');
+            if (manualSaveFeedbackTimeout) {
+              clearTimeout(manualSaveFeedbackTimeout);
+            }
+            manualSaveFeedbackTimeout = window.setTimeout(() => {
+              saveCacheBtn.textContent = saveCacheBtnDefaultText;
+              if (hasPendingChanges) {
+                saveCacheBtn.classList.add('dirty');
+              }
+            }, 2000);
+          }
+          return true;
+        } catch (error) {
+          console.error('Error al guardar localmente:', error);
+          if (options.notify) {
+            alert('No se pudo guardar localmente: ' + error.message);
+          }
+          return false;
+        }
+      }
+
+      function loadDocumentFromCacheOnStartup() {
+        if (!STORAGE_AVAILABLE) return;
+        try {
+          const raw = window.localStorage.getItem(LOCAL_CACHE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed?.data && Array.isArray(parsed.data.sections)) {
+              importSectionsData(parsed.data, { skipCacheSave: true, skipZoom: true });
+              if (typeof parsed.data.zoom === 'number') {
+                applyZoom(parsed.data.zoom, { skipCache: true, skipPersist: true });
+              }
+              clearDirty();
+              return;
+            }
+          }
+          const storedZoom = parseFloat(window.localStorage.getItem(LOCAL_ZOOM_KEY));
+          if (!Number.isNaN(storedZoom)) {
+            applyZoom(storedZoom, { skipCache: true, skipPersist: true });
+          }
+        } catch (error) {
+          console.error('No se pudo restaurar la información local:', error);
+        }
+      }
       
       const panel = document.getElementById('topic-panel');
       const tocPanel = document.getElementById('toc-panel');
@@ -2447,7 +2605,19 @@
       const specialtySpan = document.getElementById('specialtyTitle');
       const modalOverlay = document.getElementById('modalOverlay');
       const modalContent = document.getElementById('modalContent');
-      
+
+      saveCacheBtn = document.getElementById('saveCacheBtn');
+      if (saveCacheBtn) {
+        const label = saveCacheBtn.textContent?.trim();
+        if (label) {
+          saveCacheBtnDefaultText = saveCacheBtn.textContent;
+        }
+        if (!STORAGE_AVAILABLE) {
+          saveCacheBtn.setAttribute('disabled', 'true');
+          saveCacheBtn.title = 'El almacenamiento local no está disponible en este navegador.';
+        }
+      }
+
       const editBtn = document.getElementById('editBtn');
       const saveHtmlBtn = document.getElementById('saveHtmlBtn');
       const loadHtmlBtn = document.getElementById('loadHtmlBtn');
@@ -2642,6 +2812,7 @@
         buildSectionsPanel();
         buildTableOfContents();
         setupMagicIcons();
+        scheduleCacheSave();
         return true;
       }
 
@@ -2675,6 +2846,7 @@
         page.dataset.sectionName = targetSection.nombre;
         initializeSections();
         buildSectionsPanel();
+        scheduleCacheSave();
         return true;
       }
 
@@ -2684,11 +2856,13 @@
         if (!confirm(`¿Eliminar "${title}"?`)) {
           return false;
         }
+        detachPageListeners(page);
         page.remove();
         pages = pages.filter(p => p !== page);
         initializeSections();
         buildSectionsPanel();
         buildTableOfContents();
+        scheduleCacheSave();
         return true;
       }
 
@@ -2705,12 +2879,14 @@
         clone.contentEditable = isEditMode ? 'true' : 'false';
         page.parentNode.insertBefore(clone, page.nextSibling);
         pages = [...document.querySelectorAll('.page')];
+        attachPageListeners(clone);
         setupMagicIcons();
         io.observe(clone);
         initializeSections();
         buildSectionsPanel();
         buildTableOfContents();
         clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scheduleCacheSave();
         return clone;
       }
 
@@ -2764,14 +2940,42 @@
       });
 
       /* === ZOOM === */
-      function updateZoom(delta) {
-        currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
-        document.documentElement.style.setProperty('--zoom-level', currentZoom);
-        zoomValue.textContent = Math.round(currentZoom * 100) + '%';
+      function clampZoom(value) {
+        return Math.max(MIN_ZOOM_LEVEL, Math.min(MAX_ZOOM_LEVEL, value));
       }
 
-      zoomInBtn?.addEventListener('click', () => updateZoom(0.1));
-      zoomOutBtn?.addEventListener('click', () => updateZoom(-0.1));
+      function applyZoom(value, options = {}) {
+        const { skipCache = false, skipPersist = false } = options;
+        const clamped = clampZoom(value);
+        currentZoom = clamped;
+        document.documentElement.style.setProperty('--zoom-level', clamped);
+        document.documentElement.style.setProperty('--dynamic-font-size', `${BASE_FONT_SIZE * clamped}px`);
+        if (zoomValue) {
+          zoomValue.textContent = Math.round(clamped * 100) + '%';
+        }
+        if (!skipPersist && STORAGE_AVAILABLE) {
+          try {
+            window.localStorage.setItem(LOCAL_ZOOM_KEY, String(clamped));
+          } catch (error) {
+            console.warn('No se pudo guardar el nivel de zoom:', error);
+          }
+        }
+        if (!skipCache) {
+          scheduleCacheSave({ skipDirtyMark: false });
+        }
+      }
+
+      function updateZoom(delta) {
+        applyZoom(currentZoom + delta);
+      }
+
+      zoomInBtn?.addEventListener('click', () => updateZoom(ZOOM_STEP));
+      zoomOutBtn?.addEventListener('click', () => updateZoom(-ZOOM_STEP));
+
+      saveCacheBtn?.addEventListener('click', () => {
+        if (!STORAGE_AVAILABLE) return;
+        persistDocumentToCache({ notify: true });
+      });
 
       /* === UTILIDADES === */
       function saveCurrentSelection() {
@@ -4313,6 +4517,7 @@
         if (!p.dataset.sectionId) {
           p.dataset.sectionId = 'seccion-1';
         }
+        attachPageListeners(p);
       });
       
       document.querySelectorAll('.magic-topic').forEach(m => afterContentSanitize(m));
@@ -5565,18 +5770,19 @@
           const toggle = document.createElement('span');
           toggle.className = 'section-toggle';
           toggle.textContent = '▼';
-          toggle.addEventListener('click', () => {
-            section.collapsed = !section.collapsed;
-            sectionDiv.classList.toggle('collapsed');
-          });
-          
+
           const nameSpan = document.createElement('span');
           nameSpan.className = 'section-name';
           nameSpan.textContent = section.nombre;
-          nameSpan.addEventListener('click', () => {
+
+          const toggleSectionState = () => {
             section.collapsed = !section.collapsed;
             sectionDiv.classList.toggle('collapsed');
-          });
+            scheduleCacheSave();
+          };
+
+          toggle.addEventListener('click', toggleSectionState);
+          nameSpan.addEventListener('click', toggleSectionState);
           
           const countSpan = document.createElement('span');
           countSpan.className = 'section-count';
@@ -5693,19 +5899,22 @@
             tema.page.dataset.sectionName = section.nombre;
           });
           buildSectionsPanel();
+          scheduleCacheSave();
         }
       }
 
       function deleteSection(section) {
         if (!confirm(`¿Eliminar toda la sección "${section.nombre}" con ${section.temas.length} tema(s)?`)) return;
-        
+
         section.temas.forEach(tema => {
+          detachPageListeners(tema.page);
           tema.page.remove();
         });
-        
+
         pages = pages.filter(p => p.dataset.sectionId !== section.id);
         sections = sections.filter(s => s.id !== section.id);
         buildSectionsPanel();
+        scheduleCacheSave();
       }
 
       function addNewSection() {
@@ -5721,11 +5930,13 @@
         
         sections.push(newSection);
         buildSectionsPanel();
+        scheduleCacheSave();
       }
 
       function sortSectionsAlpha() {
         sections.sort((a, b) => a.nombre.localeCompare(b.nombre));
         buildSectionsPanel();
+        scheduleCacheSave();
       }
 
       function sortSectionsNumeric() {
@@ -5735,6 +5946,7 @@
           return numA - numB;
         });
         buildSectionsPanel();
+        scheduleCacheSave();
       }
 
       function printSection(section) {
@@ -6319,7 +6531,8 @@ ${document.querySelector('style').textContent}
     return {
       specialty: specialtySpan?.textContent || '',
       sections: exportedSections,
-      magicContainerHtml: magicContainer ? magicContainer.innerHTML : ''
+      magicContainerHtml: magicContainer ? magicContainer.innerHTML : '',
+      zoom: currentZoom
     };
   }
 
@@ -6335,10 +6548,12 @@ ${document.querySelector('style').textContent}
     URL.revokeObjectURL(url);
   }
 
-  function importSectionsData(data) {
+  function importSectionsData(data, options = {}) {
     if (!data || !Array.isArray(data.sections)) {
       throw new Error('El archivo no contiene secciones válidas.');
     }
+
+    const { skipCacheSave = false, skipZoom = false } = options;
 
     const mainContainer = document.body;
     const scriptTag = document.querySelector('script');
@@ -6347,7 +6562,10 @@ ${document.querySelector('style').textContent}
     }
 
     io.disconnect();
-    pages.forEach(page => page.remove());
+    pages.forEach(page => {
+      detachPageListeners(page);
+      page.remove();
+    });
 
     if (specialtySpan && typeof data.specialty === 'string') {
       specialtySpan.textContent = data.specialty;
@@ -6381,6 +6599,7 @@ ${document.querySelector('style').textContent}
         mainContainer.insertBefore(page, scriptTag);
         afterContentSanitize(page);
         page.contentEditable = isEditMode ? 'true' : 'false';
+        attachPageListeners(page);
 
         const title = (topicData?.titulo && String(topicData.titulo).trim()) || getTopicTitle(page) || `Tema ${sectionInfo.temas.length + 1}`;
         sectionInfo.temas.push({ id: topicId, titulo: title, page });
@@ -6421,6 +6640,14 @@ ${document.querySelector('style').textContent}
     hideTemplateToolbar();
     savedSelection = null;
     window.scrollTo({ top: 0 });
+
+    if (!skipZoom && typeof data.zoom === 'number') {
+      applyZoom(data.zoom, { skipCache: true });
+    }
+
+    if (!skipCacheSave) {
+      scheduleCacheSave();
+    }
   }
 
   exportDataBtn?.addEventListener('click', () => {
@@ -6578,12 +6805,12 @@ ${document.querySelector('style').textContent}
           }
 
           loadedPages.forEach(page => {
-            const clonedPage = page.cloneNode(true);
-            afterContentSanitize(clonedPage);
+          const clonedPage = page.cloneNode(true);
+          afterContentSanitize(clonedPage);
 
-            if (!clonedPage.dataset.sectionId) {
-              clonedPage.dataset.sectionId = importedSectionId;
-            }
+          if (!clonedPage.dataset.sectionId) {
+            clonedPage.dataset.sectionId = importedSectionId;
+          }
             if (!clonedPage.dataset.sectionName) {
               clonedPage.dataset.sectionName = importedSectionName;
             }
@@ -6599,9 +6826,10 @@ ${document.querySelector('style').textContent}
             }
             existingTopicIds.add(topicId);
 
-            clonedPage.contentEditable = isEditMode ? 'true' : 'false';
-            mainContainer.insertBefore(clonedPage, scriptTag);
-          });
+          clonedPage.contentEditable = isEditMode ? 'true' : 'false';
+          mainContainer.insertBefore(clonedPage, scriptTag);
+          attachPageListeners(clonedPage);
+        });
 
           const magicContainer = document.querySelector('.magic-content-container');
           if (magicContainer) {
@@ -6660,6 +6888,7 @@ ${document.querySelector('style').textContent}
         if (!p.dataset.topicId) {
           p.dataset.topicId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         }
+        attachPageListeners(p);
         io.observe(p);
       });
 
@@ -6681,6 +6910,7 @@ ${document.querySelector('style').textContent}
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      scheduleCacheSave();
     } catch (error) {
       console.error('Error al cargar el archivo:', error);
       alert('Error al cargar archivos: ' + error.message);
@@ -6703,6 +6933,17 @@ ${document.querySelector('style').textContent}
       alert('No se pudo copiar el HTML');
     }
   });
+
+  applyZoom(currentZoom, { skipCache: true, skipPersist: true });
+  loadDocumentFromCacheOnStartup();
+
+  if (STORAGE_AVAILABLE) {
+    window.addEventListener('beforeunload', () => {
+      if (hasPendingChanges) {
+        persistDocumentToCache();
+      }
+    });
+  }
 
 })();
   </script>
