@@ -3965,10 +3965,18 @@
         });
       }
 
+      function resetInteractiveBindings(root) {
+        if (!root) return;
+        root.querySelectorAll('.magic-icon[data-bound], .topic-title-text[data-bound]').forEach(node => {
+          node.removeAttribute('data-bound');
+        });
+      }
+
       function afterContentSanitize(root) {
         sanitizeCitations(root);
         purgeUnwantedNotes(root);
         normalizePearls(root);
+        resetInteractiveBindings(root);
         initializeCollapseCards(root);
       }
 
