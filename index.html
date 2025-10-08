@@ -10,7 +10,9 @@
       --theme-primary: #0d6efd;
       --theme-primary-dark: #0b5ed7;
       --theme-primary-light: #6ea8fe;
+      --base-font-size: 10.5px;
       --zoom-level: 1;
+      font-size: calc(var(--base-font-size) * var(--zoom-level));
     }
 
     body.theme-blue {
@@ -45,7 +47,7 @@
       margin: 0;
       padding: 0;
       line-height: 1.3;
-      font-size: 10.5px;
+      font-size: 1rem;
       transition: all 0.3s ease;
     }
 
@@ -60,9 +62,9 @@
     }
 
     body.reading-mode .page {
-      margin-top: 20px;
+      margin-top: 1.9rem;
       box-shadow: 0 0 5px rgba(0, 0, 0, .05);
-      max-width: 800px;
+      max-width: 76.2rem;
     }
 
     .reading-mode-exit {
@@ -75,7 +77,7 @@
       border-radius: 50%;
       width: 48px;
       height: 48px;
-      font-size: 20px;
+      font-size: 1.905rem;
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       z-index: 5000;
@@ -101,39 +103,47 @@
       left: 0;
       right: 0;
       z-index: 4000;
-      height: 36px;
+      height: 3.43rem;
       background: #000;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 10px;
+      padding: 0 0.95rem;
       box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
-      font-size: calc(11px * var(--zoom-level));
+      font-size: 1.05rem;
     }
 
     .topbar-left {
       position: absolute;
-      left: 10px;
+      left: 0.95rem;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.95rem;
     }
 
     .topbar-center {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
+      gap: 0.76rem;
+      font-size: 1.14rem;
       flex-wrap: wrap;
       justify-content: center;
-      max-width: 90%;
+      max-width: calc(100% - 12rem);
+    }
+
+    .topbar-right {
+      position: absolute;
+      right: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.95rem;
     }
 
     .topbar-topic {
       display: inline-block;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 0.19rem 0.57rem;
+      border-radius: 0.38rem;
       background: #222;
       color: #ddd;
       max-width: 60vw;
@@ -146,14 +156,14 @@
       background: #111;
       color: #fff;
       border: 1px solid #333;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 11px;
+      padding: 0.38rem 0.76rem;
+      border-radius: 0.57rem;
+      font-size: 1.05rem;
       cursor: pointer;
       transition: opacity .15s;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 0.38rem;
     }
 
     .topbar-btn:hover {
@@ -166,7 +176,7 @@
     }
 
     .topbar-btn-label {
-      font-size: 9px;
+      font-size: 0.86rem;
       display: none;
     }
 
@@ -179,22 +189,22 @@
     .zoom-controls {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 0.38rem;
     }
 
     .zoom-value {
-      min-width: 45px;
+      min-width: 4.29rem;
       text-align: center;
-      font-size: 10px;
+      font-size: 0.95rem;
       background: #222;
-      padding: 2px 4px;
-      border-radius: 3px;
+      padding: 0.19rem 0.38rem;
+      border-radius: 0.29rem;
     }
 
     /* ===== Barra de herramientas mejorada ===== */
     .edit-toolbar {
       position: fixed;
-      top: calc(38px / var(--zoom-level));
+      top: 3.62rem;
       left: 0;
       right: 0;
       background: #fff;
@@ -204,7 +214,7 @@
       display: none;
       z-index: 3500;
       justify-content: center;
-      font-size: calc(10px * var(--zoom-level));
+      font-size: 0.95rem;
     }
 
     .edit-toolbar.show {
@@ -226,7 +236,7 @@
       border-radius: 3px;
       background: #fff;
       cursor: pointer;
-      font-size: 10px;
+      font-size: 0.952rem;
       line-height: 1.2;
     }
 
@@ -242,7 +252,7 @@
 
     .edit-toolbar select {
       min-width: 70px;
-      font-size: 10px;
+      font-size: 0.952rem;
     }
 
     .toolbar-separator {
@@ -263,7 +273,7 @@
     }
 
     .toolbar-label {
-      font-size: 9px;
+      font-size: 0.857rem;
       color: #6c757d;
       font-weight: 600;
       margin-right: 3px;
@@ -360,7 +370,7 @@
       border-radius: 3px;
       background: #fff;
       cursor: pointer;
-      font-size: 10px;
+      font-size: 0.952rem;
       transition: all 0.15s;
     }
 
@@ -375,7 +385,7 @@
     }
 
     .image-toolbar label {
-      font-size: 9px;
+      font-size: 0.857rem;
       color: #6c757d;
       font-weight: 600;
       min-width: 40px;
@@ -387,7 +397,7 @@
     }
 
     .image-toolbar .size-display {
-      font-size: 9px;
+      font-size: 0.857rem;
       color: #495057;
       min-width: 60px;
       text-align: right;
@@ -442,15 +452,15 @@
     }
 
     .template-toolbar label {
-      font-size: 9px;
+      font-size: 0.857rem;
       color: #6c757d;
       font-weight: 600;
       min-width: 64px;
     }
 
     .template-toolbar input[type="color"] {
-      width: 36px;
-      height: 24px;
+      width: 3.43rem;
+      height: 2.29rem;
       border: 1px solid #ced4da;
       border-radius: 4px;
       padding: 0;
@@ -464,7 +474,7 @@
     }
 
     .template-toolbar .size-display {
-      font-size: 9px;
+      font-size: 0.857rem;
       color: #495057;
       min-width: 52px;
       text-align: right;
@@ -476,7 +486,7 @@
       border-radius: 3px;
       background: #fff;
       cursor: pointer;
-      font-size: 10px;
+      font-size: 0.952rem;
       transition: all 0.15s;
     }
 
@@ -619,14 +629,14 @@
 
     .modal-header h3 {
       margin: 0;
-      font-size: 18px;
+      font-size: 1.714rem;
       color: var(--theme-primary);
     }
 
     .modal-close {
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: 2.286rem;
       cursor: pointer;
       color: #6c757d;
       line-height: 1;
@@ -650,7 +660,7 @@
       border: 1px solid #dee2e6;
       background: #fff;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 1.333rem;
     }
 
     .modal-btn.primary {
@@ -670,7 +680,7 @@
       padding: 8px;
       border: 1px solid #ced4da;
       border-radius: 4px;
-      font-size: 14px;
+      font-size: 1.333rem;
       margin-bottom: 10px;
       box-sizing: border-box;
     }
@@ -681,7 +691,7 @@
       border: 1px solid #ced4da;
       border-radius: 4px;
       font-family: monospace;
-      font-size: 12px;
+      font-size: 1.143rem;
       min-height: 200px;
       resize: vertical;
       box-sizing: border-box;
@@ -732,7 +742,7 @@
     .image-crop-close {
       border: none;
       background: transparent;
-      font-size: 20px;
+      font-size: 1.905rem;
       cursor: pointer;
       color: #495057;
     }
@@ -768,7 +778,7 @@
     }
 
     .image-crop-instructions {
-      font-size: 11px;
+      font-size: 1.048rem;
       color: #6c757d;
       margin: 0;
       text-align: center;
@@ -776,7 +786,7 @@
     }
 
     .image-crop-size {
-      font-size: 12px;
+      font-size: 1.143rem;
       color: #495057;
     }
 
@@ -791,7 +801,7 @@
       border: 1px solid #ced4da;
       background: #fff;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 1.143rem;
       transition: background 0.2s ease;
     }
 
@@ -822,13 +832,13 @@
     }
 
     .stat-label {
-      font-size: 11px;
+      font-size: 1.048rem;
       color: #6c757d;
       margin-bottom: 4px;
     }
 
     .stat-value {
-      font-size: 20px;
+      font-size: 1.905rem;
       font-weight: 600;
       color: #212529;
     }
@@ -855,12 +865,12 @@
 
     .template-card h4 {
       margin: 0 0 8px 0;
-      font-size: 12px;
+      font-size: 1.143rem;
       color: var(--theme-primary);
     }
 
     .template-preview {
-      font-size: 10px;
+      font-size: 0.952rem;
       color: #6c757d;
       border: 1px dashed #dee2e6;
       padding: 6px;
@@ -871,11 +881,11 @@
     /* ===== Panel lateral ===== */
     .topic-panel {
       position: fixed;
-      top: 36px;
+      top: 3.43rem;
       left: 0;
       width: 340px;
       max-width: 90vw;
-      height: calc(100vh - 36px);
+      height: calc(100vh - 3.43rem);
       background: #fff;
       border-right: 1px solid #e5e7eb;
       box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
@@ -893,11 +903,11 @@
     /* ===== Tabla de contenidos ===== */
     .toc-panel {
       position: fixed;
-      top: 36px;
+      top: 3.43rem;
       right: 0;
       width: 300px;
       max-width: 90vw;
-      height: calc(100vh - 36px);
+      height: calc(100vh - 3.43rem);
       background: #fff;
       border-left: 1px solid #e5e7eb;
       box-shadow: -4px 4px 10px rgba(0, 0, 0, .08);
@@ -926,7 +936,7 @@
     }
 
     .toc-header strong {
-      font-size: 13px;
+      font-size: 1.238rem;
       color: #212529;
     }
 
@@ -950,21 +960,21 @@
     }
 
     .toc-item.h1 {
-      font-size: 11px;
+      font-size: 1.048rem;
       font-weight: 600;
       color: var(--theme-primary);
       margin-top: 8px;
     }
 
     .toc-item.h2 {
-      font-size: 10px;
+      font-size: 0.952rem;
       font-weight: 500;
       color: #495057;
       padding-left: 20px;
     }
 
     .toc-item.h3 {
-      font-size: 9px;
+      font-size: 0.857rem;
       color: #6c757d;
       padding-left: 32px;
     }
@@ -979,7 +989,7 @@
     }
 
     .panel-header strong {
-      font-size: 13px;
+      font-size: 1.238rem;
       color: #212529;
     }
 
@@ -994,7 +1004,7 @@
       border-radius: 4px;
       padding: 3px 6px;
       cursor: pointer;
-      font-size: 10px;
+      font-size: 0.952rem;
       color: #495057;
     }
 
@@ -1024,7 +1034,7 @@
       background: #fff;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 10px;
+      font-size: 0.952rem;
     }
 
     .panel-action-btn:hover {
@@ -1046,13 +1056,13 @@
       padding: 6px 10px;
       background: #f8f9fa;
       font-weight: 600;
-      font-size: 11px;
+      font-size: 1.048rem;
       gap: 6px;
       border-bottom: 1px solid #e9ecef;
     }
 
     .section-toggle {
-      font-size: 9px;
+      font-size: 0.857rem;
       transition: transform 0.2s;
       cursor: pointer;
       user-select: none;
@@ -1083,7 +1093,7 @@
       background: #fff;
       border-radius: 3px;
       cursor: pointer;
-      font-size: 9px;
+      font-size: 0.857rem;
     }
 
     .section-action-btn:hover {
@@ -1091,7 +1101,7 @@
     }
 
     .section-count {
-      font-size: 9px;
+      font-size: 0.857rem;
       color: #6c757d;
       font-weight: normal;
     }
@@ -1113,7 +1123,7 @@
       gap: 6px;
       padding: 5px 10px 5px 30px;
       border-bottom: 1px dashed #f8f9fa;
-      font-size: 10px;
+      font-size: 0.952rem;
     }
 
     .topic-list li:hover {
@@ -1132,7 +1142,7 @@
     }
 
     .topic-list .topic-action {
-      font-size: 10px;
+      font-size: 0.952rem;
       border: 1px solid #d0d7de;
       background: #fff;
       border-radius: 3px;
@@ -1175,7 +1185,7 @@
       border: none;
       text-align: left;
       padding: 8px 14px;
-      font-size: 11px;
+      font-size: 1.048rem;
       color: #212529;
       cursor: pointer;
       width: 100%;
@@ -1191,7 +1201,7 @@
 
     .panel-backdrop {
       position: fixed;
-      top: 36px;
+      top: 3.43rem;
       left: 0;
       right: 0;
       bottom: 0;
@@ -1210,18 +1220,16 @@
 
     /* ===== Páginas con zoom CORREGIDO ===== */
     .page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 12mm;
-      margin: calc(56px * var(--zoom-level)) auto calc(20px * var(--zoom-level));
+      width: 75.6rem;
+      min-height: 106.9rem;
+      padding: 4.32rem;
+      margin: 5.33rem auto 1.9rem;
       box-sizing: border-box;
       background: #fff;
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
       page-break-after: always;
       overflow-wrap: break-word;
       position: relative;
-      transform: scale(var(--zoom-level));
-      transform-origin: top center;
     }
 
     .page[contenteditable="true"] {
@@ -1231,7 +1239,7 @@
 
     /* ===== Icono mágico en el título ===== */
     h1 {
-      font-size: 18px;
+      font-size: 1.714rem;
       color: var(--theme-primary);
       margin: 0 0 6px 0;
       padding-bottom: 3px;
@@ -1254,7 +1262,7 @@
       justify-content: center;
       width: 24px;
       height: 24px;
-      font-size: 16px;
+      font-size: 1.524rem;
       cursor: pointer;
       background: rgba(0, 0, 0, 0.05);
       border: none;
@@ -1271,7 +1279,7 @@
     }
 
     h2 {
-      font-size: 13px;
+      font-size: 1.238rem;
       color: var(--theme-primary-dark);
       margin: 8px 0 3px 0;
       font-weight: 600;
@@ -1279,7 +1287,7 @@
     }
 
     h3 {
-      font-size: 11px;
+      font-size: 1.048rem;
       color: var(--theme-primary);
       margin: 6px 0 2px 0;
       font-weight: 600;
@@ -1287,7 +1295,7 @@
     }
 
     h4 {
-      font-size: 11px;
+      font-size: 1.048rem;
       color: var(--theme-primary-dark);
       margin: 6px 0 2px 0;
       font-weight: 600;
@@ -1314,7 +1322,7 @@
     }
 
     .small-text {
-      font-size: 9px;
+      font-size: 0.857rem;
       color: #6c757d
     }
 
@@ -1382,7 +1390,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 1.333rem;
       line-height: 1;
       transition: background 0.2s ease;
     }
@@ -1418,7 +1426,7 @@
       border-collapse: collapse;
       width: 100%;
       max-width: 100%;
-      font-size: 10px;
+      font-size: 0.952rem;
       margin: 6px 0;
       line-height: 1.25;
       table-layout: fixed
@@ -1464,7 +1472,7 @@
       box-shadow: 0 12px 40px rgba(15, 23, 42, 0.18);
       display: none;
       flex-direction: column;
-      font-size: 11px;
+      font-size: 1.048rem;
       color: #212529;
       z-index: 4100;
       max-height: calc(100vh - 40px);
@@ -1494,12 +1502,12 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      font-size: 10px;
+      font-size: 0.952rem;
       color: #6c757d;
     }
 
     .table-menu-size {
-      font-size: 13px;
+      font-size: 1.238rem;
       font-weight: 600;
       color: #0d6efd;
     }
@@ -1514,7 +1522,7 @@
     .table-menu input,
     .table-menu select {
       font-family: inherit;
-      font-size: 11px;
+      font-size: 1.048rem;
     }
 
     .table-menu button {
@@ -1555,7 +1563,7 @@
       height: 28px;
       border-radius: 50%;
       padding: 0;
-      font-size: 16px;
+      font-size: 1.524rem;
       line-height: 1;
       display: flex;
       align-items: center;
@@ -1584,7 +1592,7 @@
       border-radius: 10px 10px 0 0;
       border-bottom: none;
       background: #f1f3f5;
-      font-size: 13px;
+      font-size: 1.238rem;
       padding: 8px 0;
     }
 
@@ -1623,7 +1631,7 @@
 
     .table-menu-section h4 {
       margin: 0;
-      font-size: 11px;
+      font-size: 1.048rem;
       font-weight: 700;
       letter-spacing: 0.03em;
       text-transform: uppercase;
@@ -1679,7 +1687,7 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
-      font-size: 9px;
+      font-size: 0.857rem;
       font-weight: 600;
       text-transform: uppercase;
     }
@@ -1692,7 +1700,7 @@
     }
 
     .table-slider-row label {
-      font-size: 11px;
+      font-size: 1.048rem;
       color: #6c757d;
       font-weight: 600;
     }
@@ -1749,7 +1757,7 @@
       display: flex;
       align-items: center;
       gap: 4px;
-      font-size: 11px;
+      font-size: 1.048rem;
       color: #495057;
     }
 
@@ -1855,7 +1863,7 @@
     /* ===== Visor Mágico ===== */
     .magic-view {
       position: fixed;
-      top: 36px;
+      top: 3.43rem;
       left: 0;
       right: 0;
       bottom: 0;
@@ -1883,23 +1891,21 @@
     .magic-close {
       background: transparent;
       border: none;
-      font-size: 22px;
+      font-size: 2.095rem;
       line-height: 1;
       color: #444;
       cursor: pointer
     }
 
     .magic-page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 12mm;
-      margin: calc(20px * var(--zoom-level)) auto;
+      width: 75.6rem;
+      min-height: 106.9rem;
+      padding: 4.32rem;
+      margin: 1.9rem auto;
       background: #fff;
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
       box-sizing: border-box;
       overflow-wrap: break-word;
-      transform: scale(var(--zoom-level));
-      transform-origin: top center;
     }
 
     .magic-page[contenteditable="true"] {
@@ -1912,7 +1918,7 @@
     }
 
     .magic-title {
-      font-size: 18px;
+      font-size: 1.714rem;
       color: var(--theme-primary);
       margin: 0 0 6px 0;
       padding-bottom: 3px;
@@ -1926,7 +1932,7 @@
 
     .magic-section h4 {
       margin: 0 0 6px 0;
-      font-size: 12px;
+      font-size: 1.143rem;
       color: var(--theme-primary-dark);
     }
 
@@ -1934,7 +1940,7 @@
       border-collapse: collapse;
       width: 100%;
       max-width: 100%;
-      font-size: 9.5px;
+      font-size: 0.905rem;
       line-height: 1.15;
       margin: 6px 0;
       background: #ffffff;
@@ -2009,8 +2015,8 @@
     }
   </style>
 </head>
-<body class="theme-blue">
-  <!-- build:topics {"especialidad":"Endocrinología","secciones":[{"id":"seccion-1","nombre":"Endocrinología","temas":[{"id":"sindrome-metabolico","titulo":"Síndrome Metabólico"},{"id":"diabetes-mellitus-2","titulo":"Diabetes Mellitus tipo II"}]}]} -->
+<body>
+  <!-- build:topics {"especialidad":"Endocrinología","secciones":[]} -->
   
   <div class="topbar">
     <div class="topbar-left">
@@ -2034,6 +2040,9 @@
       <button class="topbar-btn" id="exportMarkdownBtn" title="Exportar a Markdown"><span>⬇️</span> <span class="topbar-btn-label">MD</span></button>
       <button class="topbar-btn" id="copyHtmlBtn" title="Copiar HTML completo"><span>📋</span> <span class="topbar-btn-label">Copiar</span></button>
       <button class="topbar-btn" id="printCurrentBtn" title="Imprimir documento"><span>🖨️</span> <span class="topbar-btn-label">Imprimir</span></button>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" id="cacheSaveBtn" title="Guardar en caché"><span>💾</span> <span class="topbar-btn-label">Guardar</span></button>
     </div>
   </div>
 
@@ -2141,13 +2150,13 @@
     </div>
     <div class="image-toolbar-row">
       <label for="imageAltInput">Alt:</label>
-      <input type="text" id="imageAltInput" placeholder="Texto alternativo" style="flex:1; font-size: 11px; padding: 4px;">
+      <input type="text" id="imageAltInput" placeholder="Texto alternativo" style="flex:1; font-size: 1.048rem; padding: 0.38rem;">
       <button id="applyAltBtn" title="Aplicar texto alternativo">Aplicar</button>
     </div>
     <div class="image-toolbar-row">
       <label for="imageFrameToggle">Marco:</label>
       <input type="checkbox" id="imageFrameToggle" style="margin-right: 6px;">
-      <span style="font-size: 10px; color: #495057;">Agregar marco</span>
+      <span style="font-size: 0.952rem; color: #495057;">Agregar marco</span>
     </div>
     <div class="image-toolbar-row">
       <button id="wrapFigureBtn" title="Agregar figura" style="flex:1;">➕ Cuadro</button>
@@ -2386,23 +2395,9 @@
   </aside>
 
   <!-- Contenido mágico -->
-  <div class="magic-content-container" style="display:none">
-    <div id="magic-sindrome-metabolico" class="magic-topic">
-      <section class="magic-section"><h4>Contenido de ejemplo</h4>
-        <p>Este es contenido mágico de ejemplo.</p>
-      </section>
-    </div>
-  </div>
+  <div class="magic-content-container" style="display:none"></div>
 
   <!-- Páginas -->
-  <section class="page" data-topic-id="sindrome-metabolico" data-section-id="seccion-1">
-    <h1>
-      <span>Síndrome Metabólico</span>
-      <span class="magic-icon" title="Ver contenido mágico">✨</span>
-    </h1>
-    <h2>Definición</h2>
-    <p>El síndrome metabólico (SM) es un conjunto de alteraciones metabólicas interrelacionadas.</p>
-  </section>
 
   <script>
     (function() {
@@ -2426,15 +2421,10 @@
         scaleX: 1,
         scaleY: 1
       };
+
+      const CACHE_STORAGE_KEY = 'emi2025-editor-cache-v1';
       
-      let sections = [
-        {
-          id: 'seccion-1',
-          nombre: 'Endocrinología',
-          collapsed: false,
-          temas: []
-        }
-      ];
+      let sections = [];
       
       const panel = document.getElementById('topic-panel');
       const tocPanel = document.getElementById('toc-panel');
@@ -2457,6 +2447,7 @@
       const exportDataBtn = document.getElementById('exportDataBtn');
       const importDataBtn = document.getElementById('importDataBtn');
       const importDataInput = document.getElementById('importDataInput');
+      const cacheSaveBtn = document.getElementById('cacheSaveBtn');
       const editPanelBtn = document.getElementById('editPanelBtn');
       const tocBtn = document.getElementById('tocBtn');
       const readingModeBtn = document.getElementById('readingModeBtn');
@@ -2764,10 +2755,14 @@
       });
 
       /* === ZOOM === */
-      function updateZoom(delta) {
-        currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
+      function applyZoom(level) {
+        currentZoom = Math.max(0.5, Math.min(2, level));
         document.documentElement.style.setProperty('--zoom-level', currentZoom);
         zoomValue.textContent = Math.round(currentZoom * 100) + '%';
+      }
+
+      function updateZoom(delta) {
+        applyZoom(currentZoom + delta);
       }
 
       zoomInBtn?.addEventListener('click', () => updateZoom(0.1));
@@ -6323,6 +6318,75 @@ ${document.querySelector('style').textContent}
     };
   }
 
+  function saveToLocalCache(showFeedback = true) {
+    try {
+      if (!window.localStorage) {
+        throw new Error('Almacenamiento local no disponible');
+      }
+
+      const snapshot = {
+        version: 1,
+        savedAt: new Date().toISOString(),
+        zoom: currentZoom,
+        data: collectDocumentData()
+      };
+
+      window.localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(snapshot));
+
+      if (showFeedback && cacheSaveBtn) {
+        const oldHtml = cacheSaveBtn.innerHTML;
+        cacheSaveBtn.innerHTML = '<span>✅</span> <span class="topbar-btn-label">Guardado</span>';
+        setTimeout(() => {
+          cacheSaveBtn.innerHTML = oldHtml;
+        }, 2000);
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error al guardar en caché:', error);
+      if (showFeedback) {
+        alert('No se pudo guardar en caché: ' + error.message);
+      }
+      return false;
+    }
+  }
+
+  function restoreFromLocalCache() {
+    try {
+      if (!window.localStorage) {
+        return false;
+      }
+
+      const raw = window.localStorage.getItem(CACHE_STORAGE_KEY);
+      if (!raw) {
+        return false;
+      }
+
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object') {
+        return false;
+      }
+
+      let restored = false;
+
+      if (parsed.data) {
+        importSectionsData(parsed.data);
+        restored = true;
+      }
+
+      if (typeof parsed.zoom === 'number') {
+        applyZoom(parsed.zoom);
+      } else {
+        applyZoom(currentZoom);
+      }
+
+      return restored;
+    } catch (error) {
+      console.error('Error al restaurar desde caché:', error);
+      return false;
+    }
+  }
+
   function downloadJsonFile(data, filename) {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -6703,6 +6767,17 @@ ${document.querySelector('style').textContent}
       alert('No se pudo copiar el HTML');
     }
   });
+
+  cacheSaveBtn?.addEventListener('click', () => saveToLocalCache(true));
+
+  window.addEventListener('beforeunload', () => saveToLocalCache(false));
+
+  const restoredFromCache = restoreFromLocalCache();
+  if (!restoredFromCache) {
+    buildSectionsPanel();
+    buildTableOfContents();
+    applyZoom(currentZoom);
+  }
 
 })();
   </script>
