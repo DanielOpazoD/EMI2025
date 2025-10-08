@@ -6288,18 +6288,32 @@
       }
 
       function magicAnchorFor(page) {
-        const tid = page.dataset.topicId || '';
-        if (!tid) return '';
-        
-        if (document.getElementById(`magic-topic-${tid}`)) {
-          return `magic-topic-${tid}`;
+        if (!page) return '';
+
+        const storedAnchor = page.dataset.magicAnchorId?.trim();
+        if (storedAnchor) {
+          const storedEl = document.getElementById(storedAnchor);
+          if (storedEl) {
+            return storedAnchor;
+          }
+          delete page.dataset.magicAnchorId;
         }
-        if (document.getElementById(`magic-${tid}`)) {
-          return `magic-${tid}`;
+
+        const tid = (page.dataset.topicId || '').trim();
+        if (!tid) {
+          return '';
         }
-        if (document.getElementById(tid)) {
-          return tid;
+
+        const candidates = [`magic-topic-${tid}`, `magic-${tid}`, tid];
+        for (const candidate of candidates) {
+          if (!candidate) continue;
+          const el = document.getElementById(candidate);
+          if (el) {
+            page.dataset.magicAnchorId = candidate;
+            return candidate;
+          }
         }
+
         return '';
       }
 
@@ -7303,7 +7317,10 @@ ${document.querySelector('style').textContent}
       magicContainer.innerHTML = '';
       if (Array.isArray(data.magicTopics) && data.magicTopics.length) {
         data.magicTopics.forEach(topicInfo => {
-          const topicId = topicInfo?.id ? String(topicInfo.id) : generateUniqueId('magic-topic');
+          let topicId = topicInfo?.id ? String(topicInfo.id).trim() : '';
+          if (!topicId) {
+            topicId = generateUniqueId('magic-topic');
+          }
           const magicTopic = document.createElement('div');
           magicTopic.id = topicId;
           magicTopic.className = 'magic-topic';
@@ -7317,7 +7334,13 @@ ${document.querySelector('style').textContent}
         magicContainer.querySelectorAll('.magic-topic').forEach(topic => {
           afterContentSanitize(topic);
           if (topic.id) {
-            magicTopicMap.set(topic.id, topic);
+            const trimmedId = topic.id.trim();
+            if (trimmedId && trimmedId !== topic.id) {
+              topic.id = trimmedId;
+            }
+            if (trimmedId) {
+              magicTopicMap.set(trimmedId, topic);
+            }
           }
         });
       }
@@ -7357,10 +7380,11 @@ ${document.querySelector('style').textContent}
         sectionInfo.temas.push({ id: topicId, titulo: title, page });
         newPages.push(page);
 
+        let resolvedMagicId = '';
         if (magicContainer) {
           let magicId = '';
           if (topicData?.magicId) {
-            magicId = String(topicData.magicId);
+            magicId = String(topicData.magicId).trim();
           } else if (typeof topicData?.magicHtml === 'string') {
             magicId = `magic-topic-${topicId}`;
           }
@@ -7378,7 +7402,16 @@ ${document.querySelector('style').textContent}
               magicTopic.innerHTML = topicData.magicHtml;
               afterContentSanitize(magicTopic);
             }
+            resolvedMagicId = magicId;
           }
+        }
+
+        if (resolvedMagicId) {
+          page.dataset.magicAnchorId = resolvedMagicId;
+        } else if (topicData?.magicId) {
+          page.dataset.magicAnchorId = String(topicData.magicId).trim();
+        } else {
+          delete page.dataset.magicAnchorId;
         }
       });
 
