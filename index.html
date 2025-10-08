@@ -484,6 +484,46 @@
       background: #f8f9fa;
     }
 
+    .template-toolbar .template-color-palette {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .template-toolbar .template-color-swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      border: 1px solid rgba(0,0,0,0.15);
+      cursor: pointer;
+      position: relative;
+      padding: 0;
+      background: var(--swatch-color, #ffffff);
+    }
+
+    .template-toolbar .template-color-swatch::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 5px;
+      border: 2px solid transparent;
+      pointer-events: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .template-toolbar .template-color-swatch:hover {
+      background: var(--swatch-color, #ffffff);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+    }
+
+    .template-toolbar .template-color-swatch.active::after {
+      border-color: var(--theme-primary);
+    }
+
+    .template-toolbar .template-toolbar-row.compact {
+      align-items: flex-start;
+    }
+
     img.selected-image {
       outline: 2px solid var(--theme-primary);
       outline-offset: 2px;
@@ -645,6 +685,126 @@
       min-height: 200px;
       resize: vertical;
       box-sizing: border-box;
+    }
+
+    /* ===== Recorte de imágenes ===== */
+    .image-crop-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 4600;
+      padding: 20px;
+    }
+
+    .image-crop-modal.show {
+      display: flex;
+    }
+
+    .image-crop-dialog {
+      background: #fff;
+      border-radius: 8px;
+      max-width: min(90vw, 720px);
+      width: 100%;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+    }
+
+    .image-crop-header,
+    .image-crop-footer {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .image-crop-footer {
+      border-bottom: none;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .image-crop-close {
+      border: none;
+      background: transparent;
+      font-size: 20px;
+      cursor: pointer;
+      color: #495057;
+    }
+
+    .image-crop-stage {
+      position: relative;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      overflow: auto;
+    }
+
+    .image-crop-stage img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .image-crop-selection {
+      position: absolute;
+      border: 2px dashed var(--theme-primary);
+      background: rgba(13,110,253,0.12);
+      pointer-events: none;
+      display: none;
+    }
+
+    .image-crop-selection.show {
+      display: block;
+    }
+
+    .image-crop-instructions {
+      font-size: 11px;
+      color: #6c757d;
+      margin: 0;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .image-crop-size {
+      font-size: 12px;
+      color: #495057;
+    }
+
+    .image-crop-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .image-crop-actions button {
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid #ced4da;
+      background: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.2s ease;
+    }
+
+    #imageCropApplyBtn {
+      background: var(--theme-primary);
+      color: #fff;
+      border-color: var(--theme-primary);
+    }
+
+    #imageCropApplyBtn:disabled {
+      background: #adb5bd;
+      border-color: #adb5bd;
+      cursor: not-allowed;
     }
 
     .stats-grid {
@@ -1053,7 +1213,7 @@
       width: 210mm;
       min-height: 297mm;
       padding: 12mm;
-      margin: calc((56px + (20px * var(--zoom-level))) * var(--zoom-level)) auto calc((20px * var(--zoom-level)));
+      margin: calc(56px * var(--zoom-level)) auto calc(20px * var(--zoom-level));
       box-sizing: border-box;
       background: #fff;
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
@@ -1182,6 +1342,70 @@
     .pearl::before {
       content: "💡 ";
       font-weight: 700
+    }
+
+    .collapse-card {
+      border: 1px solid #ced4da;
+      border-left-width: 4px;
+      border-radius: 6px;
+      background: #ffffff;
+      margin: 8px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .collapse-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #f1f3f5;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .collapse-card-title {
+      font-weight: 600;
+      color: #343a40;
+      flex: 1;
+    }
+
+    .collapse-card-toggle {
+      border: none;
+      background: var(--theme-primary);
+      color: #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      line-height: 1;
+      transition: background 0.2s ease;
+    }
+
+    .collapse-card-toggle:hover {
+      background: var(--theme-primary-dark);
+    }
+
+    .collapse-card-body {
+      padding: 10px 12px;
+    }
+
+    .collapse-card.collapsed .collapse-card-body {
+      display: none;
+    }
+
+    .collapse-card.collapsed .collapse-card-toggle::after {
+      content: '+';
+    }
+
+    .collapse-card-toggle::after {
+      content: '−';
+      font-weight: 700;
     }
 
     .table-wrap {
@@ -1360,6 +1584,14 @@
         min-height: auto;
       }
 
+      body[data-printing-section] .page:not([data-print-target]) {
+        display: none !important;
+      }
+
+      body[data-printing-section] .page[data-print-target] {
+        display: block !important;
+      }
+
       @page {
         size: auto;
         margin: 10mm;
@@ -1387,8 +1619,8 @@
       <button class="topbar-btn" id="loadHtmlBtn" title="Cargar archivo HTML"><span>📂</span> <span class="topbar-btn-label">Abrir</span></button>
       <button class="topbar-btn" id="editBtn" title="Modo edición"><span>✏️</span> <span class="topbar-btn-label">Editar</span></button>
       <button class="topbar-btn" id="saveHtmlBtn" style="display:none;" title="Guardar como HTML"><span>💾</span> <span class="topbar-btn-label">Guardar</span></button>
-      <button class="topbar-btn" id="exportDataBtn" title="Exportar secciones y temas"><span>📤</span> <span class="topbar-btn-label">Exportar datos</span></button>
-      <button class="topbar-btn" id="importDataBtn" title="Importar secciones y temas"><span>📥</span> <span class="topbar-btn-label">Importar datos</span></button>
+      <button class="topbar-btn" id="exportDataBtn" title="Exportar secciones y temas" aria-label="Exportar secciones y temas"><span>📤</span></button>
+      <button class="topbar-btn" id="importDataBtn" title="Importar secciones y temas" aria-label="Importar secciones y temas"><span>📥</span></button>
       <button class="topbar-btn" id="exportMarkdownBtn" title="Exportar a Markdown"><span>⬇️</span> <span class="topbar-btn-label">MD</span></button>
       <button class="topbar-btn" id="copyHtmlBtn" title="Copiar HTML completo"><span>📋</span> <span class="topbar-btn-label">Copiar</span></button>
       <button class="topbar-btn" id="printCurrentBtn" title="Imprimir documento"><span>🖨️</span> <span class="topbar-btn-label">Imprimir</span></button>
@@ -1457,6 +1689,7 @@
         <button id="insertOlBtn" title="Numerada">1.</button>
         <button id="insertHtmlBtn" title="HTML personalizado">&lt;/&gt;</button>
         <button id="insertTemplateBtn" title="Plantillas">📝</button>
+        <button id="insertCollapseCardBtn" title="Tarjeta colapsable">📘</button>
       </div>
 
       <div class="toolbar-separator"></div>
@@ -1521,20 +1754,61 @@
       <span class="size-display" id="heightDisplay">auto</span>
     </div>
     <div class="image-toolbar-row">
+      <button id="cropImageBtn" title="Recortar imagen" style="flex: 1;">✂️ Recortar</button>
+    </div>
+    <div class="image-toolbar-row">
       <button id="deleteImageBtn" title="Eliminar" style="color: #dc3545; flex: 1;">🗑️ Eliminar</button>
     </div>
   </div>
 
+  <div class="image-crop-modal" id="imageCropModal" aria-hidden="true">
+    <div class="image-crop-dialog">
+      <div class="image-crop-header">
+        <strong>Recortar imagen</strong>
+        <button type="button" id="imageCropCloseBtn" class="image-crop-close" title="Cerrar">&times;</button>
+      </div>
+      <div class="image-crop-stage" id="imageCropStage">
+        <img id="imageCropPreview" alt="Vista previa de la imagen a recortar" />
+        <div class="image-crop-selection" id="imageCropSelection"></div>
+        <p class="image-crop-instructions">Haz clic y arrastra sobre la imagen para elegir el área a conservar.</p>
+      </div>
+      <div class="image-crop-footer">
+        <span class="image-crop-size" id="imageCropSizeLabel">0 × 0 px</span>
+        <div class="image-crop-actions">
+          <button type="button" id="imageCropCancelBtn">Cancelar</button>
+          <button type="button" id="imageCropApplyBtn" disabled>Aplicar recorte</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="template-toolbar" id="templateToolbar">
-    <div class="template-toolbar-row">
+    <div class="template-toolbar-row compact">
       <label for="templateBgColor">Fondo:</label>
+      <div class="template-color-palette" id="templateBgPalette"></div>
       <input type="color" id="templateBgColor" value="#ffffff">
       <button id="templateClearBgBtn" title="Quitar fondo">Sin fondo</button>
     </div>
-    <div class="template-toolbar-row">
+    <div class="template-toolbar-row compact">
       <label for="templateTextColor">Texto:</label>
+      <div class="template-color-palette" id="templateTextPalette"></div>
       <input type="color" id="templateTextColor" value="#212529">
       <button id="templateResetTextColorBtn" title="Restablecer color">Restablecer</button>
+    </div>
+    <div class="template-toolbar-row">
+      <label for="templateBorderWidth">Borde:</label>
+      <input type="range" id="templateBorderWidth" min="0" max="12" step="1">
+      <span class="size-display" id="templateBorderWidthDisplay">1px</span>
+    </div>
+    <div class="template-toolbar-row compact" id="templateBorderColorRow">
+      <label for="templateBorderColor">Color borde:</label>
+      <div class="template-color-palette" id="templateBorderPalette"></div>
+      <input type="color" id="templateBorderColor" value="#ced4da">
+    </div>
+    <div class="template-toolbar-row compact" id="templateAccentColorRow" style="display:none;">
+      <label for="templateAccentColor">Borde izq.:</label>
+      <div class="template-color-palette" id="templateAccentPalette"></div>
+      <input type="color" id="templateAccentColor" value="#0d6efd">
     </div>
     <div class="template-toolbar-row">
       <label for="templateFontSize">Tamaño:</label>
@@ -1624,6 +1898,15 @@
       let currentZoom = 1;
       let allSectionsExpanded = true;
       let savedSelection = null;
+      const cropState = {
+        image: null,
+        isSelecting: false,
+        startX: 0,
+        startY: 0,
+        currentRect: null,
+        scaleX: 1,
+        scaleY: 1
+      };
       
       let sections = [
         {
@@ -1666,18 +1949,47 @@
       const imageFrameToggle = document.getElementById('imageFrameToggle');
       const wrapFigureBtn = document.getElementById('wrapFigureBtn');
       const unwrapFigureBtn = document.getElementById('unwrapFigureBtn');
+      const cropImageBtn = document.getElementById('cropImageBtn');
+      const imageCropModal = document.getElementById('imageCropModal');
+      const imageCropStage = document.getElementById('imageCropStage');
+      const imageCropPreview = document.getElementById('imageCropPreview');
+      const imageCropSelection = document.getElementById('imageCropSelection');
+      const imageCropApplyBtn = document.getElementById('imageCropApplyBtn');
+      const imageCropCancelBtn = document.getElementById('imageCropCancelBtn');
+      const imageCropCloseBtn = document.getElementById('imageCropCloseBtn');
+      const imageCropSizeLabel = document.getElementById('imageCropSizeLabel');
       const templateToolbar = document.getElementById('templateToolbar');
       const templateBgColorInput = document.getElementById('templateBgColor');
       const templateClearBgBtn = document.getElementById('templateClearBgBtn');
       const templateTextColorInput = document.getElementById('templateTextColor');
       const templateResetTextColorBtn = document.getElementById('templateResetTextColorBtn');
+      const templateBgPalette = document.getElementById('templateBgPalette');
+      const templateTextPalette = document.getElementById('templateTextPalette');
+      const templateBorderPalette = document.getElementById('templateBorderPalette');
+      const templateAccentPalette = document.getElementById('templateAccentPalette');
+      const templateBorderColorInput = document.getElementById('templateBorderColor');
+      const templateAccentColorInput = document.getElementById('templateAccentColor');
+      const templateBorderColorRow = document.getElementById('templateBorderColorRow');
+      const templateAccentColorRow = document.getElementById('templateAccentColorRow');
       const templateFontSizeSlider = document.getElementById('templateFontSize');
       const templateFontSizeDisplay = document.getElementById('templateFontSizeDisplay');
       const templateMarginTopSlider = document.getElementById('templateMarginTop');
       const templateMarginTopDisplay = document.getElementById('templateMarginTopDisplay');
       const templateMarginBottomSlider = document.getElementById('templateMarginBottom');
       const templateMarginBottomDisplay = document.getElementById('templateMarginBottomDisplay');
+      const templateBorderWidthSlider = document.getElementById('templateBorderWidth');
+      const templateBorderWidthDisplay = document.getElementById('templateBorderWidthDisplay');
       const templateDeleteBtn = document.getElementById('templateDeleteBtn');
+
+      const templateBackgroundPaletteColors = ['#ffffff', '#f8f9fa', '#fef9e7', '#fff3cd', '#fde2e4', '#f8d7da', '#e7f3ff', '#d1e7dd', '#e9ecef'];
+      const templateTextPaletteColors = ['#212529', '#343a40', '#0d6efd', '#198754', '#dc3545', '#fd7e14', '#6f42c1', '#6c757d', '#ffffff'];
+      const templateBorderPaletteColors = ['#ced4da', '#adb5bd', '#0d6efd', '#198754', '#dc3545', '#fd7e14', '#6f42c1', '#0dcaf0', '#6c757d', '#212529'];
+      const templateAccentPaletteColors = ['#0d6efd', '#198754', '#dc3545', '#fd7e14', '#6f42c1', '#ffc107', '#20c997', '#0dcaf0', '#6c757d'];
+
+      initPalette(templateBgPalette, templateBackgroundPaletteColors, color => applyTemplateBackground(color));
+      initPalette(templateTextPalette, templateTextPaletteColors, color => applyTemplateTextColor(color));
+      initPalette(templateBorderPalette, templateBorderPaletteColors, color => applyTemplateBorderColor(color));
+      initPalette(templateAccentPalette, templateAccentPaletteColors, color => applyTemplateAccentColor(color));
       const alignButtons = {
         left: document.getElementById('alignLeftBtn'),
         center: document.getElementById('alignCenterBtn'),
@@ -1693,11 +2005,16 @@
       const insertTemplateBtn = document.getElementById('insertTemplateBtn');
       const insertHtmlBtn = document.getElementById('insertHtmlBtn');
       const insertTableBtn = document.getElementById('insertTableBtn');
+      const insertCollapseCardBtn = document.getElementById('insertCollapseCardBtn');
 
       const pastelColors = [
         '#FFB6C1', '#FFD1DC', '#FFC8DD', '#E7C6FF', '#C8B6FF', '#B4D4FF', '#AEC6CF', '#B2DFDB',
         '#C5E1A5', '#FFF9C4', '#FFE082', '#FFCCBC', '#D7CCC8', '#F5F5F5', '#CFD8DC', '#E1BEE7'
       ];
+
+      if (cropImageBtn) {
+        cropImageBtn.disabled = true;
+      }
 
       const topicMenu = document.createElement('div');
       topicMenu.id = 'topicContextMenu';
@@ -1955,7 +2272,8 @@
         const activeEditable = document.activeElement && document.activeElement.isContentEditable
           ? document.activeElement
           : null;
-        const target = activeEditable || getCurrentPage() || getCurrentMagicPage();
+        const preferredMagic = getCurrentMagicPage();
+        const target = activeEditable || preferredMagic || getCurrentPage();
         if (!target) return null;
 
         const range = document.createRange();
@@ -2000,7 +2318,7 @@
       }
 
       function normalizeColorToHex(color, fallback = '#ffffff') {
-        if (!color || color === 'transparent' || color === 'rgba(0, 0, 0, 0)') {
+        if (!color || color === 'transparent' || color === 'rgba(0, 0, 0, 0)' || color === 'none') {
           return fallback;
         }
         if (color.startsWith('#')) {
@@ -2051,18 +2369,171 @@
         return block;
       }
 
+      function getTemplateTarget(block) {
+        if (!block) return null;
+        if (block.classList && block.classList.contains('box')) return block;
+        return block.querySelector('.box') || block;
+      }
+
+      function setPaletteActive(container, value) {
+        if (!container) return;
+        const normalized = normalizeColorToHex(value || '', '').toLowerCase();
+        container.querySelectorAll('.template-color-swatch').forEach(swatch => {
+          const swatchValue = normalizeColorToHex(swatch.dataset.value || '', '').toLowerCase();
+          swatch.classList.toggle('active', normalized && swatchValue === normalized);
+        });
+      }
+
+      function updateBorderWidthDataset(block, baseWidth, accentExtra) {
+        if (!block) return;
+        if (Number.isFinite(baseWidth)) {
+          block.dataset.borderWidth = String(baseWidth);
+        }
+        if (Number.isFinite(accentExtra)) {
+          block.dataset.borderAccentExtra = String(accentExtra);
+        }
+      }
+
+      function createCollapseCardElement() {
+        const card = document.createElement('div');
+        card.className = 'collapse-card';
+        card.innerHTML = `
+          <div class="collapse-card-header">
+            <span class="collapse-card-title">Título de la tarjeta</span>
+            <button type="button" class="collapse-card-toggle" aria-expanded="true"></button>
+          </div>
+          <div class="collapse-card-body">
+            <p>Contenido de la tarjeta colapsable.</p>
+          </div>
+        `;
+        return card;
+      }
+
+      function initializeCollapseCards(root) {
+        if (!root) return;
+        const cards = root.classList && root.classList.contains('collapse-card')
+          ? [root]
+          : Array.from(root.querySelectorAll('.collapse-card'));
+        cards.forEach(card => {
+          const toggle = card.querySelector('.collapse-card-toggle');
+          if (toggle) {
+            toggle.type = 'button';
+            toggle.setAttribute('aria-expanded', card.classList.contains('collapsed') ? 'false' : 'true');
+          }
+          const title = card.querySelector('.collapse-card-title');
+          if (title) {
+            title.setAttribute('contenteditable', 'true');
+          }
+        });
+      }
+
+      function initPalette(container, colors, onSelect) {
+        if (!container) return;
+        container.innerHTML = '';
+        colors.forEach(color => {
+          const swatch = document.createElement('button');
+          swatch.type = 'button';
+          swatch.className = 'template-color-swatch';
+          swatch.style.setProperty('--swatch-color', color);
+          swatch.dataset.value = color;
+          swatch.addEventListener('click', () => onSelect(color));
+          container.appendChild(swatch);
+        });
+      }
+
+      function applyTemplateBackground(color) {
+        if (!selectedTemplateBlock) return;
+        const target = getTemplateTarget(selectedTemplateBlock);
+        if (!target) return;
+        if (!color || color === 'transparent') {
+          target.style.backgroundColor = 'transparent';
+          delete selectedTemplateBlock.dataset.bgColor;
+          if (templateBgColorInput) {
+            templateBgColorInput.value = '#ffffff';
+          }
+          setPaletteActive(templateBgPalette, '');
+        } else {
+          target.style.backgroundColor = color;
+          selectedTemplateBlock.dataset.bgColor = color;
+          if (templateBgColorInput) {
+            templateBgColorInput.value = normalizeColorToHex(color, '#ffffff');
+          }
+          setPaletteActive(templateBgPalette, color);
+        }
+        repositionTemplateToolbar();
+      }
+
+      function applyTemplateTextColor(color) {
+        if (!selectedTemplateBlock) return;
+        const target = getTemplateTarget(selectedTemplateBlock);
+        if (!target) return;
+        if (!color) {
+          target.style.color = '';
+          delete selectedTemplateBlock.dataset.textColor;
+          if (templateTextColorInput) {
+            templateTextColorInput.value = '#212529';
+          }
+          setPaletteActive(templateTextPalette, '');
+        } else {
+          target.style.color = color;
+          selectedTemplateBlock.dataset.textColor = color;
+          if (templateTextColorInput) {
+            templateTextColorInput.value = normalizeColorToHex(color, '#212529');
+          }
+          setPaletteActive(templateTextPalette, color);
+        }
+      }
+
+      function applyTemplateBorderColor(color) {
+        if (!selectedTemplateBlock) return;
+        const target = getTemplateTarget(selectedTemplateBlock);
+        if (!target || !target.classList.contains('box')) return;
+        const normalized = color || '#ced4da';
+        target.style.borderStyle = 'solid';
+        target.style.borderColor = normalized;
+        selectedTemplateBlock.dataset.borderColor = normalized;
+        if (templateBorderColorInput) {
+          templateBorderColorInput.value = normalizeColorToHex(normalized, '#ced4da');
+        }
+        setPaletteActive(templateBorderPalette, normalized);
+        if (selectedTemplateBlock.dataset.accentColor) {
+          target.style.borderLeftColor = selectedTemplateBlock.dataset.accentColor;
+        }
+        updateTemplateToolbarState(selectedTemplateBlock);
+      }
+
+      function applyTemplateAccentColor(color) {
+        if (!selectedTemplateBlock) return;
+        const target = getTemplateTarget(selectedTemplateBlock);
+        if (!target || !target.classList.contains('box')) return;
+        const normalized = color || selectedTemplateBlock.dataset.borderColor || '#0d6efd';
+        target.style.borderLeftColor = normalized;
+        selectedTemplateBlock.dataset.accentColor = normalized;
+        if (templateAccentColorInput) {
+          templateAccentColorInput.value = normalizeColorToHex(normalized, '#0d6efd');
+        }
+        setPaletteActive(templateAccentPalette, normalized);
+        updateTemplateToolbarState(selectedTemplateBlock);
+      }
+
       function updateTemplateToolbarState(block) {
         if (!block || !templateToolbar) return;
-        const computed = window.getComputedStyle(block);
+        const target = getTemplateTarget(block);
+        const computed = window.getComputedStyle(target || block);
+        const isNote = target && target.classList && target.classList.contains('box');
 
         if (templateBgColorInput) {
-          const bgValue = block.dataset.bgColor || block.style.backgroundColor || computed.backgroundColor;
-          templateBgColorInput.value = normalizeColorToHex(bgValue, '#ffffff');
+          const bgValue = block.dataset.bgColor || target?.style.backgroundColor || computed.backgroundColor;
+          const normalizedBg = bgValue === 'transparent' ? '#ffffff' : normalizeColorToHex(bgValue, '#ffffff');
+          templateBgColorInput.value = normalizedBg;
+          setPaletteActive(templateBgPalette, bgValue === 'transparent' ? '' : normalizedBg);
         }
 
         if (templateTextColorInput) {
-          const textValue = block.dataset.textColor || block.style.color || computed.color;
-          templateTextColorInput.value = normalizeColorToHex(textValue, '#212529');
+          const textValue = block.dataset.textColor || target?.style.color || computed.color;
+          const normalizedText = normalizeColorToHex(textValue, '#212529');
+          templateTextColorInput.value = normalizedText;
+          setPaletteActive(templateTextPalette, normalizedText);
         }
 
         if (templateFontSizeSlider && templateFontSizeDisplay) {
@@ -2089,6 +2560,58 @@
           marginBottom = Number.isFinite(marginBottom) ? Math.max(0, Math.min(bottomMax, marginBottom)) : 0;
           templateMarginBottomSlider.value = marginBottom;
           templateMarginBottomDisplay.textContent = marginBottom + 'px';
+        }
+
+        if (templateBorderWidthSlider && templateBorderWidthDisplay) {
+          if (!isNote) {
+            templateBorderWidthSlider.disabled = true;
+            templateBorderWidthDisplay.textContent = '—';
+          } else {
+            templateBorderWidthSlider.disabled = false;
+            const sliderMax = parseInt(templateBorderWidthSlider.max || '12', 10);
+            const sliderMin = parseInt(templateBorderWidthSlider.min || '0', 10);
+            const storedWidth = block.dataset.borderWidth !== undefined ? parseInt(block.dataset.borderWidth, 10) : null;
+            const baseWidth = Number.isFinite(storedWidth)
+              ? storedWidth
+              : parsePxValue(target.style.borderTopWidth || computed.borderTopWidth, 1);
+            const leftWidth = parsePxValue(target.style.borderLeftWidth || computed.borderLeftWidth, baseWidth);
+            const accentExtraStored = block.dataset.borderAccentExtra !== undefined ? parseInt(block.dataset.borderAccentExtra, 10) : null;
+            const accentExtra = Number.isFinite(accentExtraStored)
+              ? accentExtraStored
+              : Math.max(0, leftWidth - baseWidth);
+            const clampedWidth = Math.max(sliderMin, Math.min(sliderMax, baseWidth));
+            templateBorderWidthSlider.value = clampedWidth;
+            templateBorderWidthDisplay.textContent = baseWidth + 'px';
+            updateBorderWidthDataset(block, baseWidth, accentExtra);
+          }
+        }
+
+        if (templateBorderColorRow) {
+          templateBorderColorRow.style.display = isNote ? 'flex' : 'none';
+        }
+
+        if (templateBorderColorInput) {
+          const borderValue = block.dataset.borderColor || target?.style.borderTopColor || computed.borderTopColor;
+          const normalizedBorder = normalizeColorToHex(borderValue, '#ced4da');
+          templateBorderColorInput.value = normalizedBorder;
+          setPaletteActive(templateBorderPalette, normalizedBorder);
+        }
+
+        if (templateAccentColorRow) {
+          const borderTopColor = normalizeColorToHex(target?.style.borderTopColor || computed.borderTopColor, '#ced4da');
+          const borderLeftColor = normalizeColorToHex(block.dataset.accentColor || target?.style.borderLeftColor || computed.borderLeftColor, borderTopColor);
+          const accentExtra = parseInt(block.dataset.borderAccentExtra || '0', 10);
+          const shouldShowAccent = isNote && (borderLeftColor !== borderTopColor || accentExtra > 0);
+          templateAccentColorRow.style.display = shouldShowAccent ? 'flex' : 'none';
+          if (templateAccentColorInput) {
+            templateAccentColorInput.value = normalizeColorToHex(borderLeftColor, borderTopColor);
+            setPaletteActive(templateAccentPalette, borderLeftColor);
+          }
+          if (shouldShowAccent && !block.dataset.accentColor) {
+            block.dataset.accentColor = borderLeftColor;
+          } else if (!shouldShowAccent) {
+            delete block.dataset.accentColor;
+          }
         }
       }
 
@@ -2193,6 +2716,7 @@
         sanitizeCitations(root);
         purgeUnwantedNotes(root);
         normalizePearls(root);
+        initializeCollapseCards(root);
       }
 
       function countWords(html) {
@@ -2648,6 +3172,98 @@
             heightDisplay.textContent = 'auto';
           }
         }
+
+        if (cropImageBtn) {
+          cropImageBtn.disabled = false;
+        }
+      }
+
+      function updateCropScale() {
+        if (!imageCropPreview) return;
+        const rect = imageCropPreview.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          cropState.scaleX = imageCropPreview.naturalWidth / rect.width;
+          cropState.scaleY = imageCropPreview.naturalHeight / rect.height;
+        }
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function setCropSelection(startX, startY, currentX, currentY) {
+        if (!imageCropStage || !imageCropSelection || !imageCropPreview) return;
+        const stageRect = imageCropStage.getBoundingClientRect();
+        const imageRect = imageCropPreview.getBoundingClientRect();
+        const x1 = clamp(startX, imageRect.left, imageRect.right);
+        const y1 = clamp(startY, imageRect.top, imageRect.bottom);
+        const x2 = clamp(currentX, imageRect.left, imageRect.right);
+        const y2 = clamp(currentY, imageRect.top, imageRect.bottom);
+        const left = Math.min(x1, x2);
+        const top = Math.min(y1, y2);
+        const width = Math.abs(x1 - x2);
+        const height = Math.abs(y1 - y2);
+
+        cropState.currentRect = { left, top, width, height };
+        imageCropSelection.style.left = (left - stageRect.left) + 'px';
+        imageCropSelection.style.top = (top - stageRect.top) + 'px';
+        imageCropSelection.style.width = width + 'px';
+        imageCropSelection.style.height = height + 'px';
+
+        if (width < 3 || height < 3) {
+          if (imageCropSizeLabel) imageCropSizeLabel.textContent = '0 × 0 px';
+          if (imageCropApplyBtn) imageCropApplyBtn.disabled = true;
+          return;
+        }
+
+        const naturalWidth = Math.round(width * cropState.scaleX);
+        const naturalHeight = Math.round(height * cropState.scaleY);
+        if (imageCropSizeLabel) {
+          imageCropSizeLabel.textContent = `${naturalWidth} × ${naturalHeight} px`;
+        }
+        if (imageCropApplyBtn) {
+          imageCropApplyBtn.disabled = !(naturalWidth > 0 && naturalHeight > 0);
+        }
+      }
+
+      function openImageCropModal(img) {
+        if (!imageCropModal || !imageCropPreview) return;
+        cropState.image = img;
+        cropState.isSelecting = false;
+        cropState.currentRect = null;
+        cropState.scaleX = 1;
+        cropState.scaleY = 1;
+        if (imageCropSelection) {
+          imageCropSelection.classList.remove('show');
+        }
+        if (imageCropSizeLabel) {
+          imageCropSizeLabel.textContent = '0 × 0 px';
+        }
+        if (imageCropApplyBtn) {
+          imageCropApplyBtn.disabled = true;
+        }
+        imageCropPreview.src = img.src;
+        imageCropModal.classList.add('show');
+        imageCropModal.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(updateCropScale);
+      }
+
+      function closeImageCropModal() {
+        if (!imageCropModal) return;
+        imageCropModal.classList.remove('show');
+        imageCropModal.setAttribute('aria-hidden', 'true');
+        cropState.image = null;
+        cropState.isSelecting = false;
+        cropState.currentRect = null;
+        if (imageCropSelection) {
+          imageCropSelection.classList.remove('show');
+        }
+        if (imageCropApplyBtn) {
+          imageCropApplyBtn.disabled = true;
+        }
+        if (imageCropSizeLabel) {
+          imageCropSizeLabel.textContent = '0 × 0 px';
+        }
       }
 
       function repositionImageToolbar() {
@@ -2660,6 +3276,128 @@
       window.addEventListener('resize', repositionImageToolbar);
       window.addEventListener('scroll', repositionTemplateToolbar, { passive: true });
       window.addEventListener('resize', repositionTemplateToolbar);
+
+      imageCropPreview?.addEventListener('load', updateCropScale);
+
+      window.addEventListener('resize', () => {
+        if (imageCropModal?.classList.contains('show')) {
+          requestAnimationFrame(updateCropScale);
+        }
+      });
+
+      cropImageBtn?.addEventListener('click', () => {
+        if (!selectedImage) {
+          alert('Selecciona una imagen para recortar.');
+          return;
+        }
+        openImageCropModal(selectedImage);
+      });
+
+      const finishCropSelection = (event) => {
+        if (!cropState.isSelecting) return;
+        cropState.isSelecting = false;
+        try {
+          imageCropStage?.releasePointerCapture(event.pointerId);
+        } catch (err) {
+          /* ignore */
+        }
+        if (!cropState.currentRect || cropState.currentRect.width < 3 || cropState.currentRect.height < 3) {
+          cropState.currentRect = null;
+          imageCropSelection?.classList.remove('show');
+          if (imageCropSizeLabel) imageCropSizeLabel.textContent = '0 × 0 px';
+          if (imageCropApplyBtn) imageCropApplyBtn.disabled = true;
+        }
+      };
+
+      imageCropStage?.addEventListener('pointerdown', (event) => {
+        if (!imageCropModal?.classList.contains('show') || !cropState.image || !imageCropPreview?.complete) return;
+        const imageRect = imageCropPreview.getBoundingClientRect();
+        if (imageRect.width === 0 || imageRect.height === 0) return;
+        const withinImage = event.clientX >= imageRect.left && event.clientX <= imageRect.right
+          && event.clientY >= imageRect.top && event.clientY <= imageRect.bottom;
+        if (!withinImage) return;
+        cropState.isSelecting = true;
+        cropState.startX = event.clientX;
+        cropState.startY = event.clientY;
+        setCropSelection(cropState.startX, cropState.startY, cropState.startX, cropState.startY);
+        imageCropSelection?.classList.add('show');
+        if (imageCropApplyBtn) imageCropApplyBtn.disabled = true;
+        if (imageCropSizeLabel) imageCropSizeLabel.textContent = '0 × 0 px';
+        try {
+          imageCropStage.setPointerCapture(event.pointerId);
+        } catch (err) {
+          /* ignore */
+        }
+        event.preventDefault();
+      });
+
+      imageCropStage?.addEventListener('pointermove', (event) => {
+        if (!cropState.isSelecting) return;
+        setCropSelection(cropState.startX, cropState.startY, event.clientX, event.clientY);
+        event.preventDefault();
+      });
+
+      imageCropStage?.addEventListener('pointerup', finishCropSelection);
+      imageCropStage?.addEventListener('pointerleave', finishCropSelection);
+      imageCropStage?.addEventListener('pointercancel', finishCropSelection);
+
+      imageCropApplyBtn?.addEventListener('click', () => {
+        if (!cropState.image || !cropState.currentRect || !imageCropPreview) return;
+        const { left, top, width, height } = cropState.currentRect;
+        if (width < 3 || height < 3) {
+          alert('Selecciona un área mayor para recortar.');
+          return;
+        }
+        const imageRect = imageCropPreview.getBoundingClientRect();
+        const sx = Math.round((left - imageRect.left) * cropState.scaleX);
+        const sy = Math.round((top - imageRect.top) * cropState.scaleY);
+        const sw = Math.round(width * cropState.scaleX);
+        const sh = Math.round(height * cropState.scaleY);
+        if (sw <= 1 || sh <= 1) {
+          alert('El recorte seleccionado es demasiado pequeño.');
+          return;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = sw;
+        canvas.height = sh;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          alert('No se pudo preparar el recorte.');
+          return;
+        }
+
+        const source = new Image();
+        source.crossOrigin = 'anonymous';
+        source.onload = () => {
+          try {
+            ctx.drawImage(source, sx, sy, sw, sh, 0, 0, sw, sh);
+            const dataUrl = canvas.toDataURL('image/png');
+            cropState.image.src = dataUrl;
+            cropState.image.removeAttribute('height');
+            cropState.image.style.height = 'auto';
+            updateToolbarState(cropState.image);
+            repositionImageToolbar();
+            closeImageCropModal();
+          } catch (error) {
+            console.error('Error al recortar la imagen:', error);
+            alert('No se pudo recortar la imagen.');
+          }
+        };
+        source.onerror = () => {
+          alert('No se pudo cargar la imagen para recortar.');
+        };
+        source.src = cropState.image.src;
+      });
+
+      imageCropCancelBtn?.addEventListener('click', closeImageCropModal);
+      imageCropCloseBtn?.addEventListener('click', closeImageCropModal);
+
+      imageCropModal?.addEventListener('click', (event) => {
+        if (event.target === imageCropModal) {
+          closeImageCropModal();
+        }
+      });
 
       function showImageToolbar(img) {
         hideTemplateToolbar();
@@ -2679,6 +3417,9 @@
           selectedImage = null;
         }
         imageToolbar.classList.remove('show');
+        if (cropImageBtn) {
+          cropImageBtn.disabled = true;
+        }
       }
 
       document.addEventListener('click', (e) => {
@@ -2701,6 +3442,15 @@
         }
       });
 
+      document.addEventListener('click', (event) => {
+        const toggle = event.target.closest('.collapse-card-toggle');
+        if (!toggle) return;
+        const card = toggle.closest('.collapse-card');
+        if (!card) return;
+        const collapsed = card.classList.toggle('collapsed');
+        toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      });
+
       document.getElementById('imageWidthSlider')?.addEventListener('input', (e) => {
         if (selectedImage) {
           const width = parseInt(e.target.value);
@@ -2720,37 +3470,53 @@
       });
 
       templateBgColorInput?.addEventListener('input', (e) => {
-        if (!selectedTemplateBlock) return;
-        const color = e.target.value || '#ffffff';
-        selectedTemplateBlock.dataset.bgColor = color;
-        selectedTemplateBlock.style.backgroundColor = color;
-        repositionTemplateToolbar();
+        applyTemplateBackground(e.target.value || '#ffffff');
       });
 
       templateClearBgBtn?.addEventListener('click', () => {
-        if (!selectedTemplateBlock) return;
-        delete selectedTemplateBlock.dataset.bgColor;
-        selectedTemplateBlock.style.backgroundColor = 'transparent';
-        if (templateBgColorInput) {
-          templateBgColorInput.value = '#ffffff';
-        }
-        repositionTemplateToolbar();
+        applyTemplateBackground('transparent');
       });
 
       templateTextColorInput?.addEventListener('input', (e) => {
-        if (!selectedTemplateBlock) return;
-        const color = e.target.value || '#212529';
-        selectedTemplateBlock.dataset.textColor = color;
-        selectedTemplateBlock.style.color = color;
+        applyTemplateTextColor(e.target.value || '#212529');
       });
 
       templateResetTextColorBtn?.addEventListener('click', () => {
+        applyTemplateTextColor('');
+      });
+
+      templateBorderColorInput?.addEventListener('input', (e) => {
+        applyTemplateBorderColor(e.target.value || '#ced4da');
+      });
+
+      templateAccentColorInput?.addEventListener('input', (e) => {
+        applyTemplateAccentColor(e.target.value || '#0d6efd');
+      });
+
+      templateBorderWidthSlider?.addEventListener('input', (e) => {
         if (!selectedTemplateBlock) return;
-        delete selectedTemplateBlock.dataset.textColor;
-        selectedTemplateBlock.style.color = '';
-        if (templateTextColorInput) {
-          templateTextColorInput.value = '#212529';
+        const target = getTemplateTarget(selectedTemplateBlock);
+        if (!target || !target.classList.contains('box')) return;
+        const width = parseInt(e.target.value, 10) || 0;
+        const accentExtra = parseInt(selectedTemplateBlock.dataset.borderAccentExtra || '0', 10) || 0;
+        if (width <= 0) {
+          target.style.borderWidth = '0';
+          target.style.borderStyle = 'none';
+          if (accentExtra > 0) {
+            target.style.borderLeftStyle = 'solid';
+            target.style.borderLeftWidth = accentExtra + 'px';
+          } else {
+            target.style.borderLeftWidth = '0';
+          }
+        } else {
+          target.style.borderStyle = 'solid';
+          target.style.borderWidth = width + 'px';
+          target.style.borderLeftWidth = (width + Math.max(0, accentExtra)) + 'px';
         }
+        if (templateBorderWidthDisplay) {
+          templateBorderWidthDisplay.textContent = width + 'px';
+        }
+        updateBorderWidthDataset(selectedTemplateBlock, width, Math.max(0, accentExtra));
       });
 
       templateFontSizeSlider?.addEventListener('input', (e) => {
@@ -3114,6 +3880,16 @@
         }
       });
 
+      insertCollapseCardBtn?.addEventListener('pointerdown', () => {
+        saveCurrentSelection();
+      });
+
+      insertCollapseCardBtn?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          saveCurrentSelection();
+        }
+      });
+
       document.getElementById('insertTemplateBtn')?.addEventListener('click', () => {
         if (!savedSelection) {
           const activeEditable = document.activeElement && document.activeElement.isContentEditable ? document.activeElement : null;
@@ -3220,6 +3996,26 @@
           });
           grid?.appendChild(card);
         });
+      });
+
+      insertCollapseCardBtn?.addEventListener('click', () => {
+        const card = createCollapseCardElement();
+        initializeCollapseCards(card);
+        const insertedCard = insertNodeAtSelection(card);
+        if (!insertedCard) {
+          alert('Selecciona un área editable antes de insertar la tarjeta.');
+          return;
+        }
+        const title = insertedCard.querySelector('.collapse-card-title');
+        if (title) {
+          const range = document.createRange();
+          range.selectNodeContents(title);
+          range.collapse(true);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        insertedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
 
       /* === PANEL LATERAL === */
@@ -3479,7 +4275,51 @@
       }
 
       function printSection(section) {
+        if (!section || !Array.isArray(section.temas)) {
+          window.print();
+          return;
+        }
+
+        const pagesToPrint = section.temas
+          .map(topic => topic?.page)
+          .filter(page => page && page.isConnected);
+
+        if (!pagesToPrint.length) {
+          alert('No hay temas disponibles en esta sección para imprimir.');
+          return;
+        }
+
+        pages.forEach(page => {
+          if (pagesToPrint.includes(page)) {
+            page.dataset.printTarget = 'true';
+          } else {
+            page.dataset.prevDisplay = page.style.display || '';
+            page.style.display = 'none';
+          }
+        });
+
+        document.body.dataset.printingSection = 'true';
+
+        let cleaned = false;
+        const cleanup = () => {
+          if (cleaned) return;
+          cleaned = true;
+          delete document.body.dataset.printingSection;
+          pages.forEach(page => {
+            if (page.dataset.printTarget) {
+              delete page.dataset.printTarget;
+            }
+            if (page.dataset.prevDisplay !== undefined) {
+              page.style.display = page.dataset.prevDisplay;
+              delete page.dataset.prevDisplay;
+            }
+          });
+          window.removeEventListener('afterprint', cleanup);
+        };
+
+        window.addEventListener('afterprint', cleanup);
         window.print();
+        setTimeout(cleanup, 1200);
       }
 
       function printCurrentTopic() {
@@ -3529,6 +4369,7 @@
           hideImageToolbar();
           hideTemplateToolbar();
           closeMagicView();
+          closeImageCropModal();
           highlightPalette.classList.remove('show');
           textColorPalette.classList.remove('show');
           savedSelection = null;
