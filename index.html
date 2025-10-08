@@ -1409,6 +1409,7 @@
     }
 
     .table-wrap {
+      position: relative;
       overflow-x: auto;
       max-width: 100%
     }
@@ -1433,6 +1434,415 @@
     table th {
       background: #e9ecef;
       font-weight: 600
+    }
+
+    table.table-zebra tbody tr:nth-child(even) > * {
+      background: rgba(13, 110, 253, 0.06);
+    }
+
+    table.table-zebra tbody tr:nth-child(odd) > * {
+      background: transparent;
+    }
+
+    .table-menu-selected {
+      outline: 2px solid var(--theme-primary);
+      outline-offset: 2px;
+    }
+
+    .table-column-highlight {
+      background: rgba(13, 110, 253, 0.1) !important;
+    }
+
+    .table-menu {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 320px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.18);
+      display: none;
+      flex-direction: column;
+      font-size: 11px;
+      color: #212529;
+      z-index: 4100;
+      max-height: calc(100vh - 40px);
+      overflow: hidden;
+    }
+
+    .table-menu.show {
+      display: flex;
+    }
+
+    .table-menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid #e9ecef;
+      background: linear-gradient(180deg, rgba(248, 249, 250, 0.95), rgba(233, 236, 239, 0.75));
+    }
+
+    .table-menu-header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .table-menu-title {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 10px;
+      color: #6c757d;
+    }
+
+    .table-menu-size {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+
+    .table-menu-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .table-menu button,
+    .table-menu input,
+    .table-menu select {
+      font-family: inherit;
+      font-size: 11px;
+    }
+
+    .table-menu button {
+      cursor: pointer;
+      border: 1px solid #d0d5dd;
+      background: #f8f9fa;
+      color: #1f2937;
+      border-radius: 8px;
+      padding: 6px 8px;
+      transition: all 0.2s ease;
+    }
+
+    .table-menu button:hover {
+      background: #e9ecef;
+    }
+
+    .table-menu button.active,
+    .table-menu button[data-state="active"] {
+      background: rgba(13, 110, 253, 0.14);
+      border-color: rgba(13, 110, 253, 0.5);
+      color: #0b5ed7;
+      box-shadow: inset 0 0 0 1px rgba(13, 110, 253, 0.2);
+    }
+
+    .table-menu-resize {
+      background: var(--theme-primary);
+      color: #fff;
+      border-color: var(--theme-primary);
+      padding: 6px 12px;
+    }
+
+    .table-menu-resize:hover {
+      background: var(--theme-primary-dark);
+    }
+
+    .table-menu-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      padding: 0;
+      font-size: 16px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid transparent;
+      color: #6c757d;
+    }
+
+    .table-menu-close:hover {
+      border-color: #dee2e6;
+      background: rgba(0, 0, 0, 0.05);
+      color: #212529;
+    }
+
+    .table-menu-tabs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 12px 0;
+    }
+
+    .table-menu-tab {
+      flex: 1;
+      border-radius: 10px 10px 0 0;
+      border-bottom: none;
+      background: #f1f3f5;
+      font-size: 13px;
+      padding: 8px 0;
+    }
+
+    .table-menu-tab.active {
+      background: #fff;
+      color: #0d6efd;
+      border-color: #d0d5dd;
+      border-bottom: 1px solid #fff;
+      box-shadow: 0 -2px 8px rgba(15, 23, 42, 0.05);
+    }
+
+    .table-menu-body {
+      padding: 12px;
+      overflow-y: auto;
+    }
+
+    .table-menu-panel {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .table-menu-panel.active {
+      display: flex;
+    }
+
+    .table-menu-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .table-menu-section h4 {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #6c757d;
+    }
+
+    .table-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .table-menu-grid.two-columns {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .table-menu-grid.single-column {
+      grid-template-columns: 1fr;
+    }
+
+    .table-theme-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .table-menu .table-theme-option {
+      padding: 0;
+      border: none;
+      background: transparent;
+    }
+
+    .table-menu .table-theme-option .table-theme-sample {
+      width: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .table-menu .table-theme-option.active {
+      background: transparent;
+      border: none;
+    }
+
+    .table-menu .table-theme-option.active .table-theme-sample {
+      border-color: rgba(13, 110, 253, 0.6);
+      box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.35);
+    }
+
+    .table-theme-sample {
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .table-slider-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .table-slider-row label {
+      font-size: 11px;
+      color: #6c757d;
+      font-weight: 600;
+    }
+
+    .table-slider-row input[type="range"] {
+      width: 100%;
+    }
+
+    .table-slider-value {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+
+    .table-preset-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .table-preset-buttons button {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .table-border-colors {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .table-border-color-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      padding: 0;
+    }
+
+    .table-border-color-btn.active {
+      border-width: 2px;
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
+    }
+
+    .table-border-toggle {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .table-border-toggle label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #495057;
+    }
+
+    .table-border-toggle input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+    }
+
+    .table-theme-default {
+      background: linear-gradient(135deg, #fff, #f1f3f5);
+      color: #212529;
+    }
+
+    .table-theme-ocean {
+      background: linear-gradient(135deg, #0d6efd, #6ea8fe);
+      color: #fff;
+    }
+
+    .table-theme-forest {
+      background: linear-gradient(135deg, #198754, #75b798);
+      color: #fff;
+    }
+
+    .table-theme-sunset {
+      background: linear-gradient(135deg, #fd7e14, #fda861);
+      color: #fff;
+    }
+
+    .table-theme-violet {
+      background: linear-gradient(135deg, #6f42c1, #9d7cd4);
+      color: #fff;
+    }
+
+    table.table-theme-ocean thead th {
+      background: rgba(13, 110, 253, 0.15);
+      color: #0b5ed7;
+    }
+
+    table.table-theme-forest thead th {
+      background: rgba(25, 135, 84, 0.15);
+      color: #157347;
+    }
+
+    table.table-theme-sunset thead th {
+      background: rgba(253, 126, 20, 0.18);
+      color: #dc6502;
+    }
+
+    table.table-theme-violet thead th {
+      background: rgba(111, 66, 193, 0.15);
+      color: #59359a;
+    }
+
+    .table-resize-handle {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      bottom: -7px;
+      right: -7px;
+      border-radius: 4px;
+      background: #0d6efd;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 8px rgba(13, 110, 253, 0.35);
+      cursor: nwse-resize;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      transform: scale(0.9);
+      z-index: 2;
+    }
+
+    .table-resize-wrapper.table-resize-mode .table-resize-handle {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .table-resize-wrapper.table-resize-active .table-resize-handle {
+      transform: scale(1.1);
+    }
+
+    .table-resize-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 110, 253, 0.05);
+      cursor: crosshair;
+      z-index: 4050;
+      display: none;
+      pointer-events: none;
+    }
+
+    .table-resize-overlay.show {
+      display: block;
     }
 
     .columns {
@@ -1761,6 +2171,114 @@
     </div>
   </div>
 
+  <div class="table-menu" id="tableMenu" aria-hidden="true">
+    <div class="table-menu-header">
+      <div class="table-menu-header-info">
+        <span class="table-menu-title">Tabla seleccionada</span>
+        <span class="table-menu-size" id="tableMenuSize">0 × 0</span>
+      </div>
+      <div class="table-menu-actions">
+        <button type="button" class="table-menu-resize" id="tableResizeBtn">Tamaño</button>
+        <button type="button" class="table-menu-close" id="tableMenuClose" title="Cerrar panel">×</button>
+      </div>
+    </div>
+    <div class="table-menu-tabs" role="tablist">
+      <button type="button" class="table-menu-tab active" data-tab="structure" role="tab" aria-selected="true">✏️</button>
+      <button type="button" class="table-menu-tab" data-tab="style" role="tab" aria-selected="false">🎨</button>
+    </div>
+    <div class="table-menu-body">
+      <div class="table-menu-panel active" data-panel="structure" role="tabpanel">
+        <div class="table-menu-section">
+          <h4>Acciones rápidas</h4>
+          <div class="table-menu-grid two-columns">
+            <button type="button" data-action="insert-row-above">Fila ↑</button>
+            <button type="button" data-action="insert-row-below">Fila ↓</button>
+            <button type="button" data-action="insert-column-left">Columna ←</button>
+            <button type="button" data-action="insert-column-right">Columna →</button>
+            <button type="button" data-action="delete-row">Eliminar fila</button>
+            <button type="button" data-action="delete-column">Eliminar columna</button>
+            <button type="button" data-action="clear-column">Limpiar columna</button>
+            <button type="button" data-action="select-column">Seleccionar columna</button>
+            <button type="button" data-action="toggle-header" data-stateful="true">Fila encabezado</button>
+            <button type="button" data-action="toggle-zebra" data-stateful="true">Patrón cebra</button>
+            <button type="button" data-action="open-tools">Más herramientas</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-menu-panel" data-panel="style" role="tabpanel">
+        <div class="table-menu-section">
+          <h4>Temas</h4>
+          <div class="table-theme-gallery">
+            <button type="button" class="table-theme-option active" data-table-theme="">
+              <span class="table-theme-sample table-theme-default">Base</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-ocean">
+              <span class="table-theme-sample table-theme-ocean">Océano</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-forest">
+              <span class="table-theme-sample table-theme-forest">Bosque</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-sunset">
+              <span class="table-theme-sample table-theme-sunset">Atardecer</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-violet">
+              <span class="table-theme-sample table-theme-violet">Violeta</span>
+            </button>
+          </div>
+        </div>
+        <div class="table-menu-section">
+          <h4>Espaciado</h4>
+          <div class="table-slider-row">
+            <label for="tableLineHeight">Interlineado</label>
+            <input type="range" id="tableLineHeight" min="1" max="2" step="0.05">
+            <span class="table-slider-value" id="tableLineHeightValue">1.25</span>
+          </div>
+          <div class="table-slider-row">
+            <label for="tablePaddingY">Padding vertical</label>
+            <input type="range" id="tablePaddingY" min="2" max="32" step="1">
+            <span class="table-slider-value" id="tablePaddingYValue">6px</span>
+          </div>
+          <div class="table-slider-row">
+            <label for="tableMargin">Margen exterior</label>
+            <input type="range" id="tableMargin" min="0" max="48" step="1">
+            <span class="table-slider-value" id="tableMarginValue">6px</span>
+          </div>
+          <div class="table-preset-buttons">
+            <button type="button" data-table-preset="compacta">Compacta</button>
+            <button type="button" data-table-preset="equilibrada">Equilibrada</button>
+            <button type="button" data-table-preset="amplia">Amplia</button>
+          </div>
+        </div>
+        <div class="table-menu-section">
+          <h4>Líneas divisorias</h4>
+          <div class="table-border-colors">
+            <button type="button" class="table-border-color-btn" style="background:#dee2e6;" data-border-color="#dee2e6"></button>
+            <button type="button" class="table-border-color-btn" style="background:#adb5bd;" data-border-color="#adb5bd"></button>
+            <button type="button" class="table-border-color-btn" style="background:#0d6efd;" data-border-color="#0d6efd"></button>
+            <button type="button" class="table-border-color-btn" style="background:#198754;" data-border-color="#198754"></button>
+            <button type="button" class="table-border-color-btn" style="background:#fd7e14;" data-border-color="#fd7e14"></button>
+            <button type="button" class="table-border-color-btn" style="background:#6f42c1;" data-border-color="#6f42c1"></button>
+            <input type="color" id="tableBorderColorCustom" value="#dee2e6" title="Color personalizado">
+          </div>
+          <div class="table-slider-row">
+            <label for="tableBorderWidth">Grosor</label>
+            <input type="range" id="tableBorderWidth" min="0" max="8" step="0.5">
+            <span class="table-slider-value" id="tableBorderWidthValue">1px</span>
+          </div>
+          <div class="table-border-toggle">
+            <label><input type="checkbox" id="toggleVerticalBorders"> Ocultar verticales</label>
+            <label><input type="checkbox" id="toggleHorizontalBorders"> Ocultar horizontales</label>
+          </div>
+          <div class="table-preset-buttons">
+            <button type="button" data-border-reset="true">Restablecer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-resize-overlay" id="tableResizeOverlay" aria-hidden="true"></div>
+
   <div class="image-crop-modal" id="imageCropModal" aria-hidden="true">
     <div class="image-crop-dialog">
       <div class="image-crop-header">
@@ -1898,6 +2416,7 @@
       let currentZoom = 1;
       let allSectionsExpanded = true;
       let savedSelection = null;
+      let tableMenuAPI = null;
       const cropState = {
         image: null,
         isSelecting: false,
@@ -2006,11 +2525,35 @@
       const insertHtmlBtn = document.getElementById('insertHtmlBtn');
       const insertTableBtn = document.getElementById('insertTableBtn');
       const insertCollapseCardBtn = document.getElementById('insertCollapseCardBtn');
+      const tableMenu = document.getElementById('tableMenu');
+      const tableMenuSize = document.getElementById('tableMenuSize');
+      const tableResizeBtn = document.getElementById('tableResizeBtn');
+      const tableMenuClose = document.getElementById('tableMenuClose');
+      const tableMenuTabs = Array.from(document.querySelectorAll('.table-menu-tab'));
+      const tableMenuPanels = Array.from(document.querySelectorAll('.table-menu-panel'));
+      const tableThemeButtons = Array.from(document.querySelectorAll('.table-theme-option'));
+      const tableLineHeightInput = document.getElementById('tableLineHeight');
+      const tableLineHeightValue = document.getElementById('tableLineHeightValue');
+      const tablePaddingYInput = document.getElementById('tablePaddingY');
+      const tablePaddingYValue = document.getElementById('tablePaddingYValue');
+      const tableMarginInput = document.getElementById('tableMargin');
+      const tableMarginValue = document.getElementById('tableMarginValue');
+      const tablePresetButtons = Array.from(document.querySelectorAll('[data-table-preset]'));
+      const tableBorderColorButtons = Array.from(document.querySelectorAll('.table-border-color-btn'));
+      const tableBorderColorCustom = document.getElementById('tableBorderColorCustom');
+      const tableBorderWidthInput = document.getElementById('tableBorderWidth');
+      const tableBorderWidthValue = document.getElementById('tableBorderWidthValue');
+      const toggleVerticalBorders = document.getElementById('toggleVerticalBorders');
+      const toggleHorizontalBorders = document.getElementById('toggleHorizontalBorders');
+      const tableBorderResetBtn = document.querySelector('[data-border-reset]');
+      const tableResizeOverlay = document.getElementById('tableResizeOverlay');
 
       const pastelColors = [
         '#FFB6C1', '#FFD1DC', '#FFC8DD', '#E7C6FF', '#C8B6FF', '#B4D4FF', '#AEC6CF', '#B2DFDB',
         '#C5E1A5', '#FFF9C4', '#FFE082', '#FFCCBC', '#D7CCC8', '#F5F5F5', '#CFD8DC', '#E1BEE7'
       ];
+
+      const tableResizers = new WeakMap();
 
       if (cropImageBtn) {
         cropImageBtn.disabled = true;
@@ -2215,6 +2758,8 @@
           hideTopicMenu();
           hideTemplateToolbar();
           hideImageToolbar();
+          tableMenuAPI?.cancelResize();
+          tableMenuAPI?.hide();
         }
       });
 
@@ -2798,6 +3343,924 @@
           el.dataset.pasteHandlerBound = 'true';
         });
       }
+
+      /* === TABLAS === */
+      function wrapTableIfNeeded(table) {
+        if (!table) return null;
+        let wrapper = table.closest('.table-wrap');
+        if (!wrapper) {
+          wrapper = document.createElement('div');
+          wrapper.className = 'table-wrap';
+          table.parentNode?.insertBefore(wrapper, table);
+          wrapper.appendChild(table);
+        }
+        wrapper.classList.add('table-resize-wrapper');
+        if (getComputedStyle(wrapper).position === 'static') {
+          wrapper.style.position = 'relative';
+        }
+        return wrapper;
+      }
+
+      function makeTableResizable(table) {
+        if (!table) return null;
+
+        if (tableResizers.has(table)) {
+          return tableResizers.get(table);
+        }
+
+        const wrapper = wrapTableIfNeeded(table);
+        if (!wrapper) return null;
+
+        let handle = wrapper.querySelector('.table-resize-handle');
+        if (!handle) {
+          handle = document.createElement('div');
+          handle.className = 'table-resize-handle';
+          wrapper.appendChild(handle);
+        }
+
+        const state = {
+          active: false,
+          mode: null,
+          startX: 0,
+          startY: 0,
+          startTableWidth: 0,
+          startTableHeight: 0,
+          originalWidthStyle: table.style.width,
+          originalHeightStyle: table.style.height,
+          columnCells: [],
+          rowCells: [],
+          startColumnStyles: [],
+          startRowStyles: [],
+          callbacks: null,
+          cleanup: null
+        };
+
+        const threshold = 8;
+
+        function exitResizeMode() {
+          wrapper.classList.remove('table-resize-mode');
+          wrapper.classList.remove('table-resize-active');
+          table.classList.remove('table-resize-ready');
+          table.style.cursor = '';
+          document.body.style.userSelect = '';
+          document.body.classList.remove('table-resizing');
+          if (tableResizeOverlay) {
+            tableResizeOverlay.classList.remove('show');
+          }
+        }
+
+        function restoreOriginalDimensions() {
+          if (state.mode === 'table') {
+            table.style.width = state.originalWidthStyle;
+            table.style.height = state.originalHeightStyle;
+          } else if (state.mode === 'column') {
+            state.columnCells.forEach((cell, index) => {
+              const info = state.startColumnStyles[index];
+              if (!info) return;
+              cell.style.width = info.width;
+              cell.style.minWidth = info.minWidth;
+            });
+          } else if (state.mode === 'row') {
+            state.rowCells.forEach((cell, index) => {
+              const info = state.startRowStyles[index];
+              if (!info) return;
+              cell.style.height = info.height;
+              cell.style.minHeight = info.minHeight;
+            });
+          }
+        }
+
+        function finishResize(cancelled) {
+          if (state.cleanup) {
+            state.cleanup();
+            state.cleanup = null;
+          }
+
+          const callbacks = state.callbacks;
+          state.active = false;
+          const mode = state.mode;
+          state.mode = null;
+          state.columnCells = [];
+          state.rowCells = [];
+          state.startColumnStyles = [];
+          state.startRowStyles = [];
+
+          if (cancelled) {
+            restoreOriginalDimensions();
+          } else if (mode === 'table') {
+            state.originalWidthStyle = table.style.width;
+            state.originalHeightStyle = table.style.height;
+          }
+
+          exitResizeMode();
+
+          if (callbacks) {
+            if (cancelled) {
+              callbacks.onCancel?.();
+            } else {
+              callbacks.onFinish?.();
+            }
+          }
+        }
+
+        function applyColumnResize(deltaX) {
+          if (!state.columnCells.length) return;
+          const baseWidth = state.startColumnStyles[0]?.numericWidth || state.columnCells[0].offsetWidth;
+          const newWidth = Math.max(40, baseWidth + deltaX);
+          state.columnCells.forEach(cell => {
+            cell.style.width = newWidth + 'px';
+            cell.style.minWidth = newWidth + 'px';
+          });
+        }
+
+        function applyRowResize(deltaY) {
+          if (!state.rowCells.length) return;
+          const baseHeight = state.startRowStyles[0]?.numericHeight || state.rowCells[0].offsetHeight;
+          const newHeight = Math.max(24, baseHeight + deltaY);
+          state.rowCells.forEach(cell => {
+            cell.style.height = newHeight + 'px';
+            cell.style.minHeight = newHeight + 'px';
+          });
+        }
+
+        function applyTableResize(deltaX, deltaY) {
+          const newWidth = Math.max(160, state.startTableWidth + deltaX);
+          const newHeight = Math.max(80, state.startTableHeight + deltaY);
+          table.style.width = newWidth + 'px';
+          table.style.height = newHeight + 'px';
+          table.dataset.tableWidth = String(newWidth);
+          table.dataset.tableHeight = String(newHeight);
+        }
+
+        function onMouseMove(event) {
+          if (!state.active) return;
+          if (state.mode === 'column') {
+            applyColumnResize(event.clientX - state.startX);
+          } else if (state.mode === 'row') {
+            applyRowResize(event.clientY - state.startY);
+          } else {
+            applyTableResize(event.clientX - state.startX, event.clientY - state.startY);
+          }
+        }
+
+        function onMouseUp() {
+          finishResize(false);
+        }
+
+        function onKeyDown(event) {
+          if (event.key === 'Escape') {
+            finishResize(true);
+          }
+        }
+
+        function startResize(mode, cell, event) {
+          if (!isEditMode) return;
+          event.preventDefault();
+
+          state.active = true;
+          state.mode = mode;
+          state.startX = event.clientX;
+          state.startY = event.clientY;
+          state.originalWidthStyle = table.style.width;
+          state.originalHeightStyle = table.style.height;
+          state.columnCells = [];
+          state.rowCells = [];
+          state.startColumnStyles = [];
+          state.startRowStyles = [];
+
+          if (mode === 'column' && cell) {
+            const index = cell.cellIndex;
+            const columnCells = Array.from(table.rows).map(row => row.cells[index]).filter(Boolean);
+            state.columnCells = columnCells;
+            state.startColumnStyles = columnCells.map(colCell => ({
+              width: colCell.style.width,
+              minWidth: colCell.style.minWidth,
+              numericWidth: colCell.offsetWidth
+            }));
+          } else if (mode === 'row' && cell) {
+            const rowCells = Array.from(cell.parentElement?.cells || []);
+            state.rowCells = rowCells;
+            state.startRowStyles = rowCells.map(rowCell => ({
+              height: rowCell.style.height,
+              minHeight: rowCell.style.minHeight,
+              numericHeight: rowCell.offsetHeight
+            }));
+          } else {
+            state.startTableWidth = table.offsetWidth;
+            state.startTableHeight = table.offsetHeight;
+          }
+
+          wrapper.classList.add('table-resize-active');
+          if (tableResizeOverlay) {
+            tableResizeOverlay.classList.add('show');
+          }
+          document.body.style.userSelect = 'none';
+          document.body.classList.add('table-resizing');
+
+          document.addEventListener('mousemove', onMouseMove);
+          document.addEventListener('mouseup', onMouseUp, { once: true });
+          document.addEventListener('keydown', onKeyDown);
+
+          state.cleanup = () => {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('keydown', onKeyDown);
+            document.removeEventListener('mouseup', onMouseUp);
+          };
+        }
+
+        function handleTableMouseMove(event) {
+          if (state.active) return;
+          const cell = event.target.closest('th,td');
+          if (!cell) {
+            table.style.cursor = '';
+            return;
+          }
+          const rect = cell.getBoundingClientRect();
+          const offsetX = event.clientX - rect.left;
+          const offsetY = event.clientY - rect.top;
+          const nearRight = rect.width - offsetX <= threshold;
+          const nearBottom = rect.height - offsetY <= threshold;
+
+          if (nearRight && nearBottom) {
+            table.style.cursor = 'nwse-resize';
+          } else if (nearRight) {
+            table.style.cursor = 'col-resize';
+          } else if (nearBottom) {
+            table.style.cursor = 'row-resize';
+          } else {
+            table.style.cursor = '';
+          }
+        }
+
+        function handleTableMouseDown(event) {
+          if (!isEditMode || event.button !== 0) return;
+          const cell = event.target.closest('th,td');
+          if (!cell) return;
+          const rect = cell.getBoundingClientRect();
+          const offsetX = event.clientX - rect.left;
+          const offsetY = event.clientY - rect.top;
+          const nearRight = rect.width - offsetX <= threshold;
+          const nearBottom = rect.height - offsetY <= threshold;
+
+          if (nearRight || nearBottom) {
+            startResize(nearRight ? 'column' : 'row', cell, event);
+          }
+        }
+
+        handle.addEventListener('mousedown', (event) => {
+          if (event.button !== 0) return;
+          startResize('table', null, event);
+        });
+
+        table.addEventListener('mousemove', handleTableMouseMove);
+        table.addEventListener('mouseleave', () => {
+          if (!state.active) {
+            table.style.cursor = '';
+          }
+        });
+        table.addEventListener('mousedown', handleTableMouseDown);
+
+        const controller = {
+          activate(callbacks = {}) {
+            state.callbacks = callbacks;
+            wrapper.classList.add('table-resize-mode');
+            table.classList.add('table-resize-ready');
+            return controller;
+          },
+          cancel() {
+            if (state.active) {
+              finishResize(true);
+            } else {
+              state.callbacks = null;
+              exitResizeMode();
+            }
+            return controller;
+          },
+          isActive() {
+            return state.active;
+          }
+        };
+
+        tableResizers.set(table, controller);
+        return controller;
+      }
+
+      function initializeTableMenu() {
+        if (!tableMenu) return null;
+
+        let selectedTable = null;
+        let selectedCell = null;
+        let highlightedColumnIndex = null;
+        let currentResizer = null;
+
+        const actionButtons = Array.from(tableMenu.querySelectorAll('[data-action]'));
+
+        function hideMenu(options = {}) {
+          tableMenu.classList.remove('show');
+          tableMenu.setAttribute('aria-hidden', 'true');
+          if (!options.preserveSelection) {
+            if (selectedTable) {
+              selectedTable.classList.remove('table-menu-selected');
+            }
+            clearColumnHighlight();
+            selectedTable = null;
+            selectedCell = null;
+          }
+        }
+
+        function showMenu(table, cell) {
+          if (!isEditMode || !table) return;
+          if (!table.closest('[contenteditable="true"]')) return;
+          if (selectedTable && selectedTable !== table) {
+            selectedTable.classList.remove('table-menu-selected');
+            clearColumnHighlight();
+          }
+          selectedTable = table;
+          if (cell) {
+            selectedCell = cell;
+          } else if (!selectedCell || !selectedTable.contains(selectedCell)) {
+            selectedCell = selectedTable.querySelector('td,th');
+          }
+
+          if (selectedTable) {
+            selectedTable.classList.add('table-menu-selected');
+          }
+
+          updateMenuState();
+          tableMenu.classList.add('show');
+          tableMenu.setAttribute('aria-hidden', 'false');
+        }
+
+        function clearColumnHighlight() {
+          if (!selectedTable) return;
+          if (highlightedColumnIndex == null) return;
+          Array.from(selectedTable.rows).forEach(row => {
+            const cell = row.cells[highlightedColumnIndex];
+            if (cell) cell.classList.remove('table-column-highlight');
+          });
+          highlightedColumnIndex = null;
+        }
+
+        function highlightColumn(index) {
+          clearColumnHighlight();
+          if (index == null || !selectedTable) return;
+          Array.from(selectedTable.rows).forEach(row => {
+            const cell = row.cells[index];
+            if (cell) cell.classList.add('table-column-highlight');
+          });
+          highlightedColumnIndex = index;
+        }
+
+        function ensureTableDefaults(table) {
+          if (!table.dataset.lineHeight) table.dataset.lineHeight = '1.25';
+          if (!table.dataset.paddingY) table.dataset.paddingY = '4';
+          if (!table.dataset.tableMargin) table.dataset.tableMargin = '6';
+          if (!table.dataset.borderColor) table.dataset.borderColor = '#dee2e6';
+          if (!table.dataset.borderWidth) table.dataset.borderWidth = '1';
+          if (!table.dataset.hideVerticalBorders) table.dataset.hideVerticalBorders = 'false';
+          if (!table.dataset.hideHorizontalBorders) table.dataset.hideHorizontalBorders = 'false';
+        }
+
+        function countColumns(table) {
+          return Array.from(table.rows).reduce((max, row) => Math.max(max, row.cells.length), 0);
+        }
+
+        function countRows(table) {
+          return Array.from(table.rows).length;
+        }
+
+        function updateSizeDisplay() {
+          if (!selectedTable) return;
+          const rows = countRows(selectedTable);
+          const cols = countColumns(selectedTable);
+          tableMenuSize.textContent = `${rows} × ${cols}`;
+        }
+
+        function applySpacing() {
+          if (!selectedTable) return;
+          const lineHeight = parseFloat(selectedTable.dataset.lineHeight || '1.25');
+          const paddingY = parseInt(selectedTable.dataset.paddingY || '4', 10);
+          const margin = parseInt(selectedTable.dataset.tableMargin || '6', 10);
+          const cells = selectedTable.querySelectorAll('th,td');
+          cells.forEach(cell => {
+            cell.style.lineHeight = lineHeight.toString();
+            cell.style.paddingTop = paddingY + 'px';
+            cell.style.paddingBottom = paddingY + 'px';
+          });
+          selectedTable.style.marginTop = margin + 'px';
+          selectedTable.style.marginBottom = margin + 'px';
+          selectedTable.style.marginLeft = margin + 'px';
+          selectedTable.style.marginRight = margin + 'px';
+        }
+
+        function updateSpacingControls() {
+          if (!selectedTable) return;
+          tableLineHeightInput.value = selectedTable.dataset.lineHeight || '1.25';
+          tablePaddingYInput.value = selectedTable.dataset.paddingY || '4';
+          tableMarginInput.value = selectedTable.dataset.tableMargin || '6';
+          tableLineHeightValue.textContent = parseFloat(tableLineHeightInput.value).toFixed(2);
+          tablePaddingYValue.textContent = `${tablePaddingYInput.value}px`;
+          tableMarginValue.textContent = `${tableMarginInput.value}px`;
+        }
+
+        function updateThemeButtons() {
+          if (!selectedTable) return;
+          const currentTheme = selectedTable.dataset.themeClass || '';
+          tableThemeButtons.forEach(btn => {
+            const theme = btn.dataset.tableTheme || '';
+            btn.classList.toggle('active', theme === currentTheme);
+          });
+        }
+
+        function applyTheme(themeClass) {
+          if (!selectedTable) return;
+          const previous = selectedTable.dataset.themeClass;
+          if (previous) {
+            selectedTable.classList.remove(previous);
+          }
+          if (themeClass) {
+            selectedTable.classList.add(themeClass);
+            selectedTable.dataset.themeClass = themeClass;
+          } else {
+            delete selectedTable.dataset.themeClass;
+          }
+          updateThemeButtons();
+        }
+
+        const spacingPresets = {
+          compacta: { lineHeight: 1.15, paddingY: 3, margin: 4 },
+          equilibrada: { lineHeight: 1.3, paddingY: 5, margin: 8 },
+          amplia: { lineHeight: 1.5, paddingY: 8, margin: 12 }
+        };
+
+        function updatePresetButtons() {
+          if (!selectedTable) return;
+          const current = {
+            lineHeight: parseFloat(selectedTable.dataset.lineHeight || '1.25'),
+            paddingY: parseInt(selectedTable.dataset.paddingY || '4', 10),
+            margin: parseInt(selectedTable.dataset.tableMargin || '6', 10)
+          };
+          tablePresetButtons.forEach(btn => {
+            const preset = spacingPresets[btn.dataset.tablePreset];
+            if (!preset) {
+              btn.classList.remove('active');
+              return;
+            }
+            const isMatch = Math.abs(preset.lineHeight - current.lineHeight) < 0.01
+              && preset.paddingY === current.paddingY
+              && preset.margin === current.margin;
+            btn.classList.toggle('active', isMatch);
+          });
+        }
+
+        function applySpacingPreset(key) {
+          const preset = spacingPresets[key];
+          if (!preset || !selectedTable) return;
+          selectedTable.dataset.lineHeight = preset.lineHeight.toString();
+          selectedTable.dataset.paddingY = preset.paddingY.toString();
+          selectedTable.dataset.tableMargin = preset.margin.toString();
+          applySpacing();
+          updateSpacingControls();
+          updatePresetButtons();
+        }
+
+        function applyBorderStyles() {
+          if (!selectedTable) return;
+          const color = selectedTable.dataset.borderColor || '#dee2e6';
+          const width = parseFloat(selectedTable.dataset.borderWidth || '1');
+          const hideVertical = selectedTable.dataset.hideVerticalBorders === 'true';
+          const hideHorizontal = selectedTable.dataset.hideHorizontalBorders === 'true';
+          const cells = selectedTable.querySelectorAll('th,td');
+
+          selectedTable.style.borderColor = color;
+          selectedTable.style.borderWidth = width + 'px';
+          selectedTable.style.borderStyle = 'solid';
+
+          cells.forEach(cell => {
+            cell.style.borderColor = color;
+            cell.style.borderStyle = 'solid';
+            cell.style.borderWidth = width + 'px';
+            cell.style.borderLeftWidth = hideVertical ? '0px' : width + 'px';
+            cell.style.borderRightWidth = hideVertical ? '0px' : width + 'px';
+            cell.style.borderTopWidth = hideHorizontal ? '0px' : width + 'px';
+            cell.style.borderBottomWidth = hideHorizontal ? '0px' : width + 'px';
+          });
+        }
+
+        function updateBorderControls() {
+          if (!selectedTable) return;
+          const color = selectedTable.dataset.borderColor || '#dee2e6';
+          const width = selectedTable.dataset.borderWidth || '1';
+          const hideVertical = selectedTable.dataset.hideVerticalBorders === 'true';
+          const hideHorizontal = selectedTable.dataset.hideHorizontalBorders === 'true';
+
+          tableBorderColorButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.borderColor === color);
+          });
+          if (tableBorderColorCustom) {
+            tableBorderColorCustom.value = color;
+          }
+          tableBorderWidthInput.value = width;
+          tableBorderWidthValue.textContent = `${width}px`;
+          toggleVerticalBorders.checked = hideVertical;
+          toggleHorizontalBorders.checked = hideHorizontal;
+        }
+
+        function updateStatefulButtons() {
+          actionButtons.forEach(btn => {
+            if (!btn.dataset.stateful) return;
+            if (!selectedTable) {
+              btn.classList.remove('active');
+              return;
+            }
+            const action = btn.dataset.action;
+            if (action === 'toggle-header') {
+              const hasHeader = !!selectedTable.tHead;
+              btn.classList.toggle('active', hasHeader);
+            }
+            if (action === 'toggle-zebra') {
+              const isZebra = selectedTable.classList.contains('table-zebra');
+              btn.classList.toggle('active', isZebra);
+            }
+          });
+        }
+
+        function updateMenuState() {
+          if (!selectedTable) return;
+          ensureTableDefaults(selectedTable);
+          updateSizeDisplay();
+          updateSpacingControls();
+          updatePresetButtons();
+          updateThemeButtons();
+          updateBorderControls();
+          updateStatefulButtons();
+          applySpacing();
+          applyBorderStyles();
+        }
+
+        function ensureCellContext() {
+          if (!selectedCell || !selectedTable || !selectedTable.contains(selectedCell)) {
+            selectedCell = selectedTable?.querySelector('td,th') || null;
+          }
+          return selectedCell;
+        }
+
+        function insertRow(relativePosition) {
+          const cell = ensureCellContext();
+          if (!cell || !selectedTable) return;
+          const row = cell.parentElement;
+          if (!row) return;
+          const section = row.parentElement;
+          const columnCount = countColumns(selectedTable) || row.cells.length;
+          const isHeader = section?.tagName === 'THEAD';
+          const newRow = document.createElement('tr');
+          for (let i = 0; i < columnCount; i++) {
+            const newCell = document.createElement(isHeader ? 'th' : 'td');
+            newCell.innerHTML = '<br>';
+            newRow.appendChild(newCell);
+          }
+          if (relativePosition === 'before') {
+            row.parentElement?.insertBefore(newRow, row);
+          } else {
+            row.parentElement?.insertBefore(newRow, row.nextSibling);
+          }
+          selectedCell = newRow.cells[cell.cellIndex] || newRow.cells[0] || selectedCell;
+        }
+
+        function deleteRow() {
+          const cell = ensureCellContext();
+          if (!cell || !selectedTable) return;
+          const row = cell.parentElement;
+          if (!row) return;
+          const section = row.parentElement;
+          const isBody = section?.tagName === 'TBODY';
+          const isHeader = section?.tagName === 'THEAD';
+
+          if (isHeader) {
+            const thead = selectedTable.tHead;
+            if (!thead) return;
+            if (thead.rows.length <= 1) {
+              thead.remove();
+            } else {
+              row.remove();
+            }
+          } else if (isBody) {
+            const tbody = section;
+            if (tbody && tbody.rows.length <= 1) return;
+            row.remove();
+          } else {
+            row.remove();
+          }
+          selectedCell = selectedTable.querySelector('td,th');
+        }
+
+        function insertColumn(position) {
+          const cell = ensureCellContext();
+          if (!cell || !selectedTable) return;
+          const index = cell.cellIndex;
+          const rows = Array.from(selectedTable.rows);
+          rows.forEach(row => {
+            const tag = row.parentElement?.tagName === 'THEAD' ? 'th' : 'td';
+            const newCell = document.createElement(tag);
+            newCell.innerHTML = '<br>';
+            const reference = row.cells[index] || null;
+            if (position === 'left') {
+              row.insertBefore(newCell, reference);
+            } else {
+              if (reference) {
+                row.insertBefore(newCell, reference.nextSibling);
+              } else {
+                row.appendChild(newCell);
+              }
+            }
+          });
+        }
+
+        function deleteColumn() {
+          const cell = ensureCellContext();
+          if (!cell || !selectedTable) return;
+          const index = cell.cellIndex;
+          const columnCount = countColumns(selectedTable);
+          if (columnCount <= 1) return;
+          Array.from(selectedTable.rows).forEach(row => {
+            const target = row.cells[index];
+            if (target) target.remove();
+          });
+          selectedCell = selectedTable.querySelector('td,th');
+          clearColumnHighlight();
+        }
+
+        function clearColumn() {
+          const cell = ensureCellContext();
+          if (!cell || !selectedTable) return;
+          const index = cell.cellIndex;
+          Array.from(selectedTable.rows).forEach(row => {
+            const target = row.cells[index];
+            if (target) target.innerHTML = '<br>';
+          });
+        }
+
+        function toggleHeaderRow() {
+          if (!selectedTable) return;
+          if (selectedTable.tHead) {
+            const headerRow = selectedTable.tHead.rows[0];
+            if (headerRow) {
+              const tbody = selectedTable.tBodies[0] || selectedTable.createTBody();
+              const bodyRow = document.createElement('tr');
+              Array.from(headerRow.cells).forEach(th => {
+                const td = document.createElement('td');
+                td.innerHTML = th.innerHTML;
+                td.style.cssText = th.style.cssText;
+                bodyRow.appendChild(td);
+              });
+              tbody.insertBefore(bodyRow, tbody.firstChild || null);
+              selectedCell = bodyRow.cells[0] || null;
+            }
+            selectedTable.tHead.remove();
+            selectedTable.dataset.headerRow = 'false';
+          } else {
+            const tbody = selectedTable.tBodies[0];
+            if (!tbody || !tbody.rows.length) return;
+            const firstRow = tbody.rows[0];
+            const thead = selectedTable.createTHead();
+            const headerRow = document.createElement('tr');
+            Array.from(firstRow.cells).forEach(td => {
+              const th = document.createElement('th');
+              th.innerHTML = td.innerHTML;
+              th.style.cssText = td.style.cssText;
+              headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            firstRow.remove();
+            selectedCell = headerRow.cells[0] || null;
+            selectedTable.dataset.headerRow = 'true';
+          }
+        }
+
+        function toggleZebra() {
+          if (!selectedTable) return;
+          const isActive = selectedTable.classList.toggle('table-zebra');
+          selectedTable.dataset.zebra = isActive ? 'true' : 'false';
+        }
+
+        function selectColumn() {
+          const cell = ensureCellContext();
+          if (!cell) return;
+          highlightColumn(cell.cellIndex);
+        }
+
+        function openTools() {
+          if (!selectedTable) return;
+          const event = new CustomEvent('tableMenu:tools', { detail: { table: selectedTable } });
+          document.dispatchEvent(event);
+        }
+
+        function handleAction(action) {
+          switch (action) {
+            case 'insert-row-above':
+              insertRow('before');
+              break;
+            case 'insert-row-below':
+              insertRow('after');
+              break;
+            case 'delete-row':
+              deleteRow();
+              break;
+            case 'insert-column-left':
+              insertColumn('left');
+              break;
+            case 'insert-column-right':
+              insertColumn('right');
+              break;
+            case 'delete-column':
+              deleteColumn();
+              break;
+            case 'clear-column':
+              clearColumn();
+              break;
+            case 'toggle-header':
+              toggleHeaderRow();
+              break;
+            case 'toggle-zebra':
+              toggleZebra();
+              break;
+            case 'select-column':
+              selectColumn();
+              break;
+            case 'open-tools':
+              openTools();
+              break;
+          }
+          updateMenuState();
+        }
+
+        actionButtons.forEach(btn => {
+          btn.addEventListener('click', () => handleAction(btn.dataset.action));
+        });
+
+        tableMenuTabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            if (tab.classList.contains('active')) return;
+            tableMenuTabs.forEach(t => {
+              t.classList.toggle('active', t === tab);
+              t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+            });
+            const target = tab.dataset.tab;
+            tableMenuPanels.forEach(panel => {
+              panel.classList.toggle('active', panel.dataset.panel === target);
+            });
+          });
+        });
+
+        tableThemeButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            applyTheme(btn.dataset.tableTheme || '');
+          });
+        });
+
+        tableLineHeightInput?.addEventListener('input', () => {
+          if (!selectedTable) return;
+          selectedTable.dataset.lineHeight = tableLineHeightInput.value;
+          tableLineHeightValue.textContent = parseFloat(tableLineHeightInput.value).toFixed(2);
+          applySpacing();
+        });
+
+        tablePaddingYInput?.addEventListener('input', () => {
+          if (!selectedTable) return;
+          selectedTable.dataset.paddingY = tablePaddingYInput.value;
+          tablePaddingYValue.textContent = `${tablePaddingYInput.value}px`;
+          applySpacing();
+        });
+
+        tableMarginInput?.addEventListener('input', () => {
+          if (!selectedTable) return;
+          selectedTable.dataset.tableMargin = tableMarginInput.value;
+          tableMarginValue.textContent = `${tableMarginInput.value}px`;
+          applySpacing();
+        });
+
+        tablePresetButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            applySpacingPreset(btn.dataset.tablePreset);
+          });
+        });
+
+        tableBorderColorButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (!selectedTable) return;
+            selectedTable.dataset.borderColor = btn.dataset.borderColor || '#dee2e6';
+            updateBorderControls();
+            applyBorderStyles();
+          });
+        });
+
+        tableBorderColorCustom?.addEventListener('input', () => {
+          if (!selectedTable || !tableBorderColorCustom) return;
+          selectedTable.dataset.borderColor = tableBorderColorCustom.value;
+          updateBorderControls();
+          applyBorderStyles();
+        });
+
+        tableBorderWidthInput?.addEventListener('input', () => {
+          if (!selectedTable) return;
+          selectedTable.dataset.borderWidth = tableBorderWidthInput.value;
+          tableBorderWidthValue.textContent = `${tableBorderWidthInput.value}px`;
+          applyBorderStyles();
+        });
+
+        toggleVerticalBorders?.addEventListener('change', () => {
+          if (!selectedTable) return;
+          selectedTable.dataset.hideVerticalBorders = toggleVerticalBorders.checked ? 'true' : 'false';
+          applyBorderStyles();
+        });
+
+        toggleHorizontalBorders?.addEventListener('change', () => {
+          if (!selectedTable) return;
+          selectedTable.dataset.hideHorizontalBorders = toggleHorizontalBorders.checked ? 'true' : 'false';
+          applyBorderStyles();
+        });
+
+        tableBorderResetBtn?.addEventListener('click', () => {
+          if (!selectedTable) return;
+          selectedTable.dataset.borderColor = '#dee2e6';
+          selectedTable.dataset.borderWidth = '1';
+          selectedTable.dataset.hideVerticalBorders = 'false';
+          selectedTable.dataset.hideHorizontalBorders = 'false';
+          updateBorderControls();
+          applyBorderStyles();
+        });
+
+        tableMenuClose?.addEventListener('click', () => hideMenu());
+
+        tableResizeBtn?.addEventListener('click', () => {
+          if (!selectedTable) return;
+          currentResizer = makeTableResizable(selectedTable);
+          currentResizer?.activate({
+            onFinish: () => {
+              currentResizer = null;
+              showMenu(selectedTable, selectedCell);
+            },
+            onCancel: () => {
+              currentResizer = null;
+              showMenu(selectedTable, selectedCell);
+            }
+          });
+          hideMenu({ preserveSelection: true });
+        });
+
+        function cancelResizeMode() {
+          if (currentResizer) {
+            currentResizer.cancel();
+            currentResizer = null;
+          } else if (selectedTable && tableResizers.has(selectedTable)) {
+            tableResizers.get(selectedTable)?.cancel();
+          }
+        }
+
+        document.addEventListener('click', (event) => {
+          if (!isEditMode) return;
+          if (tableMenu.contains(event.target)) return;
+          const table = event.target.closest('table');
+          if (!table) {
+            if (!tableMenu.contains(event.target)) {
+              hideMenu();
+            }
+            return;
+          }
+          const cell = event.target.closest('td,th') || table.querySelector('td,th');
+          if (!cell) return;
+          showMenu(table, cell);
+        });
+
+        document.addEventListener('selectionchange', () => {
+          if (!isEditMode) return;
+          const selection = window.getSelection();
+          if (!selection || !selection.rangeCount) return;
+          const node = selection.anchorNode;
+          if (!node) return;
+          const element = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+          if (!element) return;
+          const table = element.closest('table');
+          if (!table) {
+            if (tableMenu.classList.contains('show')) {
+              hideMenu();
+            }
+            return;
+          }
+          const cell = element.closest('td,th') || table.querySelector('td,th');
+          if (!cell) return;
+          showMenu(table, cell);
+        });
+
+        return {
+          hide: hideMenu,
+          show: showMenu,
+          refresh: updateMenuState,
+          cancelResize: cancelResizeMode
+        };
+      }
+
+      tableMenuAPI = initializeTableMenu();
 
       /* === MODAL === */
       function showModal(content) {
@@ -4402,6 +5865,7 @@
           editBtn.textContent = '✏️';
           saveHtmlBtn.style.display = 'inline-block';
           enableHtmlPaste();
+          tableMenuAPI?.refresh();
         } else {
           pages.forEach(page => page.contentEditable = 'false');
           const magicPages = document.querySelectorAll('.magic-page');
@@ -4412,6 +5876,8 @@
           saveHtmlBtn.style.display = 'none';
           hideTemplateToolbar();
           hideImageToolbar();
+          tableMenuAPI?.cancelResize();
+          tableMenuAPI?.hide();
         }
       }
       
