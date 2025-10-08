@@ -12,6 +12,7 @@
       --theme-primary-light: #6ea8fe;
       --base-font-size: 10.5px;
       --zoom-level: 1;
+      --topbar-height: 36px;
       font-size: calc(var(--base-font-size) * var(--zoom-level));
     }
 
@@ -89,7 +90,8 @@
     }
 
     body.reading-mode .topbar,
-    body.reading-mode .edit-toolbar {
+    body.reading-mode .edit-toolbar,
+    body.reading-mode .floating-notes-container {
       display: none !important;
     }
 
@@ -135,30 +137,30 @@
       left: 0;
       right: 0;
       z-index: 4000;
-      height: 3.43rem;
+      height: var(--topbar-height);
       background: #000;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 0.95rem;
+      padding: 0 12px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
-      font-size: 1.05rem;
+      font-size: 12px;
     }
 
     .topbar-left {
       position: absolute;
-      left: 0.95rem;
+      left: 12px;
       display: flex;
       align-items: center;
-      gap: 0.95rem;
+      gap: 12px;
     }
 
     .topbar-center {
       display: flex;
       align-items: center;
-      gap: 0.76rem;
-      font-size: 1.14rem;
+      gap: 12px;
+      font-size: 13px;
       flex-wrap: wrap;
       justify-content: center;
       max-width: calc(100% - 12rem);
@@ -166,16 +168,16 @@
 
     .topbar-right {
       position: absolute;
-      right: 0.95rem;
+      right: 12px;
       display: flex;
       align-items: center;
-      gap: 0.95rem;
+      gap: 12px;
     }
 
     .topbar-topic {
       display: inline-block;
-      padding: 0.19rem 0.57rem;
-      border-radius: 0.38rem;
+      padding: 3px 9px;
+      border-radius: 6px;
       background: #222;
       color: #ddd;
       max-width: 60vw;
@@ -192,14 +194,14 @@
       background: #111;
       color: #fff;
       border: 1px solid #333;
-      padding: 0.38rem 0.76rem;
-      border-radius: 0.57rem;
-      font-size: 1.05rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
       cursor: pointer;
       transition: opacity .15s;
       display: flex;
       align-items: center;
-      gap: 0.38rem;
+      gap: 6px;
     }
 
     .topbar-btn:hover {
@@ -212,7 +214,7 @@
     }
 
     .topbar-btn-label {
-      font-size: 0.86rem;
+      font-size: 11px;
       display: none;
     }
 
@@ -225,16 +227,16 @@
     .zoom-controls {
       display: flex;
       align-items: center;
-      gap: 0.38rem;
+      gap: 6px;
     }
 
     .zoom-value {
-      min-width: 4.29rem;
+      min-width: 48px;
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 11px;
       background: #222;
-      padding: 0.19rem 0.38rem;
-      border-radius: 0.29rem;
+      padding: 3px 6px;
+      border-radius: 6px;
     }
 
     /* ===== Barra de herramientas mejorada ===== */
@@ -961,11 +963,11 @@
     /* ===== Panel lateral ===== */
     .topic-panel {
       position: fixed;
-      top: 3.43rem;
+      top: var(--topbar-height);
       left: 0;
       width: 340px;
       max-width: 90vw;
-      height: calc(100vh - 3.43rem);
+      height: calc(100vh - var(--topbar-height));
       background: #fff;
       border-right: 1px solid #e5e7eb;
       box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
@@ -983,11 +985,11 @@
     /* ===== Tabla de contenidos ===== */
     .toc-panel {
       position: fixed;
-      top: 3.43rem;
+      top: var(--topbar-height);
       right: 0;
       width: 300px;
       max-width: 90vw;
-      height: calc(100vh - 3.43rem);
+      height: calc(100vh - var(--topbar-height));
       background: #fff;
       border-left: 1px solid #e5e7eb;
       box-shadow: -4px 4px 10px rgba(0, 0, 0, .08);
@@ -1106,6 +1108,17 @@
       flex-wrap: wrap;
     }
 
+    .panel-topic-counter {
+      padding: 4px 10px;
+      border-bottom: 1px solid #f1f3f5;
+      font-size: 0.857rem;
+      color: #495057;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
     .panel-action-btn {
       flex: 1;
       min-width: 70px;
@@ -1200,10 +1213,10 @@
     .topic-list li {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 5px 10px 5px 30px;
-      border-bottom: 1px dashed #f8f9fa;
-      font-size: 0.952rem;
+      gap: 4px;
+      padding: 4px 8px 4px 26px;
+      border-bottom: 1px dashed #eef1f4;
+      font-size: 0.9rem;
     }
 
     .topic-list li:hover {
@@ -1218,15 +1231,15 @@
     .topic-number {
       font-weight: 600;
       color: var(--theme-primary);
-      min-width: 20px;
+      min-width: 18px;
     }
 
     .topic-list .topic-action {
-      font-size: 0.952rem;
+      font-size: 0.9rem;
       border: 1px solid #d0d7de;
       background: #fff;
       border-radius: 3px;
-      padding: 2px 5px;
+      padding: 1px 4px;
       cursor: pointer;
       flex-shrink: 0;
     }
@@ -1281,7 +1294,7 @@
 
     .panel-backdrop {
       position: fixed;
-      top: 3.43rem;
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       bottom: 0;
@@ -2102,7 +2115,7 @@
     /* ===== Visor Mágico ===== */
     .magic-view {
       position: fixed;
-      top: 3.43rem;
+      top: var(--topbar-height);
       left: 0;
       right: 0;
       bottom: 0;
@@ -2172,6 +2185,131 @@
       line-height: 1.2
     }
 
+    /* ===== Notas flotantes ===== */
+    .floating-notes-container {
+      position: fixed;
+      top: var(--topbar-height);
+      left: 0;
+      width: 100%;
+      height: calc(100vh - var(--topbar-height));
+      pointer-events: none;
+      z-index: 3900;
+    }
+
+    .floating-notes-container.notes-hidden {
+      display: none;
+    }
+
+    .floating-note {
+      position: absolute;
+      min-width: 180px;
+      max-width: 280px;
+      background: #fffbe6;
+      color: #5c3d0c;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      box-shadow: 0 12px 24px rgba(33, 37, 41, 0.18);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: grab;
+      pointer-events: auto;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .floating-note:focus-within {
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.28);
+    }
+
+    .floating-note.dragging {
+      cursor: grabbing;
+      box-shadow: 0 18px 32px rgba(33, 37, 41, 0.3);
+    }
+
+    .floating-note-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .floating-note-style {
+      flex: 1;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 0.857rem;
+      padding: 2px 4px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #495057;
+      cursor: pointer;
+    }
+
+    .floating-note-delete {
+      background: transparent;
+      border: none;
+      font-size: 1.05rem;
+      line-height: 1;
+      color: #495057;
+      cursor: pointer;
+      padding: 2px;
+      border-radius: 4px;
+    }
+
+    .floating-note-delete:hover {
+      background: rgba(220, 53, 69, 0.1);
+      color: #c92a2a;
+    }
+
+    .floating-note-body {
+      min-height: 90px;
+      outline: none;
+      font-size: 0.952rem;
+      line-height: 1.35;
+      cursor: text;
+      word-break: break-word;
+    }
+
+    .floating-note.note-style-classic {
+      background: #fffbe6;
+      color: #5c3d0c;
+    }
+
+    .floating-note.note-style-sky {
+      background: #e7f1ff;
+      color: #0b3d91;
+    }
+
+    .floating-note.note-style-forest {
+      background: #edf7ed;
+      color: #22543d;
+    }
+
+    .floating-note.note-style-sunrise {
+      background: #fff3d9;
+      color: #8b5e11;
+    }
+
+    .floating-note.note-style-rose {
+      background: #fdf2f8;
+      color: #931946;
+    }
+
+    .floating-note.note-style-lilac {
+      background: #f3f0ff;
+      color: #4c1d95;
+    }
+
+    .floating-note.note-style-slate {
+      background: #f5f7fa;
+      color: #364152;
+    }
+
+    .floating-note.note-style-pearl {
+      background: #fff4e6;
+      color: #7a3b0c;
+    }
+
     .magic-section {
       margin: 10px 0
     }
@@ -2232,7 +2370,8 @@
       .edit-toolbar,
       .image-toolbar,
       .reading-mode-exit,
-      .magic-icon {
+      .magic-icon,
+      .floating-notes-container {
         display: none !important;
       }
 
@@ -2361,6 +2500,14 @@
       <div class="toolbar-separator"></div>
 
       <div class="toolbar-group">
+        <span class="toolbar-label">NOTAS</span>
+        <button id="addFloatingNoteBtn" title="Agregar nota flotante">🗒️</button>
+        <button id="toggleFloatingNotesBtn" title="Mostrar u ocultar notas">👁️</button>
+      </div>
+
+      <div class="toolbar-separator"></div>
+
+      <div class="toolbar-group">
         <span class="toolbar-label">AVANZADO</span>
         <button id="copyHtmlSelectionBtn" title="Copiar HTML">&lt;&gt;</button>
         <button id="findReplaceBtn" title="Buscar">🔍</button>
@@ -2386,6 +2533,8 @@
       </div>
     </div>
   </div>
+
+  <div class="floating-notes-container" id="floatingNotesContainer"></div>
 
   <!-- Paletas de color -->
   <div class="color-palette" id="highlightPalette"></div>
@@ -2414,17 +2563,12 @@
       <button id="unwrapFigureBtn" title="Quitar figura" style="flex:1;">➖ Quitar</button>
     </div>
     <div class="image-toolbar-row">
-      <label>Ancho:</label>
+      <label>Tamaño:</label>
       <div class="image-size-controls">
         <button type="button" class="image-size-btn" id="imageWidthDecrease" title="Reducir tamaño">−</button>
         <span class="size-display" id="widthDisplay">100% (200px)</span>
         <button type="button" class="image-size-btn" id="imageWidthIncrease" title="Aumentar tamaño">+</button>
       </div>
-    </div>
-    <div class="image-toolbar-row">
-      <label>Alto:</label>
-      <input type="range" id="imageHeightSlider" min="50" max="900" step="1">
-      <span class="size-display" id="heightDisplay">auto</span>
     </div>
     <div class="image-toolbar-row">
       <button id="cropImageBtn" title="Recortar imagen" style="flex: 1;">✂️ Recortar</button>
@@ -2659,6 +2803,10 @@
         <button class="panel-close">&times;</button>
       </div>
     </div>
+    <div class="panel-topic-counter" id="panelTopicCounter" role="status" aria-live="polite" aria-atomic="true" aria-label="Total de temas: 0">
+      <span id="panelTopicCounterLabel">Total de temas</span>
+      <strong id="panelTopicCounterValue">0</strong>
+    </div>
     <div class="panel-actions">
       <button class="panel-action-btn" id="toggleAllBtn" title="Expandir/Colapsar todo">⊞</button>
       <button class="panel-action-btn" id="sortAlphaBtn">🔤</button>
@@ -2711,6 +2859,11 @@
         scaleX: 1,
         scaleY: 1
       };
+      let draggingFloatingNote = null;
+      let draggingPointerId = null;
+      let dragOffsetX = 0;
+      let dragOffsetY = 0;
+      let areFloatingNotesHidden = false;
 
       const IMAGE_MIN_WIDTH = 60;
       const IMAGE_MAX_WIDTH = 1600;
@@ -2763,8 +2916,6 @@
       const imageWidthIncreaseBtn = document.getElementById('imageWidthIncrease');
       const imageWidthDecreaseBtn = document.getElementById('imageWidthDecrease');
       const widthDisplay = document.getElementById('widthDisplay');
-      const heightSlider = document.getElementById('imageHeightSlider');
-      const heightDisplay = document.getElementById('heightDisplay');
       const imageCropModal = document.getElementById('imageCropModal');
       const imageCropStage = document.getElementById('imageCropStage');
       const imageCropPreview = document.getElementById('imageCropPreview');
@@ -2782,6 +2933,12 @@
       const templateTextPalette = document.getElementById('templateTextPalette');
       const templateBorderPalette = document.getElementById('templateBorderPalette');
       const templateAccentPalette = document.getElementById('templateAccentPalette');
+      const floatingNotesContainer = document.getElementById('floatingNotesContainer');
+      const addFloatingNoteBtn = document.getElementById('addFloatingNoteBtn');
+      const toggleFloatingNotesBtn = document.getElementById('toggleFloatingNotesBtn');
+      const panelTopicCounter = document.getElementById('panelTopicCounter');
+      const panelTopicCounterValue = document.getElementById('panelTopicCounterValue');
+      areFloatingNotesHidden = floatingNotesContainer?.classList.contains('notes-hidden') || false;
       const templateBorderColorInput = document.getElementById('templateBorderColor');
       const templateAccentColorInput = document.getElementById('templateAccentColor');
       const templateBorderColorRow = document.getElementById('templateBorderColorRow');
@@ -2818,6 +2975,16 @@
       ];
       const NOTE_STYLE_CLASSES = noteStylePresets.map(p => p.className);
       const noteStylePresetMap = new Map(noteStylePresets.map(p => [p.id, p]));
+      const floatingNoteStyleLabels = new Map([
+        ['classic', 'Clásica'],
+        ['sky', 'Cielo suave'],
+        ['forest', 'Bosque'],
+        ['sunrise', 'Amanecer'],
+        ['rose', 'Rosada'],
+        ['lilac', 'Lavanda'],
+        ['slate', 'Gris suave'],
+        ['pearl', 'Perla']
+      ]);
 
       function getPageTheme(page) {
         if (!page) return DEFAULT_THEME;
@@ -3965,10 +4132,18 @@
         });
       }
 
+      function resetInteractiveBindings(root) {
+        if (!root) return;
+        root.querySelectorAll('.magic-icon[data-bound], .topic-title-text[data-bound]').forEach(node => {
+          node.removeAttribute('data-bound');
+        });
+      }
+
       function afterContentSanitize(root) {
         sanitizeCitations(root);
         purgeUnwantedNotes(root);
         normalizePearls(root);
+        resetInteractiveBindings(root);
         initializeCollapseCards(root);
       }
 
@@ -4053,6 +4228,194 @@
           });
           el.dataset.pasteHandlerBound = 'true';
         });
+      }
+
+      /* === NOTAS FLOTANTES === */
+      function updateFloatingNotesToggleState() {
+        if (!toggleFloatingNotesBtn) return;
+        toggleFloatingNotesBtn.classList.toggle('active', !areFloatingNotesHidden);
+        toggleFloatingNotesBtn.title = areFloatingNotesHidden ? 'Mostrar notas flotantes' : 'Ocultar notas flotantes';
+        toggleFloatingNotesBtn.setAttribute('aria-pressed', (!areFloatingNotesHidden).toString());
+      }
+
+      function setFloatingNotesHidden(hidden) {
+        if (!floatingNotesContainer) return;
+        areFloatingNotesHidden = !!hidden;
+        floatingNotesContainer.classList.toggle('notes-hidden', areFloatingNotesHidden);
+        if (areFloatingNotesHidden) {
+          floatingNotesContainer.querySelectorAll('.floating-note-body').forEach(body => body.blur());
+        }
+        updateFloatingNotesToggleState();
+        updateFloatingNotesEditability();
+      }
+
+      function updateFloatingNotesEditability() {
+        if (!floatingNotesContainer) return;
+        const editable = isEditMode && !areFloatingNotesHidden;
+        floatingNotesContainer.querySelectorAll('.floating-note-body').forEach(body => {
+          body.contentEditable = editable ? 'true' : 'false';
+          body.setAttribute('spellcheck', 'true');
+          if (!editable) {
+            body.blur();
+          }
+          const note = body.closest('.floating-note');
+          if (note) {
+            const styleSelect = note.querySelector('.floating-note-style');
+            const deleteBtn = note.querySelector('.floating-note-delete');
+            if (styleSelect) styleSelect.disabled = !editable;
+            if (deleteBtn) deleteBtn.disabled = !editable;
+          }
+        });
+      }
+
+      function applyFloatingNoteStyle(note, styleId, options = {}) {
+        if (!note) return;
+        const { skipSelectSync = false } = options;
+        const normalizedId = noteStylePresetMap.has(styleId) ? styleId : 'classic';
+        NOTE_STYLE_CLASSES.forEach(cls => note.classList.remove(cls));
+        const preset = noteStylePresetMap.get(normalizedId) || noteStylePresetMap.get('classic');
+        note.classList.add(preset?.className || 'note-style-classic');
+        note.dataset.noteStyle = preset?.id || 'classic';
+        if (!skipSelectSync) {
+          const select = note.querySelector('.floating-note-style');
+          if (select) {
+            select.value = note.dataset.noteStyle;
+          }
+        }
+      }
+
+      function parseCoordinate(value) {
+        if (typeof value === 'number') {
+          return Number.isFinite(value) ? value : null;
+        }
+        if (typeof value === 'string') {
+          const parsed = parseFloat(value);
+          return Number.isFinite(parsed) ? parsed : null;
+        }
+        return null;
+      }
+
+      function startFloatingNoteDrag(note, event) {
+        if (!floatingNotesContainer) return;
+        draggingFloatingNote = note;
+        draggingPointerId = event.pointerId;
+        const noteRect = note.getBoundingClientRect();
+        dragOffsetX = event.clientX - noteRect.left;
+        dragOffsetY = event.clientY - noteRect.top;
+        note.classList.add('dragging');
+        window.addEventListener('pointermove', handleFloatingNotePointerMove);
+        window.addEventListener('pointerup', stopFloatingNoteDrag);
+        window.addEventListener('pointercancel', stopFloatingNoteDrag);
+        event.preventDefault();
+      }
+
+      function handleFloatingNotePointerMove(event) {
+        if (!draggingFloatingNote || !floatingNotesContainer) return;
+        if (draggingPointerId !== null && event.pointerId !== draggingPointerId) return;
+        const containerRect = floatingNotesContainer.getBoundingClientRect();
+        const availableWidth = containerRect.width || window.innerWidth;
+        const availableHeight = containerRect.height || window.innerHeight;
+        let newLeft = event.clientX - containerRect.left - dragOffsetX;
+        let newTop = event.clientY - containerRect.top - dragOffsetY;
+        if (!Number.isFinite(newLeft)) newLeft = 0;
+        if (!Number.isFinite(newTop)) newTop = 0;
+        const maxLeft = Math.max(0, availableWidth - draggingFloatingNote.offsetWidth - 8);
+        const maxTop = Math.max(0, availableHeight - draggingFloatingNote.offsetHeight - 8);
+        newLeft = Math.min(Math.max(newLeft, 0), maxLeft);
+        newTop = Math.min(Math.max(newTop, 0), maxTop);
+        draggingFloatingNote.style.left = `${newLeft}px`;
+        draggingFloatingNote.style.top = `${newTop}px`;
+      }
+
+      function stopFloatingNoteDrag(event) {
+        if (draggingPointerId !== null && event && event.pointerId !== draggingPointerId) return;
+        if (draggingFloatingNote) {
+          draggingFloatingNote.classList.remove('dragging');
+        }
+        draggingFloatingNote = null;
+        draggingPointerId = null;
+        window.removeEventListener('pointermove', handleFloatingNotePointerMove);
+        window.removeEventListener('pointerup', stopFloatingNoteDrag);
+        window.removeEventListener('pointercancel', stopFloatingNoteDrag);
+      }
+
+      function createFloatingNote(options = {}) {
+        if (!floatingNotesContainer) return null;
+        const note = document.createElement('div');
+        note.className = 'floating-note';
+        note.setAttribute('role', 'note');
+        const noteId = options.id && String(options.id).trim() ? String(options.id).trim() : generateUniqueId('floating-note');
+        note.dataset.noteId = noteId;
+
+        const header = document.createElement('div');
+        header.className = 'floating-note-header';
+
+        const styleSelect = document.createElement('select');
+        styleSelect.className = 'floating-note-style';
+        noteStylePresets.forEach(preset => {
+          const option = document.createElement('option');
+          option.value = preset.id;
+          option.textContent = floatingNoteStyleLabels.get(preset.id) || preset.id;
+          styleSelect.appendChild(option);
+        });
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'floating-note-delete';
+        deleteBtn.title = 'Eliminar nota';
+        deleteBtn.textContent = '✕';
+
+        header.appendChild(styleSelect);
+        header.appendChild(deleteBtn);
+        note.appendChild(header);
+
+        const body = document.createElement('div');
+        body.className = 'floating-note-body';
+        const initialHtml = typeof options.html === 'string' ? options.html : '';
+        body.innerHTML = initialHtml.trim() ? initialHtml : '<p>Escribe tu nota aquí…</p>';
+        note.appendChild(body);
+
+        floatingNotesContainer.appendChild(note);
+
+        const styleId = (options.style && noteStylePresetMap.has(options.style)) ? options.style : 'classic';
+        applyFloatingNoteStyle(note, styleId, { skipSelectSync: true });
+        styleSelect.value = note.dataset.noteStyle || 'classic';
+
+        const siblingsCount = Math.max(0, floatingNotesContainer.querySelectorAll('.floating-note').length - 1);
+        const containerWidth = floatingNotesContainer.clientWidth || window.innerWidth;
+        const containerHeight = floatingNotesContainer.clientHeight || window.innerHeight;
+        const parsedLeft = parseCoordinate(options.left);
+        const parsedTop = parseCoordinate(options.top);
+        const fallbackLeft = Math.max(16, Math.min(containerWidth - 220, 40 + siblingsCount * 28));
+        const fallbackTop = Math.max(16, Math.min(containerHeight - 180, 40 + siblingsCount * 28));
+        const finalLeft = Number.isFinite(parsedLeft) ? parsedLeft : fallbackLeft;
+        const finalTop = Number.isFinite(parsedTop) ? parsedTop : fallbackTop;
+        note.style.left = `${Math.max(0, finalLeft)}px`;
+        note.style.top = `${Math.max(0, finalTop)}px`;
+
+        styleSelect.addEventListener('change', (event) => {
+          applyFloatingNoteStyle(note, event.target.value);
+        });
+
+        deleteBtn.addEventListener('click', (event) => {
+          event.stopPropagation();
+          if (!isEditMode || confirm('¿Eliminar esta nota flotante?')) {
+            note.remove();
+          }
+        });
+
+        header.addEventListener('pointerdown', (event) => {
+          if (!isEditMode || event.button !== 0) return;
+          if (event.target.closest('select') || event.target.closest('button')) return;
+          startFloatingNoteDrag(note, event);
+        });
+
+        updateFloatingNotesEditability();
+        if (isEditMode) {
+          enableHtmlPaste();
+        }
+
+        return note;
       }
 
       /* === TABLAS === */
@@ -5391,24 +5754,6 @@
 
         updateWidthDisplayForImage(img);
 
-        if (heightSlider && heightDisplay) {
-          if (img.style.height && img.style.height !== 'auto') {
-            const parsedHeight = parseInt(img.style.height) || img.height || 200;
-            const sliderMax = parseInt(heightSlider.max || '900', 10);
-            const sliderMin = parseInt(heightSlider.min || '50', 10);
-            const clampedHeight = Math.max(sliderMin, Math.min(sliderMax, parsedHeight));
-            heightSlider.value = clampedHeight;
-            heightDisplay.textContent = parsedHeight + 'px';
-          } else {
-            const autoHeight = img.height || 200;
-            const sliderMax = parseInt(heightSlider.max || '900', 10);
-            const sliderMin = parseInt(heightSlider.min || '50', 10);
-            const clampedAuto = Math.max(sliderMin, Math.min(sliderMax, autoHeight));
-            heightSlider.value = clampedAuto;
-            heightDisplay.textContent = 'auto';
-          }
-        }
-
         if (cropImageBtn) {
           cropImageBtn.disabled = false;
         }
@@ -5687,23 +6032,50 @@
         toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
       });
 
+      window.addEventListener('blur', () => {
+        if (draggingFloatingNote) {
+          stopFloatingNoteDrag({ pointerId: draggingPointerId ?? 0 });
+        }
+      });
+
+      updateFloatingNotesToggleState();
+      updateFloatingNotesEditability();
+
+      addFloatingNoteBtn?.addEventListener('click', () => {
+        if (!floatingNotesContainer) return;
+        if (!isEditMode) {
+          toggleEditMode();
+        }
+        if (areFloatingNotesHidden) {
+          setFloatingNotesHidden(false);
+        }
+        const note = createFloatingNote();
+        if (note) {
+          const body = note.querySelector('.floating-note-body');
+          if (body && isEditMode) {
+            body.focus({ preventScroll: false });
+            const selection = window.getSelection();
+            if (selection) {
+              const range = document.createRange();
+              range.selectNodeContents(body);
+              range.collapse(false);
+              selection.removeAllRanges();
+              selection.addRange(range);
+            }
+          }
+        }
+      });
+
+      toggleFloatingNotesBtn?.addEventListener('click', () => {
+        setFloatingNotesHidden(!areFloatingNotesHidden);
+      });
+
       imageWidthIncreaseBtn?.addEventListener('click', () => {
         changeSelectedImageWidth(1 + IMAGE_RESIZE_STEP);
       });
 
       imageWidthDecreaseBtn?.addEventListener('click', () => {
         changeSelectedImageWidth(1 - IMAGE_RESIZE_STEP);
-      });
-
-      heightSlider?.addEventListener('input', (e) => {
-        if (selectedImage) {
-          const height = parseInt(e.target.value);
-          selectedImage.style.height = height + 'px';
-          if (heightDisplay) {
-            heightDisplay.textContent = height + 'px';
-          }
-          repositionImageToolbar();
-        }
       });
 
       templateBgColorInput?.addEventListener('input', (e) => {
@@ -6413,7 +6785,8 @@
       function buildSectionsPanel() {
         sectionsContainer.innerHTML = '';
         globalTopicCounter = 1;
-        
+        let totalTopics = 0;
+
         sections.forEach((section, sectionIdx) => {
           const sectionDiv = document.createElement('div');
           sectionDiv.className = 'section-item';
@@ -6488,10 +6861,12 @@
           const topicList = document.createElement('ol');
           topicList.className = 'topic-list';
           
+          totalTopics += section.temas.length;
+
           section.temas.forEach(tema => {
             const li = document.createElement('li');
             li.dataset.topicId = tema.id;
-            
+
             const numSpan = document.createElement('span');
             numSpan.className = 'topic-number';
             numSpan.textContent = globalTopicCounter + '.';
@@ -6536,6 +6911,17 @@
           sectionDiv.appendChild(topicList);
           sectionsContainer.appendChild(sectionDiv);
         });
+
+        if (panelTopicCounterValue) {
+          panelTopicCounterValue.textContent = String(totalTopics);
+        } else if (panelTopicCounter) {
+          panelTopicCounter.textContent = `Total de temas: ${totalTopics}`;
+        }
+
+        if (panelTopicCounter) {
+          panelTopicCounter.setAttribute('data-count', String(totalTopics));
+          panelTopicCounter.setAttribute('aria-label', `Total de temas: ${totalTopics}`);
+        }
       }
 
       function togglePanelEditMode() {
@@ -6605,6 +6991,10 @@
         const magicContainer = document.querySelector('.magic-content-container');
         if (magicContainer) {
           magicContainer.innerHTML = '';
+        }
+        if (floatingNotesContainer) {
+          floatingNotesContainer.innerHTML = '';
+          setFloatingNotesHidden(false);
         }
         buildSectionsPanel();
         buildTableOfContents();
@@ -6766,6 +7156,7 @@
           editBtn.classList.add('active');
           editBtn.textContent = '✏️';
           saveHtmlBtn.style.display = 'inline-block';
+          updateFloatingNotesEditability();
           enableHtmlPaste();
           tableMenuAPI?.refresh();
         } else {
@@ -6780,6 +7171,7 @@
           hideImageToolbar();
           tableMenuAPI?.cancelResize();
           tableMenuAPI?.hide();
+          updateFloatingNotesEditability();
         }
       }
       
@@ -6987,6 +7379,7 @@
     const title = (titleSpan?.textContent || h1?.textContent || 'tema').trim();
     const magicId = magicAnchorFor(page);
     const magicContent = document.getElementById(magicId);
+    const notesHtml = floatingNotesContainer ? floatingNotesContainer.outerHTML : '';
     
     const tempPage = page.cloneNode(true);
     tempPage.contentEditable = 'false';
@@ -7004,6 +7397,7 @@ ${document.querySelector('style').textContent}
   </style>
 </head>
 <body class="${currentTheme}">
+  ${notesHtml}
   ${magicContent ? '<div class="magic-content-container" style="display:none">' + magicContent.outerHTML + '</div>' : ''}
   ${tempPage.outerHTML}
 </body>
@@ -7136,6 +7530,7 @@ ${document.querySelector('style').textContent}
     const seenPages = new Set();
     const exportedSections = [];
     const exportedMagicTopics = [];
+    const exportedFloatingNotes = [];
 
     if (magicContainer) {
       magicContainer.querySelectorAll('.magic-topic').forEach(topic => {
@@ -7152,6 +7547,27 @@ ${document.querySelector('style').textContent}
           id: topicId,
           html: topic.innerHTML,
           sourceTopicId: sourceTopicId || null
+        });
+      });
+    }
+
+    if (floatingNotesContainer) {
+      floatingNotesContainer.querySelectorAll('.floating-note').forEach(note => {
+        let noteId = (note.dataset.noteId || '').trim();
+        if (!noteId) {
+          noteId = generateUniqueId('floating-note');
+          note.dataset.noteId = noteId;
+        }
+        const body = note.querySelector('.floating-note-body');
+        const left = parseFloat(note.style.left) || 0;
+        const top = parseFloat(note.style.top) || 0;
+        const style = (note.dataset.noteStyle || 'classic').trim();
+        exportedFloatingNotes.push({
+          id: noteId,
+          left,
+          top,
+          style,
+          html: body ? body.innerHTML : ''
         });
       });
     }
@@ -7266,7 +7682,9 @@ ${document.querySelector('style').textContent}
       specialty: getDocumentTitle() || '',
       sections: exportedSections,
       magicContainerHtml: magicContainer ? magicContainer.innerHTML : '',
-      magicTopics: exportedMagicTopics
+      magicTopics: exportedMagicTopics,
+      floatingNotes: exportedFloatingNotes,
+      notesHidden: areFloatingNotesHidden
     };
   }
 
@@ -7415,6 +7833,24 @@ ${document.querySelector('style').textContent}
           }
         });
       }
+    }
+
+    if (floatingNotesContainer) {
+      floatingNotesContainer.innerHTML = '';
+      const notesArray = Array.isArray(data.floatingNotes) ? data.floatingNotes : [];
+      notesArray.forEach(noteData => {
+        createFloatingNote({
+          id: noteData?.id,
+          style: noteData?.style,
+          left: parseCoordinate(noteData?.left),
+          top: parseCoordinate(noteData?.top),
+          html: typeof noteData?.html === 'string' ? noteData.html : ''
+        });
+      });
+      setFloatingNotesHidden(!!data.notesHidden);
+    } else {
+      areFloatingNotesHidden = !!data.notesHidden;
+      updateFloatingNotesToggleState();
     }
 
     const newPages = [];
@@ -7748,6 +8184,26 @@ ${document.querySelector('style').textContent}
                 }
                 magicContainer.appendChild(clonedTopic);
               });
+            }
+          }
+
+          if (floatingNotesContainer) {
+            const loadedNotesContainer = loadedDoc.querySelector('.floating-notes-container');
+            floatingNotesContainer.innerHTML = '';
+            if (loadedNotesContainer) {
+              loadedNotesContainer.querySelectorAll('.floating-note').forEach(noteEl => {
+                const body = noteEl.querySelector('.floating-note-body');
+                createFloatingNote({
+                  id: noteEl.dataset.noteId,
+                  style: noteEl.dataset.noteStyle,
+                  left: parseCoordinate(noteEl.style.left || noteEl.getAttribute('data-left')),
+                  top: parseCoordinate(noteEl.style.top || noteEl.getAttribute('data-top')),
+                  html: body ? body.innerHTML : ''
+                });
+              });
+              setFloatingNotesHidden(loadedNotesContainer.classList.contains('notes-hidden'));
+            } else {
+              setFloatingNotesHidden(false);
             }
           }
 
