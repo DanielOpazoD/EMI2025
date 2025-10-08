@@ -2696,6 +2696,9 @@
       let selectedImage = null;
       let selectedTemplateBlock = null;
       let currentZoom = 1;
+      let lastRegularZoom = 1;
+      let zoomBeforeMagic = null;
+      let isMagicViewActive = false;
       let allSectionsExpanded = true;
       let savedSelection = null;
       let tableMenuAPI = null;
@@ -3164,14 +3167,22 @@
       /* === ZOOM === */
       function syncMagicZoom() {
         if (!magic) return;
-        const scale = currentZoom ? (1 / currentZoom) : 1;
-        magic.style.setProperty('--magic-zoom', scale.toString());
+        if (isMagicViewActive) {
+          const scale = currentZoom ? (1 / currentZoom) : 1;
+          magic.style.setProperty('--magic-zoom', scale.toString());
+        } else {
+          magic.style.removeProperty('--magic-zoom');
+        }
       }
 
-      function applyZoom(level) {
+      function applyZoom(level, options = {}) {
+        const { skipRemember = false } = options;
         currentZoom = Math.max(0.5, Math.min(2, level));
         document.documentElement.style.setProperty('--zoom-level', currentZoom);
         zoomValue.textContent = Math.round(currentZoom * 100) + '%';
+        if (!skipRemember && !isMagicViewActive) {
+          lastRegularZoom = currentZoom;
+        }
         syncMagicZoom();
       }
 
@@ -6318,14 +6329,26 @@
       }
 
       function closeMagicView() {
+        if (isMagicViewActive) {
+          const restoreZoom = zoomBeforeMagic ?? lastRegularZoom ?? 1;
+          isMagicViewActive = false;
+          zoomBeforeMagic = null;
+          applyZoom(restoreZoom);
+        }
         document.body.classList.remove('magic-open');
         if (!magic) return;
         magic.classList.remove('open');
         magic.style.removeProperty('--magic-zoom');
+        zoomBeforeMagic = null;
       }
 
       function activateMagicTopic(anchorId, title) {
         if (!magic) return;
+        if (!isMagicViewActive) {
+          zoomBeforeMagic = currentZoom;
+        }
+        isMagicViewActive = true;
+        applyZoom(1, { skipRemember: true });
         magic.innerHTML =
           '<div class="magic-header"><strong>✨ Visor del tema</strong><button class="magic-close">&times;</button></div>';
         const magicPage = document.createElement('div');
@@ -7219,7 +7242,7 @@ ${document.querySelector('style').textContent}
       const snapshot = {
         version: 1,
         savedAt: new Date().toISOString(),
-        zoom: currentZoom,
+        zoom: isMagicViewActive ? lastRegularZoom : currentZoom,
         data: collectDocumentData()
       };
 
