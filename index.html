@@ -15,28 +15,60 @@
       font-size: calc(var(--base-font-size) * var(--zoom-level));
     }
 
-    body.theme-blue {
+    body.theme-blue,
+    .page.theme-blue {
       --theme-primary: #0d6efd;
       --theme-primary-dark: #0b5ed7;
       --theme-primary-light: #6ea8fe;
     }
 
-    body.theme-green {
+    body.theme-green,
+    .page.theme-green {
       --theme-primary: #198754;
       --theme-primary-dark: #157347;
       --theme-primary-light: #75b798;
     }
 
-    body.theme-purple {
+    body.theme-purple,
+    .page.theme-purple {
       --theme-primary: #6f42c1;
       --theme-primary-dark: #59359a;
       --theme-primary-light: #9d7cd4;
     }
 
-    body.theme-orange {
+    body.theme-orange,
+    .page.theme-orange {
       --theme-primary: #fd7e14;
       --theme-primary-dark: #dc6502;
       --theme-primary-light: #fda861;
+    }
+
+    body.theme-teal,
+    .page.theme-teal {
+      --theme-primary: #0f766e;
+      --theme-primary-dark: #0b5c55;
+      --theme-primary-light: #5eead4;
+    }
+
+    body.theme-rose,
+    .page.theme-rose {
+      --theme-primary: #c81e5d;
+      --theme-primary-dark: #99154a;
+      --theme-primary-light: #f4a2c2;
+    }
+
+    body.theme-sand,
+    .page.theme-sand {
+      --theme-primary: #b68900;
+      --theme-primary-dark: #876500;
+      --theme-primary-light: #f6d365;
+    }
+
+    body.theme-slate,
+    .page.theme-slate {
+      --theme-primary: #475569;
+      --theme-primary-dark: #334155;
+      --theme-primary-light: #94a3b8;
     }
 
     /* ===== Base ===== */
@@ -150,6 +182,10 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis
+    }
+
+    .topbar-topic:empty {
+      display: none;
     }
 
     .topbar-btn {
@@ -456,6 +492,32 @@
       color: #6c757d;
       font-weight: 600;
       min-width: 64px;
+    }
+
+    .template-toolbar select {
+      flex: 1;
+      font-size: 0.952rem;
+      padding: 4px 6px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      background: #fff;
+      color: #212529;
+    }
+
+    .template-toolbar .template-toolbar-static-label {
+      font-size: 0.857rem;
+      color: #6c757d;
+      font-weight: 600;
+      min-width: 64px;
+    }
+
+    .template-spacing-buttons {
+      display: flex;
+      gap: 4px;
+    }
+
+    .template-spacing-buttons button {
+      flex: 1;
     }
 
     .template-toolbar input[type="color"] {
@@ -1335,12 +1397,81 @@
     }
 
     .box {
-      background: transparent;
+      background: #ffffff;
       border: 1px solid #dee2e6;
       border-left: 4px solid var(--theme-primary);
-      padding: 6px 10px;
-      margin: 6px 0;
-      border-radius: 0 4px 4px 0
+      padding: 8px 12px;
+      margin: 8px 0;
+      border-radius: 6px;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      resize: none;
+      max-width: 100%;
+    }
+
+    body.edit-mode .box {
+      resize: both;
+      overflow: auto;
+    }
+
+    .box.note-style-classic {
+      background: #ffffff;
+      border-color: #dee2e6;
+      border-left-color: var(--theme-primary);
+      color: #212529;
+    }
+
+    .box.note-style-sky {
+      background: #f1f8ff;
+      border-color: #cfe2ff;
+      border-left-color: #0d6efd;
+      color: #0b3d91;
+    }
+
+    .box.note-style-forest {
+      background: #edf7ed;
+      border-color: #c6e6c1;
+      border-left-color: #198754;
+      color: #22543d;
+    }
+
+    .box.note-style-sunrise {
+      background: #fff7e6;
+      border-color: #fbd9a0;
+      border-left-color: #f59f0b;
+      color: #8b5e11;
+    }
+
+    .box.note-style-rose {
+      background: #fdf2f8;
+      border-color: #f8cddc;
+      border-left-color: #c81e5d;
+      color: #931946;
+    }
+
+    .box.note-style-lilac {
+      background: #f3f0ff;
+      border-color: #d9ccff;
+      border-left-color: #7c3aed;
+      color: #4c1d95;
+    }
+
+    .box.note-style-slate {
+      background: #f5f7fa;
+      border-color: #cfd4da;
+      border-left-color: #475569;
+      color: #364152;
+    }
+
+    .box.note-style-pearl {
+      background: #fff4e6;
+      border-color: #f5d0a9;
+      border-left-color: #fd7e14;
+      color: #7a3b0c;
+    }
+
+    .box.note-style-pearl::before {
+      content: "💡 ";
+      font-weight: 700;
     }
 
     .pearl {
@@ -1350,6 +1481,15 @@
     .pearl::before {
       content: "💡 ";
       font-weight: 700
+    }
+
+    .note-spacer {
+      min-height: 12px;
+      margin: 6px 0;
+    }
+
+    .note-spacer::after {
+      content: '';
     }
 
     .collapse-card {
@@ -1440,12 +1580,12 @@
     }
 
     table th {
-      background: #e9ecef;
+      background: #f5f7fa;
       font-weight: 600
     }
 
     table.table-zebra tbody tr:nth-child(even) > * {
-      background: rgba(13, 110, 253, 0.06);
+      background: rgba(13, 110, 253, 0.04);
     }
 
     table.table-zebra tbody tr:nth-child(odd) > * {
@@ -1767,48 +1907,129 @@
     }
 
     .table-theme-default {
-      background: linear-gradient(135deg, #fff, #f1f3f5);
+      background: linear-gradient(135deg, #ffffff, #f1f3f5);
       color: #212529;
     }
 
     .table-theme-ocean {
-      background: linear-gradient(135deg, #0d6efd, #6ea8fe);
-      color: #fff;
+      background: linear-gradient(135deg, #e0efff, #f6faff);
+      color: #0b5ed7;
     }
 
     .table-theme-forest {
-      background: linear-gradient(135deg, #198754, #75b798);
-      color: #fff;
+      background: linear-gradient(135deg, #e4f5e9, #f3fbf5);
+      color: #157347;
     }
 
     .table-theme-sunset {
-      background: linear-gradient(135deg, #fd7e14, #fda861);
-      color: #fff;
+      background: linear-gradient(135deg, #fef1dc, #fff7ea);
+      color: #dc6502;
     }
 
     .table-theme-violet {
-      background: linear-gradient(135deg, #6f42c1, #9d7cd4);
-      color: #fff;
+      background: linear-gradient(135deg, #efe7ff, #f8f4ff);
+      color: #59359a;
+    }
+
+    .table-theme-rose {
+      background: linear-gradient(135deg, #fde4ec, #fff4f8);
+      color: #c81e5d;
+    }
+
+    .table-theme-teal {
+      background: linear-gradient(135deg, #d8f3f0, #f3fbfa);
+      color: #0f766e;
+    }
+
+    .table-theme-sand {
+      background: linear-gradient(135deg, #f7eed0, #fdf8e7);
+      color: #b68900;
+    }
+
+    .table-theme-slate {
+      background: linear-gradient(135deg, #e3e8ee, #f5f7fa);
+      color: #475569;
+    }
+
+    table.table-theme-default thead th {
+      background: #f1f3f5;
+      color: #495057;
     }
 
     table.table-theme-ocean thead th {
-      background: rgba(13, 110, 253, 0.15);
+      background: #e6f0ff;
       color: #0b5ed7;
     }
 
     table.table-theme-forest thead th {
-      background: rgba(25, 135, 84, 0.15);
+      background: #e5f4e9;
       color: #157347;
     }
 
     table.table-theme-sunset thead th {
-      background: rgba(253, 126, 20, 0.18);
-      color: #dc6502;
+      background: #fdebd6;
+      color: #b65e04;
     }
 
     table.table-theme-violet thead th {
-      background: rgba(111, 66, 193, 0.15);
+      background: #f0e8ff;
       color: #59359a;
+    }
+
+    table.table-theme-rose thead th {
+      background: #fde4ee;
+      color: #c81e5d;
+    }
+
+    table.table-theme-teal thead th {
+      background: #daf5f1;
+      color: #0f766e;
+    }
+
+    table.table-theme-sand thead th {
+      background: #f8f0d9;
+      color: #8b6900;
+    }
+
+    table.table-theme-slate thead th {
+      background: #e7ecf2;
+      color: #475569;
+    }
+
+    table.table-theme-default tbody tr:nth-child(even) > * {
+      background: #f8f9fa;
+    }
+
+    table.table-theme-ocean tbody tr:nth-child(even) > * {
+      background: #f6faff;
+    }
+
+    table.table-theme-forest tbody tr:nth-child(even) > * {
+      background: #f3fbf5;
+    }
+
+    table.table-theme-sunset tbody tr:nth-child(even) > * {
+      background: #fff7ea;
+    }
+
+    table.table-theme-violet tbody tr:nth-child(even) > * {
+      background: #f8f4ff;
+    }
+
+    table.table-theme-rose tbody tr:nth-child(even) > * {
+      background: #fff5fa;
+    }
+
+    table.table-theme-teal tbody tr:nth-child(even) > * {
+      background: #f3fbfa;
+    }
+
+    table.table-theme-sand tbody tr:nth-child(even) > * {
+      background: #fdf8e7;
+    }
+
+    table.table-theme-slate tbody tr:nth-child(even) > * {
+      background: #f5f7fa;
     }
 
     .table-resize-handle {
@@ -1872,11 +2093,16 @@
       flex-direction: column;
       z-index: 3000;
       color: #212529;
-      overflow: auto
+      overflow: auto;
+      --magic-zoom: 1;
     }
 
     body.magic-open .magic-view {
       display: flex
+    }
+
+    .magic-view.open {
+      display: flex;
     }
 
     .magic-header {
@@ -1906,6 +2132,8 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, .1);
       box-sizing: border-box;
       overflow-wrap: break-word;
+      transform: scale(var(--magic-zoom, 1));
+      transform-origin: top center;
     }
 
     .magic-page[contenteditable="true"] {
@@ -2023,7 +2251,7 @@
       <button class="topbar-btn topbar-plus" title="Abrir panel de navegación"><span>☰</span> <span class="topbar-btn-label">Menú</span></button>
     </div>
     <div class="topbar-center">
-      <span id="specialtyTitle" class="topbar-topic" title="Especialidad">Endocrinología</span>
+      <span id="specialtyTitle" class="topbar-topic" title="Sección actual" data-document-title="Endocrinología"></span>
       <div class="zoom-controls">
         <button class="topbar-btn" id="zoomOutBtn" title="Reducir zoom">-</button>
         <span class="zoom-value" id="zoomValue">100%</span>
@@ -2127,8 +2355,12 @@
         <select id="themeSelect" title="Esquema">
           <option value="theme-blue">Azul</option>
           <option value="theme-green">Verde</option>
-          <option value="theme-purple">Morado</option>
+          <option value="theme-purple">Lavanda</option>
           <option value="theme-orange">Naranja</option>
+          <option value="theme-teal">Turquesa</option>
+          <option value="theme-rose">Rosa</option>
+          <option value="theme-sand">Arena</option>
+          <option value="theme-slate">Pizarra</option>
         </select>
         <button id="duplicateTopicBtn" title="Duplicar">📑</button>
         <button id="exportTopicBtn" title="Exportar">💾</button>
@@ -2222,16 +2454,28 @@
               <span class="table-theme-sample table-theme-default">Base</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-ocean">
-              <span class="table-theme-sample table-theme-ocean">Océano</span>
+              <span class="table-theme-sample table-theme-ocean">Azul</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-forest">
-              <span class="table-theme-sample table-theme-forest">Bosque</span>
+              <span class="table-theme-sample table-theme-forest">Verde</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-sunset">
-              <span class="table-theme-sample table-theme-sunset">Atardecer</span>
+              <span class="table-theme-sample table-theme-sunset">Amanecer</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-violet">
-              <span class="table-theme-sample table-theme-violet">Violeta</span>
+              <span class="table-theme-sample table-theme-violet">Lavanda</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-rose">
+              <span class="table-theme-sample table-theme-rose">Rosa</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-teal">
+              <span class="table-theme-sample table-theme-teal">Turquesa</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-sand">
+              <span class="table-theme-sample table-theme-sand">Arena</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-slate">
+              <span class="table-theme-sample table-theme-slate">Gris</span>
             </button>
           </div>
         </div>
@@ -2337,6 +2581,27 @@
       <div class="template-color-palette" id="templateAccentPalette"></div>
       <input type="color" id="templateAccentColor" value="#0d6efd">
     </div>
+    <div class="template-toolbar-row" id="templateNoteStyleRow" style="display:none;">
+      <label for="templateNoteStyle">Estilo:</label>
+      <select id="templateNoteStyle">
+        <option value="classic">Clásica</option>
+        <option value="sky">Cielo suave</option>
+        <option value="forest">Bosque</option>
+        <option value="sunrise">Amanecer</option>
+        <option value="rose">Rosada</option>
+        <option value="lilac">Lavanda</option>
+        <option value="slate">Gris suave</option>
+        <option value="pearl">Perla</option>
+        <option value="custom">Personalizado</option>
+      </select>
+    </div>
+    <div class="template-toolbar-row" id="templateSpacingRow" style="display:none;">
+      <span class="template-toolbar-static-label">Espacios:</span>
+      <div class="template-spacing-buttons">
+        <button type="button" id="templateAddSpaceTopBtn" title="Agregar espacio arriba">↑ +</button>
+        <button type="button" id="templateAddSpaceBottomBtn" title="Agregar espacio abajo">↓ +</button>
+      </div>
+    </div>
     <div class="template-toolbar-row">
       <label for="templateFontSize">Tamaño:</label>
       <input type="range" id="templateFontSize" min="80" max="180" step="5">
@@ -2423,8 +2688,13 @@
       };
 
       const CACHE_STORAGE_KEY = 'emi2025-editor-cache-v1';
-      
+
       let sections = [];
+      const AVAILABLE_THEMES = ['theme-blue', 'theme-green', 'theme-purple', 'theme-orange', 'theme-teal', 'theme-rose', 'theme-sand', 'theme-slate'];
+      const DEFAULT_THEME = 'theme-blue';
+      let sectionThemes = new Map();
+      let currentSectionId = '';
+      let currentPageRef = null;
       
       const panel = document.getElementById('topic-panel');
       const tocPanel = document.getElementById('toc-panel');
@@ -2490,11 +2760,108 @@
       const templateBorderWidthSlider = document.getElementById('templateBorderWidth');
       const templateBorderWidthDisplay = document.getElementById('templateBorderWidthDisplay');
       const templateDeleteBtn = document.getElementById('templateDeleteBtn');
+      const templateNoteStyleRow = document.getElementById('templateNoteStyleRow');
+      const templateNoteStyleSelect = document.getElementById('templateNoteStyle');
+      const templateSpacingRow = document.getElementById('templateSpacingRow');
+      const templateAddSpaceTopBtn = document.getElementById('templateAddSpaceTopBtn');
+      const templateAddSpaceBottomBtn = document.getElementById('templateAddSpaceBottomBtn');
+      const themeSelect = document.getElementById('themeSelect');
 
       const templateBackgroundPaletteColors = ['#ffffff', '#f8f9fa', '#fef9e7', '#fff3cd', '#fde2e4', '#f8d7da', '#e7f3ff', '#d1e7dd', '#e9ecef'];
       const templateTextPaletteColors = ['#212529', '#343a40', '#0d6efd', '#198754', '#dc3545', '#fd7e14', '#6f42c1', '#6c757d', '#ffffff'];
       const templateBorderPaletteColors = ['#ced4da', '#adb5bd', '#0d6efd', '#198754', '#dc3545', '#fd7e14', '#6f42c1', '#0dcaf0', '#6c757d', '#212529'];
       const templateAccentPaletteColors = ['#0d6efd', '#198754', '#dc3545', '#fd7e14', '#6f42c1', '#ffc107', '#20c997', '#0dcaf0', '#6c757d'];
+      const noteStylePresets = [
+        { id: 'classic', className: 'note-style-classic', extraClasses: [] },
+        { id: 'sky', className: 'note-style-sky', extraClasses: [] },
+        { id: 'forest', className: 'note-style-forest', extraClasses: [] },
+        { id: 'sunrise', className: 'note-style-sunrise', extraClasses: [] },
+        { id: 'rose', className: 'note-style-rose', extraClasses: [] },
+        { id: 'lilac', className: 'note-style-lilac', extraClasses: [] },
+        { id: 'slate', className: 'note-style-slate', extraClasses: [] },
+        { id: 'pearl', className: 'note-style-pearl', extraClasses: ['pearl'] }
+      ];
+      const NOTE_STYLE_CLASSES = noteStylePresets.map(p => p.className);
+      const noteStylePresetMap = new Map(noteStylePresets.map(p => [p.id, p]));
+
+      function getPageTheme(page) {
+        if (!page) return DEFAULT_THEME;
+        const classTheme = Array.from(page.classList || []).find(cls => AVAILABLE_THEMES.includes(cls));
+        if (classTheme) return classTheme;
+        const stored = page.dataset.theme;
+        if (stored && AVAILABLE_THEMES.includes(stored)) return stored;
+        return DEFAULT_THEME;
+      }
+
+      function applyThemeToPage(page, themeClass) {
+        if (!page) return;
+        const validTheme = AVAILABLE_THEMES.includes(themeClass) ? themeClass : DEFAULT_THEME;
+        AVAILABLE_THEMES.forEach(cls => page.classList.remove(cls));
+        page.classList.add(validTheme);
+        page.dataset.theme = validTheme;
+      }
+
+      function syncBodyTheme(themeClass) {
+        const validTheme = AVAILABLE_THEMES.includes(themeClass) ? themeClass : DEFAULT_THEME;
+        AVAILABLE_THEMES.forEach(cls => document.body.classList.remove(cls));
+        document.body.classList.add(validTheme);
+        if (isReadingMode) {
+          document.body.classList.add('reading-mode');
+        }
+      }
+
+      function updateThemeSelectControl(themeClass) {
+        if (!themeSelect) return;
+        const validTheme = AVAILABLE_THEMES.includes(themeClass) ? themeClass : DEFAULT_THEME;
+        if (themeSelect.value !== validTheme) {
+          themeSelect.value = validTheme;
+        }
+      }
+
+      function updateSectionIndicator(page) {
+        if (!specialtySpan) return;
+        const sectionName = page ? (page.dataset.sectionName || '').trim() : '';
+        specialtySpan.textContent = sectionName;
+      }
+
+      function setActivePage(page) {
+        if (!page) {
+          currentPageRef = null;
+          currentSectionId = '';
+          updateSectionIndicator(null);
+          updateThemeSelectControl(DEFAULT_THEME);
+          syncBodyTheme(DEFAULT_THEME);
+          return;
+        }
+        currentPageRef = page;
+        const sectionId = page.dataset.sectionId || 'seccion-default';
+        currentSectionId = sectionId;
+        const themeClass = getPageTheme(page);
+        sectionThemes.set(sectionId, themeClass);
+        updateSectionIndicator(page);
+        updateThemeSelectControl(themeClass);
+        syncBodyTheme(themeClass);
+      }
+
+      function setSectionTheme(sectionId, themeClass) {
+        const validTheme = AVAILABLE_THEMES.includes(themeClass) ? themeClass : DEFAULT_THEME;
+        sectionThemes.set(sectionId, validTheme);
+        pages.filter(page => page.dataset.sectionId === sectionId).forEach(page => applyThemeToPage(page, validTheme));
+        if (currentSectionId === sectionId) {
+          updateThemeSelectControl(validTheme);
+          syncBodyTheme(validTheme);
+        }
+      }
+
+      function getDocumentTitle() {
+        return (specialtySpan?.dataset.documentTitle || '').trim();
+      }
+
+      function setDocumentTitle(value) {
+        if (!specialtySpan) return;
+        const trimmed = (value || '').trim();
+        specialtySpan.dataset.documentTitle = trimmed;
+      }
 
       initPalette(templateBgPalette, templateBackgroundPaletteColors, color => applyTemplateBackground(color));
       initPalette(templateTextPalette, templateTextPaletteColors, color => applyTemplateTextColor(color));
@@ -2664,8 +3031,12 @@
 
         page.dataset.sectionId = targetSection.id;
         page.dataset.sectionName = targetSection.nombre;
+        const targetTheme = sectionThemes.get(targetSection.id) || DEFAULT_THEME;
+        sectionThemes.set(targetSection.id, targetTheme);
+        applyThemeToPage(page, targetTheme);
         initializeSections();
         buildSectionsPanel();
+        setActivePage(page);
         return true;
       }
 
@@ -2680,6 +3051,9 @@
         initializeSections();
         buildSectionsPanel();
         buildTableOfContents();
+        if (currentPageRef === page) {
+          setActivePage(getCurrentPage());
+        }
         return true;
       }
 
@@ -2694,6 +3068,7 @@
         const newId = 'topic-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6);
         clone.dataset.topicId = newId;
         clone.contentEditable = isEditMode ? 'true' : 'false';
+        applyThemeToPage(clone, getPageTheme(page));
         page.parentNode.insertBefore(clone, page.nextSibling);
         pages = [...document.querySelectorAll('.page')];
         setupMagicIcons();
@@ -2755,10 +3130,17 @@
       });
 
       /* === ZOOM === */
+      function syncMagicZoom() {
+        if (!magic) return;
+        const scale = currentZoom ? (1 / currentZoom) : 1;
+        magic.style.setProperty('--magic-zoom', scale.toString());
+      }
+
       function applyZoom(level) {
         currentZoom = Math.max(0.5, Math.min(2, level));
         document.documentElement.style.setProperty('--zoom-level', currentZoom);
         zoomValue.textContent = Math.round(currentZoom * 100) + '%';
+        syncMagicZoom();
       }
 
       function updateZoom(delta) {
@@ -2891,6 +3273,260 @@
         return Number.isFinite(parsed) ? Math.round(parsed) : fallback;
       }
 
+      function clearNoteStyleClasses(target) {
+        if (!target || !target.classList) return;
+        NOTE_STYLE_CLASSES.forEach(cls => target.classList.remove(cls));
+        target.classList.remove('pearl');
+      }
+
+      function markNoteStyleAsCustom(block, target) {
+        if (!block || !target) return;
+        clearNoteStyleClasses(target);
+        block.dataset.noteStyle = 'custom';
+      }
+
+      function getAppliedNoteStyle(block, target) {
+        if (!block || !target || !target.classList?.contains('box')) {
+          return 'custom';
+        }
+        const stored = block.dataset.noteStyle;
+        if (stored && noteStylePresetMap.has(stored)) {
+          return stored;
+        }
+        const matched = NOTE_STYLE_CLASSES.find(cls => target.classList.contains(cls));
+        if (matched) {
+          const preset = noteStylePresets.find(p => p.className === matched);
+          if (preset) {
+            block.dataset.noteStyle = preset.id;
+            (preset.extraClasses || []).forEach(cls => target.classList.add(cls));
+            return preset.id;
+          }
+        }
+        return 'custom';
+      }
+
+      function applyNoteStyle(block, styleId, options = {}) {
+        if (!block) return;
+        const target = getTemplateTarget(block);
+        if (!target || !target.classList?.contains('box')) return;
+        const { skipToolbarSync = false } = options;
+
+        if (styleId === 'custom' || !noteStylePresetMap.has(styleId)) {
+          markNoteStyleAsCustom(block, target);
+        } else {
+          const preset = noteStylePresetMap.get(styleId);
+          clearNoteStyleClasses(target);
+          if (preset?.className) {
+            target.classList.add(preset.className);
+          }
+          (preset?.extraClasses || []).forEach(cls => target.classList.add(cls));
+          block.dataset.noteStyle = preset?.id || 'custom';
+        }
+
+        if (!skipToolbarSync) {
+          updateTemplateToolbarState(block);
+          repositionTemplateToolbar();
+        }
+      }
+
+      function normalizeTemplateDataValue(value) {
+        if (value === undefined || value === null) return null;
+        const str = String(value);
+        return str.trim() === '' ? null : str;
+      }
+
+      function readSerializedNoteStyle(block, target = getTemplateTarget(block)) {
+        if (!block) return 'custom';
+        const stored = block.dataset.noteStyle;
+        if (stored && noteStylePresetMap.has(stored)) {
+          return stored;
+        }
+        if (!target || !target.classList?.contains('box')) {
+          return stored || 'custom';
+        }
+        const matched = NOTE_STYLE_CLASSES.find(cls => target.classList.contains(cls));
+        if (matched) {
+          const preset = noteStylePresets.find(p => p.className === matched);
+          if (preset?.id) {
+            return preset.id;
+          }
+        }
+        return stored || 'custom';
+      }
+
+      function serializeTemplateBlocks(page) {
+        if (!page) return [];
+        return Array.from(page.querySelectorAll('.template-block')).map((block, index) => {
+          const target = getTemplateTarget(block);
+          const isNote = !!(target && target.classList && target.classList.contains('box'));
+          return {
+            index,
+            isNote,
+            noteStyle: readSerializedNoteStyle(block, target),
+            fontScale: normalizeTemplateDataValue(block.dataset.fontScale),
+            marginTop: normalizeTemplateDataValue(block.dataset.marginTop),
+            marginBottom: normalizeTemplateDataValue(block.dataset.marginBottom),
+            bgColor: normalizeTemplateDataValue(block.dataset.bgColor),
+            textColor: normalizeTemplateDataValue(block.dataset.textColor),
+            borderColor: isNote ? normalizeTemplateDataValue(block.dataset.borderColor) : null,
+            accentColor: isNote ? normalizeTemplateDataValue(block.dataset.accentColor) : null,
+            borderWidth: isNote ? normalizeTemplateDataValue(block.dataset.borderWidth) : null,
+            borderAccentExtra: isNote ? normalizeTemplateDataValue(block.dataset.borderAccentExtra) : null
+          };
+        });
+      }
+
+      function restoreTemplateBlocks(page, serializedBlocks) {
+        if (!page || !Array.isArray(serializedBlocks) || !serializedBlocks.length) return;
+        const blocks = Array.from(page.querySelectorAll('.template-block'));
+
+        serializedBlocks.forEach(state => {
+          if (!state || typeof state.index !== 'number') return;
+          const block = blocks[state.index];
+          if (!block) return;
+
+          const target = getTemplateTarget(block);
+          const isNote = !!(state.isNote && target && target.classList && target.classList.contains('box'));
+
+          if (state.fontScale !== undefined) {
+            if (state.fontScale !== null) {
+              block.dataset.fontScale = state.fontScale;
+              block.style.fontSize = state.fontScale === '100' ? '' : state.fontScale + '%';
+            } else {
+              delete block.dataset.fontScale;
+              block.style.fontSize = '';
+            }
+          }
+
+          if (state.marginTop !== undefined) {
+            if (state.marginTop !== null) {
+              block.dataset.marginTop = state.marginTop;
+              const topValue = parseInt(state.marginTop, 10) || 0;
+              block.style.marginTop = topValue + 'px';
+            } else {
+              delete block.dataset.marginTop;
+              block.style.marginTop = '';
+            }
+          }
+
+          if (state.marginBottom !== undefined) {
+            if (state.marginBottom !== null) {
+              block.dataset.marginBottom = state.marginBottom;
+              const bottomValue = parseInt(state.marginBottom, 10) || 0;
+              block.style.marginBottom = bottomValue + 'px';
+            } else {
+              delete block.dataset.marginBottom;
+              block.style.marginBottom = '';
+            }
+          }
+
+          if (target) {
+            if (state.bgColor !== undefined) {
+              if (state.bgColor !== null) {
+                block.dataset.bgColor = state.bgColor;
+                target.style.background = state.bgColor;
+              } else {
+                delete block.dataset.bgColor;
+                target.style.background = '';
+              }
+            }
+
+            if (state.textColor !== undefined) {
+              if (state.textColor !== null) {
+                block.dataset.textColor = state.textColor;
+                target.style.color = state.textColor;
+              } else {
+                delete block.dataset.textColor;
+                target.style.color = '';
+              }
+            }
+          }
+
+          if (isNote && target) {
+            if (state.noteStyle === 'custom') {
+              markNoteStyleAsCustom(block, target);
+            } else if (state.noteStyle && noteStylePresetMap.has(state.noteStyle)) {
+              applyNoteStyle(block, state.noteStyle, { skipToolbarSync: true });
+            }
+
+            if (state.borderColor !== undefined) {
+              if (state.borderColor !== null) {
+                block.dataset.borderColor = state.borderColor;
+                target.style.borderColor = state.borderColor;
+                target.style.borderTopColor = state.borderColor;
+                target.style.borderRightColor = state.borderColor;
+                target.style.borderBottomColor = state.borderColor;
+                if (!state.accentColor) {
+                  target.style.borderLeftColor = state.borderColor;
+                }
+              } else {
+                delete block.dataset.borderColor;
+                target.style.borderColor = '';
+              }
+            }
+
+            if (state.accentColor !== undefined) {
+              if (state.accentColor !== null) {
+                block.dataset.accentColor = state.accentColor;
+                target.style.borderLeftColor = state.accentColor;
+              } else {
+                delete block.dataset.accentColor;
+                if (state.borderColor && state.borderColor !== null) {
+                  target.style.borderLeftColor = state.borderColor;
+                } else {
+                  target.style.borderLeftColor = '';
+                }
+              }
+            }
+
+            if (state.borderWidth !== undefined || state.borderAccentExtra !== undefined) {
+              const widthValue = state.borderWidth !== null && state.borderWidth !== undefined
+                ? Math.max(0, parseInt(state.borderWidth, 10) || 0)
+                : null;
+              const accentValue = state.borderAccentExtra !== null && state.borderAccentExtra !== undefined
+                ? Math.max(0, parseInt(state.borderAccentExtra, 10) || 0)
+                : 0;
+
+              if (widthValue === null) {
+                delete block.dataset.borderWidth;
+                delete block.dataset.borderAccentExtra;
+                target.style.borderWidth = '';
+                target.style.borderLeftWidth = '';
+                target.style.borderStyle = '';
+              } else {
+                updateBorderWidthDataset(block, widthValue, accentValue);
+                if (widthValue <= 0) {
+                  target.style.borderStyle = 'none';
+                  target.style.borderWidth = '0';
+                } else {
+                  target.style.borderStyle = 'solid';
+                  target.style.borderWidth = widthValue + 'px';
+                }
+                const leftWidth = Math.max(0, widthValue) + Math.max(0, accentValue);
+                target.style.borderLeftWidth = leftWidth > 0 ? leftWidth + 'px' : '0';
+              }
+            }
+          } else if (state.noteStyle) {
+            block.dataset.noteStyle = state.noteStyle;
+          }
+        });
+      }
+
+      function insertNoteSpacer(position) {
+        if (!selectedTemplateBlock) return;
+        const block = selectedTemplateBlock;
+        const parent = block.parentElement;
+        if (!parent) return;
+        const spacer = document.createElement('p');
+        spacer.className = 'note-spacer';
+        spacer.innerHTML = '<br>';
+        if (position === 'before') {
+          parent.insertBefore(spacer, block);
+        } else {
+          parent.insertBefore(spacer, block.nextSibling);
+        }
+      }
+
       function createTemplateBlock(template) {
         if (!template) return null;
         const block = document.createElement('div');
@@ -2905,6 +3541,9 @@
         wrapper.innerHTML = template.html;
         while (wrapper.firstChild) {
           block.appendChild(wrapper.firstChild);
+        }
+        if (template.noteStyle) {
+          applyNoteStyle(block, template.noteStyle, { skipToolbarSync: true });
         }
         return block;
       }
@@ -3000,6 +3639,12 @@
           }
           setPaletteActive(templateBgPalette, color);
         }
+        if (target.classList.contains('box')) {
+          markNoteStyleAsCustom(selectedTemplateBlock, target);
+          if (templateNoteStyleSelect) {
+            templateNoteStyleSelect.value = 'custom';
+          }
+        }
         repositionTemplateToolbar();
       }
 
@@ -3022,6 +3667,12 @@
           }
           setPaletteActive(templateTextPalette, color);
         }
+        if (target.classList.contains('box')) {
+          markNoteStyleAsCustom(selectedTemplateBlock, target);
+          if (templateNoteStyleSelect) {
+            templateNoteStyleSelect.value = 'custom';
+          }
+        }
       }
 
       function applyTemplateBorderColor(color) {
@@ -3040,6 +3691,10 @@
           target.style.borderLeftColor = selectedTemplateBlock.dataset.accentColor;
         }
         updateTemplateToolbarState(selectedTemplateBlock);
+        markNoteStyleAsCustom(selectedTemplateBlock, target);
+        if (templateNoteStyleSelect) {
+          templateNoteStyleSelect.value = 'custom';
+        }
       }
 
       function applyTemplateAccentColor(color) {
@@ -3054,6 +3709,10 @@
         }
         setPaletteActive(templateAccentPalette, normalized);
         updateTemplateToolbarState(selectedTemplateBlock);
+        markNoteStyleAsCustom(selectedTemplateBlock, target);
+        if (templateNoteStyleSelect) {
+          templateNoteStyleSelect.value = 'custom';
+        }
       }
 
       function updateTemplateToolbarState(block) {
@@ -3061,6 +3720,18 @@
         const target = getTemplateTarget(block);
         const computed = window.getComputedStyle(target || block);
         const isNote = target && target.classList && target.classList.contains('box');
+
+        if (templateNoteStyleRow) {
+          templateNoteStyleRow.style.display = isNote ? 'flex' : 'none';
+        }
+
+        if (templateSpacingRow) {
+          templateSpacingRow.style.display = isNote ? 'flex' : 'none';
+        }
+
+        if (templateNoteStyleSelect) {
+          templateNoteStyleSelect.value = isNote ? getAppliedNoteStyle(block, target) : 'custom';
+        }
 
         if (templateBgColorInput) {
           const bgValue = block.dataset.bgColor || target?.style.backgroundColor || computed.backgroundColor;
@@ -3264,6 +3935,9 @@
       }
 
       function getCurrentPage() {
+        if (currentPageRef && document.body.contains(currentPageRef)) {
+          return currentPageRef;
+        }
         const viewportCenter = window.scrollY + window.innerHeight / 2;
         return pages.find(p => {
           const rect = p.getBoundingClientRect();
@@ -4276,30 +4950,38 @@
       /* === INICIALIZACIÓN === */
       function initializeSections() {
         const sectionMap = new Map();
-        
+        const newThemeMap = new Map(sectionThemes);
+
         pages.forEach(page => {
           const sectionId = page.dataset.sectionId || 'seccion-default';
           const topicId = page.dataset.topicId || 'topic-' + Date.now();
           const h1 = page.querySelector('h1');
           const titleSpan = h1?.querySelector('span:first-child');
           const title = (titleSpan?.textContent || h1?.textContent || 'Sin título').trim();
-          
+          const existingTheme = newThemeMap.get(sectionId) || page.dataset.theme || getPageTheme(page);
+
+          applyThemeToPage(page, existingTheme);
+          newThemeMap.set(sectionId, existingTheme);
+
           if (!sectionMap.has(sectionId)) {
             sectionMap.set(sectionId, {
               id: sectionId,
               nombre: page.dataset.sectionName || 'Sección Principal',
               collapsed: false,
-              temas: []
+              temas: [],
+              theme: existingTheme
             });
           }
-          
+
           sectionMap.get(sectionId).temas.push({
             id: topicId,
             titulo: title,
-            page: page
+            page: page,
+            theme: existingTheme
           });
         });
-        
+
+        sectionThemes = newThemeMap;
         sections = Array.from(sectionMap.values());
       }
 
@@ -4320,7 +5002,7 @@
           if (m) {
             const json = JSON.parse('{' + m[1] + '}');
             if (json.especialidad && specialtySpan) {
-              specialtySpan.textContent = json.especialidad;
+              setDocumentTitle(json.especialidad);
             }
           }
         } catch (e) {}
@@ -4466,7 +5148,7 @@
 
       /* === EXPORTAR MARKDOWN === */
       exportMarkdownBtn?.addEventListener('click', () => {
-        let markdown = `# ${specialtySpan?.textContent || 'Documento'}\n\n`;
+        let markdown = `# ${getDocumentTitle() || 'Documento'}\n\n`;
         
         pages.forEach(page => {
           const clone = page.cloneNode(true);
@@ -4477,7 +5159,7 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        const specialty = specialtySpan?.textContent || 'documento';
+        const specialty = getDocumentTitle() || 'documento';
         const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
         a.download = `${specialty.toLowerCase().replace(/\s+/g, '-')}-${timestamp}.md`;
         document.body.appendChild(a);
@@ -4975,6 +5657,10 @@
           templateBorderWidthDisplay.textContent = width + 'px';
         }
         updateBorderWidthDataset(selectedTemplateBlock, width, Math.max(0, accentExtra));
+        markNoteStyleAsCustom(selectedTemplateBlock, target);
+        if (templateNoteStyleSelect) {
+          templateNoteStyleSelect.value = 'custom';
+        }
       });
 
       templateFontSizeSlider?.addEventListener('input', (e) => {
@@ -5009,6 +5695,23 @@
         }
         repositionTemplateToolbar();
       });
+
+      templateNoteStyleSelect?.addEventListener('change', (event) => {
+        if (!selectedTemplateBlock) return;
+        const styleId = event.target.value;
+        if (styleId === 'custom') {
+          const target = getTemplateTarget(selectedTemplateBlock);
+          if (target && target.classList.contains('box')) {
+            markNoteStyleAsCustom(selectedTemplateBlock, target);
+            updateTemplateToolbarState(selectedTemplateBlock);
+          }
+          return;
+        }
+        applyNoteStyle(selectedTemplateBlock, styleId);
+      });
+
+      templateAddSpaceTopBtn?.addEventListener('click', () => insertNoteSpacer('before'));
+      templateAddSpaceBottomBtn?.addEventListener('click', () => insertNoteSpacer('after'));
 
       templateDeleteBtn?.addEventListener('click', () => {
         if (!selectedTemplateBlock) return;
@@ -5380,15 +6083,18 @@
         const templates = [
           {
             name: 'Nota Importante',
-            html: '<div class="box" style="border-left-color: #dc3545;"><strong>Nota importante:</strong> Escribe tu contenido aquí.</div>'
+            html: '<div class="box note-style-rose"><strong>Nota importante:</strong> Escribe tu contenido aquí.</div>',
+            noteStyle: 'rose'
           },
           {
             name: 'Perla Clínica',
-            html: '<div class="box pearl">Escribe tu perla clínica aquí.</div>'
+            html: '<div class="box note-style-pearl">Escribe tu perla clínica aquí.</div>',
+            noteStyle: 'pearl'
           },
           {
             name: 'Cuadro Informativo',
-            html: '<div class="box"><strong>Título:</strong><p>Contenido del cuadro informativo.</p></div>'
+            html: '<div class="box note-style-classic"><strong>Título:</strong><p>Contenido del cuadro informativo.</p></div>',
+            noteStyle: 'classic'
           },
           {
             name: 'Separador Simple',
@@ -5404,11 +6110,13 @@
           },
           {
             name: 'Nota de Advertencia',
-            html: '<div class="box" style="background: #fff3cd; border-left-color: #ffc107;"><strong>⚠️ Advertencia:</strong> Contenido importante de advertencia.</div>'
+            html: '<div class="box note-style-sunrise"><strong>⚠️ Advertencia:</strong> Contenido importante de advertencia.</div>',
+            noteStyle: 'sunrise'
           },
           {
             name: 'Nota de Éxito',
-            html: '<div class="box" style="background: #d1e7dd; border-left-color: #198754;"><strong>✓ Éxito:</strong> Información positiva o exitosa.</div>'
+            html: '<div class="box note-style-forest"><strong>✓ Éxito:</strong> Información positiva o exitosa.</div>',
+            noteStyle: 'forest'
           },
           {
             name: 'Lista de Verificación',
@@ -5424,7 +6132,8 @@
           },
           {
             name: 'Definición',
-            html: '<div class="box" style="background: #e7f3ff;"><strong>Definición:</strong> Término a definir - explicación del término.</div>'
+            html: '<div class="box note-style-sky"><strong>Definición:</strong> Término a definir - explicación del término.</div>',
+            noteStyle: 'sky'
           }
         ];
 
@@ -5509,9 +6218,13 @@
 
       function closeMagicView() {
         document.body.classList.remove('magic-open');
+        if (!magic) return;
+        magic.classList.remove('open');
+        magic.style.removeProperty('--magic-zoom');
       }
 
       function activateMagicTopic(anchorId, title) {
+        if (!magic) return;
         magic.innerHTML =
           '<div class="magic-header"><strong>✨ Visor del tema</strong><button class="magic-close">&times;</button></div>';
         const magicPage = document.createElement('div');
@@ -5541,7 +6254,9 @@
           }
           closeMagicView();
         });
-
+        syncMagicZoom();
+        magic.classList.add('open');
+        magic.scrollTop = 0;
         document.body.classList.add('magic-open');
       }
 
@@ -5687,6 +6402,9 @@
           section.temas.forEach(tema => {
             tema.page.dataset.sectionName = section.nombre;
           });
+          if (currentSectionId === section.id) {
+            updateSectionIndicator(currentPageRef);
+          }
           buildSectionsPanel();
         }
       }
@@ -5697,10 +6415,14 @@
         section.temas.forEach(tema => {
           tema.page.remove();
         });
-        
+
         pages = pages.filter(p => p.dataset.sectionId !== section.id);
         sections = sections.filter(s => s.id !== section.id);
+        sectionThemes.delete(section.id);
         buildSectionsPanel();
+        if (currentPageRef && !document.body.contains(currentPageRef)) {
+          setActivePage(getCurrentPage());
+        }
       }
 
       function addNewSection() {
@@ -5713,7 +6435,8 @@
           collapsed: false,
           temas: []
         };
-        
+
+        sectionThemes.set(newSection.id, DEFAULT_THEME);
         sections.push(newSection);
         buildSectionsPanel();
       }
@@ -5795,11 +6518,12 @@
         const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (!visible) return;
         const tid = visible.target.dataset.topicId || '';
-        sectionsContainer.querySelectorAll('li').forEach(li => 
+        sectionsContainer.querySelectorAll('li').forEach(li =>
           li.classList.toggle('active', li.dataset.topicId === tid)
         );
+        setActivePage(visible.target);
       }, { root: null, threshold: [0.5, 0.75, 1] });
-      
+
       pages.forEach(p => io.observe(p));
 
       plusBtn?.addEventListener('click', () => {
@@ -5835,15 +6559,9 @@
       });
 
       /* === TEMA DE COLORES === */
-      document.getElementById('themeSelect')?.addEventListener('change', function() {
-        const oldTheme = document.body.className.split(' ').find(c => c.startsWith('theme-'));
-        if (oldTheme) {
-          document.body.classList.remove(oldTheme);
-        }
-        document.body.classList.add(this.value);
-        if (isReadingMode) {
-          document.body.classList.add('reading-mode');
-        }
+      themeSelect?.addEventListener('change', () => {
+        const targetSection = currentSectionId || (getCurrentPage()?.dataset.sectionId) || 'seccion-default';
+        setSectionTheme(targetSection, themeSelect.value);
       });
 
       /* === EDICIÓN === */
@@ -6232,10 +6950,12 @@ ${document.querySelector('style').textContent}
     sections.forEach(section => {
       const baseSectionId = section.id || section.temas.find(t => t.page)?.page?.dataset.sectionId || generateUniqueId('seccion');
       const baseSectionName = section.nombre || section.temas.find(t => t.page)?.page?.dataset.sectionName || 'Sección';
+      const sectionTheme = sectionThemes.get(baseSectionId) || section.theme || DEFAULT_THEME;
       const exportSection = {
         id: baseSectionId,
         nombre: baseSectionName,
         collapsed: !!section.collapsed,
+        theme: sectionTheme,
         temas: []
       };
 
@@ -6262,15 +6982,22 @@ ${document.querySelector('style').textContent}
         const magicId = magicAnchorFor(page);
         const magicEl = magicId ? document.getElementById(magicId) : null;
 
-        exportSection.temas.push({
+        const templateBlocks = serializeTemplateBlocks(page);
+        const topicExport = {
           id: topicId,
           titulo: titleText,
           html: page.innerHTML,
           sectionId: page.dataset.sectionId,
           sectionName: page.dataset.sectionName,
           magicId: magicId || null,
-          magicHtml: magicEl ? magicEl.innerHTML : null
-        });
+          magicHtml: magicEl ? magicEl.innerHTML : null,
+          theme: getPageTheme(page)
+        };
+        if (templateBlocks.length) {
+          topicExport.templateBlocks = templateBlocks;
+        }
+
+        exportSection.temas.push(topicExport);
       });
     });
 
@@ -6281,10 +7008,12 @@ ${document.querySelector('style').textContent}
       const sectionName = page.dataset.sectionName || 'Sección';
       let exportSection = sectionMap.get(sectionId);
       if (!exportSection) {
+        const fallbackTheme = sectionThemes.get(sectionId) || getPageTheme(page);
         exportSection = {
           id: sectionId,
           nombre: sectionName,
           collapsed: false,
+          theme: fallbackTheme,
           temas: []
         };
         sectionMap.set(sectionId, exportSection);
@@ -6300,19 +7029,26 @@ ${document.querySelector('style').textContent}
       const magicId = magicAnchorFor(page);
       const magicEl = magicId ? document.getElementById(magicId) : null;
 
-      exportSection.temas.push({
+      const templateBlocks = serializeTemplateBlocks(page);
+      const topicExport = {
         id: topicId,
         titulo: getTopicTitle(page) || `Tema ${exportSection.temas.length + 1}`,
         html: page.innerHTML,
         sectionId: sectionId,
         sectionName: sectionName,
         magicId: magicId || null,
-        magicHtml: magicEl ? magicEl.innerHTML : null
-      });
+        magicHtml: magicEl ? magicEl.innerHTML : null,
+        theme: getPageTheme(page)
+      };
+      if (templateBlocks.length) {
+        topicExport.templateBlocks = templateBlocks;
+      }
+
+      exportSection.temas.push(topicExport);
     });
 
     return {
-      specialty: specialtySpan?.textContent || '',
+      specialty: getDocumentTitle() || '',
       sections: exportedSections,
       magicContainerHtml: magicContainer ? magicContainer.innerHTML : ''
     };
@@ -6414,8 +7150,10 @@ ${document.querySelector('style').textContent}
     pages.forEach(page => page.remove());
 
     if (specialtySpan && typeof data.specialty === 'string') {
-      specialtySpan.textContent = data.specialty;
+      setDocumentTitle(data.specialty);
     }
+
+    sectionThemes = new Map();
 
     const magicContainer = document.querySelector('.magic-content-container');
     if (magicContainer && typeof data.magicContainerHtml === 'string') {
@@ -6430,7 +7168,9 @@ ${document.querySelector('style').textContent}
       const sectionId = sectionData?.id ? String(sectionData.id) : generateUniqueId('seccion');
       const sectionName = sectionData?.nombre ? String(sectionData.nombre) : 'Sección';
       const sectionCollapsed = !!sectionData?.collapsed;
-      const sectionInfo = { id: sectionId, nombre: sectionName, collapsed: sectionCollapsed, temas: [] };
+      const sectionTheme = AVAILABLE_THEMES.includes(sectionData?.theme) ? sectionData.theme : DEFAULT_THEME;
+      sectionThemes.set(sectionId, sectionTheme);
+      const sectionInfo = { id: sectionId, nombre: sectionName, collapsed: sectionCollapsed, temas: [], theme: sectionTheme };
       const topics = Array.isArray(sectionData?.temas) ? sectionData.temas : [];
 
       topics.forEach(topicData => {
@@ -6444,7 +7184,12 @@ ${document.querySelector('style').textContent}
         page.innerHTML = typeof topicData?.html === 'string' ? topicData.html : '';
         mainContainer.insertBefore(page, scriptTag);
         afterContentSanitize(page);
+        if (Array.isArray(topicData?.templateBlocks)) {
+          restoreTemplateBlocks(page, topicData.templateBlocks);
+        }
         page.contentEditable = isEditMode ? 'true' : 'false';
+        const pageTheme = AVAILABLE_THEMES.includes(topicData?.theme) ? topicData.theme : sectionTheme;
+        applyThemeToPage(page, pageTheme);
 
         const title = (topicData?.titulo && String(topicData.titulo).trim()) || getTopicTitle(page) || `Tema ${sectionInfo.temas.length + 1}`;
         sectionInfo.temas.push({ id: topicId, titulo: title, page });
@@ -6476,6 +7221,7 @@ ${document.querySelector('style').textContent}
 
     pages.forEach(page => io.observe(page));
     setupMagicIcons();
+    initializeSections();
     buildSectionsPanel();
     buildTableOfContents();
     if (isEditMode) {
@@ -6484,6 +7230,8 @@ ${document.querySelector('style').textContent}
     hideImageToolbar();
     hideTemplateToolbar();
     savedSelection = null;
+    const firstPage = pages[0] || null;
+    setActivePage(firstPage || null);
     window.scrollTo({ top: 0 });
   }
 
@@ -6548,10 +7296,11 @@ ${document.querySelector('style').textContent}
     }
 
     const buildData = {
-      especialidad: specialtySpan?.textContent || 'documento',
+      especialidad: getDocumentTitle() || 'documento',
       secciones: sections.map(sec => ({
         id: sec.id,
         nombre: sec.nombre,
+        theme: sectionThemes.get(sec.id) || sec.theme || DEFAULT_THEME,
         temas: sec.temas.map(t => ({
           id: t.id,
           titulo: t.titulo
@@ -6576,7 +7325,7 @@ ${document.querySelector('style').textContent}
     const a = document.createElement('a');
     a.href = url;
     
-    const specialty = specialtySpan?.textContent || 'documento';
+    const specialty = getDocumentTitle() || 'documento';
     const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     const filename = `${specialty.toLowerCase().replace(/\s+/g, '-')}-${timestamp}.html`;
     a.download = filename;
@@ -6625,7 +7374,7 @@ ${document.querySelector('style').textContent}
 
           const loadedSpecialty = loadedDoc.getElementById('specialtyTitle');
           if (loadedSpecialty && specialtySpan && loadedSpecialty.textContent.trim()) {
-            specialtySpan.textContent = loadedSpecialty.textContent.trim();
+            setDocumentTitle(loadedSpecialty.textContent.trim());
           }
 
           const mainContainer = document.querySelector('body');
