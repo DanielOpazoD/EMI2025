@@ -505,6 +505,32 @@
       background: #f8f9fa;
     }
 
+    .template-toolbar .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .template-toolbar .button-group button {
+      flex: 1;
+      min-width: 90px;
+      white-space: nowrap;
+    }
+
+    .template-toolbar select,
+    .template-toolbar input[type="number"] {
+      font-size: 10px;
+      padding: 3px 6px;
+      border: 1px solid #ced4da;
+      border-radius: 3px;
+      background: #fff;
+      min-width: 120px;
+    }
+
+    .template-toolbar input[type="number"] {
+      width: 60px;
+    }
+
     .template-toolbar .template-color-palette {
       display: flex;
       gap: 4px;
@@ -1354,6 +1380,57 @@
       border-radius: 0 4px 4px 0
     }
 
+    .box.note-style-base {
+      background-color: #ffffff;
+      border-color: #d9dee6;
+      border-left-color: var(--theme-primary);
+      color: #212529;
+    }
+
+    .box.note-style-sky {
+      background-color: #f4f8ff;
+      border-color: #cbd9f6;
+      border-left-color: #4c6ef5;
+      color: #1f3b75;
+    }
+
+    .box.note-style-emerald {
+      background-color: #f3fbf6;
+      border-color: #c6dfcf;
+      border-left-color: #2f8f54;
+      color: #27553a;
+    }
+
+    .box.note-style-sunset {
+      background-color: #fff7ed;
+      border-color: #f1d5b8;
+      border-left-color: #d9822b;
+      color: #6a4415;
+    }
+
+    .box.note-style-rose {
+      background-color: #fff3f7;
+      border-color: #f3cad7;
+      border-left-color: #d63384;
+      color: #6b2146;
+    }
+
+    .box.note-style-slate {
+      background-color: #f8f9fb;
+      border-color: #d4d8de;
+      border-left-color: #6c757d;
+      color: #2f3236;
+    }
+
+    .note-spacer {
+      min-height: 0.85em;
+      margin: 6px 0;
+    }
+
+    .note-spacer:empty::after {
+      content: '\00a0';
+    }
+
     .pearl {
       border-left-color: #fd7e14
     }
@@ -1778,48 +1855,140 @@
     }
 
     .table-theme-default {
-      background: linear-gradient(135deg, #fff, #f1f3f5);
+      background: linear-gradient(180deg, #ffffff 20%, #f1f3f5 100%);
       color: #212529;
     }
 
     .table-theme-ocean {
-      background: linear-gradient(135deg, #0d6efd, #6ea8fe);
-      color: #fff;
+      background: linear-gradient(180deg, #ffffff 20%, #e7f1ff 100%);
+      color: #1d4ed8;
     }
 
     .table-theme-forest {
-      background: linear-gradient(135deg, #198754, #75b798);
-      color: #fff;
+      background: linear-gradient(180deg, #ffffff 20%, #e9f6ef 100%);
+      color: #2f6f51;
     }
 
     .table-theme-sunset {
-      background: linear-gradient(135deg, #fd7e14, #fda861);
-      color: #fff;
+      background: linear-gradient(180deg, #ffffff 20%, #fff1e4 100%);
+      color: #b35a15;
     }
 
     .table-theme-violet {
-      background: linear-gradient(135deg, #6f42c1, #9d7cd4);
-      color: #fff;
+      background: linear-gradient(180deg, #ffffff 20%, #f3ecff 100%);
+      color: #5a3ea3;
     }
 
-    table.table-theme-ocean thead th {
-      background: rgba(13, 110, 253, 0.15);
-      color: #0b5ed7;
+    .table-theme-sage {
+      background: linear-gradient(180deg, #ffffff 20%, #f5f9f3 100%);
+      color: #3c6b2f;
     }
 
-    table.table-theme-forest thead th {
-      background: rgba(25, 135, 84, 0.15);
-      color: #157347;
+    .table-theme-sand {
+      background: linear-gradient(180deg, #ffffff 20%, #fef6e7 100%);
+      color: #b8872a;
     }
 
-    table.table-theme-sunset thead th {
-      background: rgba(253, 126, 20, 0.18);
-      color: #dc6502;
+    .table-theme-rose {
+      background: linear-gradient(180deg, #ffffff 20%, #fff0f3 100%);
+      color: #a94064;
     }
 
-    table.table-theme-violet thead th {
-      background: rgba(111, 66, 193, 0.15);
-      color: #59359a;
+    .table-theme-sky {
+      background: linear-gradient(180deg, #ffffff 20%, #eef5ff 100%);
+      color: #3162c6;
+    }
+
+    table[class*="table-theme-"] {
+      --table-head-bg: #f1f3f5;
+      --table-head-color: #212529;
+      --table-head-border: #dee2e6;
+      --table-row-base: #ffffff;
+      --table-row-alt: #f9fbfc;
+      --table-border-color: #dee2e6;
+    }
+
+    table[class*="table-theme-"] thead th {
+      background: var(--table-head-bg, #f1f3f5);
+      color: var(--table-head-color, #212529);
+      border-color: var(--table-head-border, #dee2e6);
+    }
+
+    table[class*="table-theme-"] tbody tr:nth-child(odd) > * {
+      background: var(--table-row-base, #ffffff);
+    }
+
+    table[class*="table-theme-"] tbody tr:nth-child(even) > * {
+      background: var(--table-row-alt, #f9fbfc);
+    }
+
+    table[class*="table-theme-"] th,
+    table[class*="table-theme-"] td {
+      border-color: var(--table-border-color, #dee2e6);
+    }
+
+    table.table-theme-ocean {
+      --table-head-bg: #e7f1ff;
+      --table-head-color: #1d4ed8;
+      --table-head-border: #c5d9ff;
+      --table-row-alt: #f6f9ff;
+      --table-border-color: #cfdcf5;
+    }
+
+    table.table-theme-forest {
+      --table-head-bg: #e9f6ef;
+      --table-head-color: #2f6f51;
+      --table-head-border: #c6e3d3;
+      --table-row-alt: #f6fbf7;
+      --table-border-color: #c9e0d3;
+    }
+
+    table.table-theme-sunset {
+      --table-head-bg: #fff1e4;
+      --table-head-color: #b35a15;
+      --table-head-border: #f4d2b4;
+      --table-row-alt: #fff8f0;
+      --table-border-color: #efd6bc;
+    }
+
+    table.table-theme-violet {
+      --table-head-bg: #f3ecff;
+      --table-head-color: #5a3ea3;
+      --table-head-border: #d8ccf3;
+      --table-row-alt: #f9f5ff;
+      --table-border-color: #dcd3f2;
+    }
+
+    table.table-theme-sage {
+      --table-head-bg: #f0f7ed;
+      --table-head-color: #3c6b2f;
+      --table-head-border: #cfddc8;
+      --table-row-alt: #f7faf5;
+      --table-border-color: #d7e3cf;
+    }
+
+    table.table-theme-sand {
+      --table-head-bg: #fef3dd;
+      --table-head-color: #b8872a;
+      --table-head-border: #f1ddb3;
+      --table-row-alt: #fef8eb;
+      --table-border-color: #f0dec1;
+    }
+
+    table.table-theme-rose {
+      --table-head-bg: #ffe8ee;
+      --table-head-color: #a94064;
+      --table-head-border: #f4c8d5;
+      --table-row-alt: #fff3f7;
+      --table-border-color: #f2ced9;
+    }
+
+    table.table-theme-sky {
+      --table-head-bg: #edf4ff;
+      --table-head-color: #3162c6;
+      --table-head-border: #cddcf7;
+      --table-row-alt: #f7faff;
+      --table-border-color: #d4e0f7;
     }
 
     .table-resize-handle {
@@ -2234,17 +2403,29 @@
             <button type="button" class="table-theme-option active" data-table-theme="">
               <span class="table-theme-sample table-theme-default">Base</span>
             </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-sky">
+              <span class="table-theme-sample table-theme-sky">Cielo</span>
+            </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-ocean">
-              <span class="table-theme-sample table-theme-ocean">Océano</span>
+              <span class="table-theme-sample table-theme-ocean">Azul</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-sage">
+              <span class="table-theme-sample table-theme-sage">Salvia</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-forest">
-              <span class="table-theme-sample table-theme-forest">Bosque</span>
+              <span class="table-theme-sample table-theme-forest">Verde</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-sand">
+              <span class="table-theme-sample table-theme-sand">Arena</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-sunset">
-              <span class="table-theme-sample table-theme-sunset">Atardecer</span>
+              <span class="table-theme-sample table-theme-sunset">Ámbar</span>
+            </button>
+            <button type="button" class="table-theme-option" data-table-theme="table-theme-rose">
+              <span class="table-theme-sample table-theme-rose">Rosa</span>
             </button>
             <button type="button" class="table-theme-option" data-table-theme="table-theme-violet">
-              <span class="table-theme-sample table-theme-violet">Violeta</span>
+              <span class="table-theme-sample table-theme-violet">Lavanda</span>
             </button>
           </div>
         </div>
@@ -2335,9 +2516,21 @@
       <input type="color" id="templateTextColor" value="#212529">
       <button id="templateResetTextColorBtn" title="Restablecer color">Restablecer</button>
     </div>
+    <div class="template-toolbar-row compact" id="templateNoteStyleRow" style="display:none;">
+      <label for="templateNoteStyle">Estilo:</label>
+      <select id="templateNoteStyle"></select>
+    </div>
+    <div class="template-toolbar-row compact" id="templateSpacerRow" style="display:none;">
+      <label>Espacios:</label>
+      <div class="button-group">
+        <button id="templateAddSpaceAbove" type="button">↑ Arriba</button>
+        <button id="templateAddSpaceBelow" type="button">↓ Abajo</button>
+      </div>
+    </div>
     <div class="template-toolbar-row">
       <label for="templateBorderWidth">Borde:</label>
       <input type="range" id="templateBorderWidth" min="0" max="12" step="1">
+      <input type="number" id="templateBorderWidthNumber" min="0" max="12" step="1" value="1">
       <span class="size-display" id="templateBorderWidthDisplay">1px</span>
     </div>
     <div class="template-toolbar-row compact" id="templateBorderColorRow">
@@ -2667,7 +2860,13 @@
       const templateMarginBottomSlider = document.getElementById('templateMarginBottom');
       const templateMarginBottomDisplay = document.getElementById('templateMarginBottomDisplay');
       const templateBorderWidthSlider = document.getElementById('templateBorderWidth');
+      const templateBorderWidthNumber = document.getElementById('templateBorderWidthNumber');
       const templateBorderWidthDisplay = document.getElementById('templateBorderWidthDisplay');
+      const templateNoteStyleRow = document.getElementById('templateNoteStyleRow');
+      const templateNoteStyleSelect = document.getElementById('templateNoteStyle');
+      const templateSpacerRow = document.getElementById('templateSpacerRow');
+      const templateAddSpaceAboveBtn = document.getElementById('templateAddSpaceAbove');
+      const templateAddSpaceBelowBtn = document.getElementById('templateAddSpaceBelow');
       const templateDeleteBtn = document.getElementById('templateDeleteBtn');
 
       const templateBackgroundPaletteColors = ['#ffffff', '#f8f9fa', '#fef9e7', '#fff3cd', '#fde2e4', '#f8d7da', '#e7f3ff', '#d1e7dd', '#e9ecef'];
@@ -2679,6 +2878,75 @@
       initPalette(templateTextPalette, templateTextPaletteColors, color => applyTemplateTextColor(color));
       initPalette(templateBorderPalette, templateBorderPaletteColors, color => applyTemplateBorderColor(color));
       initPalette(templateAccentPalette, templateAccentPaletteColors, color => applyTemplateAccentColor(color));
+
+      const noteStylePresets = {
+        base: {
+          label: 'Base neutra',
+          className: 'note-style-base',
+          background: '#ffffff',
+          borderColor: '#d9dee6',
+          accentColor: 'var(--theme-primary)',
+          textColor: '#212529'
+        },
+        sky: {
+          label: 'Azul suave',
+          className: 'note-style-sky',
+          background: '#f4f8ff',
+          borderColor: '#cbd9f6',
+          accentColor: '#4c6ef5',
+          textColor: '#1f3b75'
+        },
+        emerald: {
+          label: 'Verde suave',
+          className: 'note-style-emerald',
+          background: '#f3fbf6',
+          borderColor: '#c6dfcf',
+          accentColor: '#2f8f54',
+          textColor: '#27553a'
+        },
+        sunset: {
+          label: 'Ámbar suave',
+          className: 'note-style-sunset',
+          background: '#fff7ed',
+          borderColor: '#f1d5b8',
+          accentColor: '#d9822b',
+          textColor: '#6a4415'
+        },
+        rose: {
+          label: 'Rosa suave',
+          className: 'note-style-rose',
+          background: '#fff3f7',
+          borderColor: '#f3cad7',
+          accentColor: '#d63384',
+          textColor: '#6b2146'
+        },
+        slate: {
+          label: 'Gris suave',
+          className: 'note-style-slate',
+          background: '#f8f9fb',
+          borderColor: '#d4d8de',
+          accentColor: '#6c757d',
+          textColor: '#2f3236'
+        }
+      };
+
+      const notePresetKeys = Object.keys(noteStylePresets);
+
+      if (templateNoteStyleSelect) {
+        templateNoteStyleSelect.innerHTML = '';
+        notePresetKeys.forEach(key => {
+          const option = document.createElement('option');
+          option.value = key;
+          option.textContent = noteStylePresets[key].label;
+          templateNoteStyleSelect.appendChild(option);
+        });
+        const customOption = document.createElement('option');
+        customOption.value = 'custom';
+        customOption.textContent = 'Personalizado';
+        templateNoteStyleSelect.appendChild(customOption);
+        templateNoteStyleSelect.value = 'custom';
+      }
+
       const alignButtons = {
         left: document.getElementById('alignLeftBtn'),
         center: document.getElementById('alignCenterBtn'),
@@ -3121,22 +3389,113 @@
       function getTemplateTarget(block) {
         if (!block) return null;
         if (block.classList && block.classList.contains('box')) return block;
-        return block.querySelector('.box') || block;
-      }
+      return block.querySelector('.box') || block;
+    }
 
-      function setPaletteActive(container, value) {
-        if (!container) return;
-        const normalized = normalizeColorToHex(value || '', '').toLowerCase();
-        container.querySelectorAll('.template-color-swatch').forEach(swatch => {
-          const swatchValue = normalizeColorToHex(swatch.dataset.value || '', '').toLowerCase();
-          swatch.classList.toggle('active', normalized && swatchValue === normalized);
-        });
-      }
+    function setPaletteActive(container, value) {
+      if (!container) return;
+      const normalized = normalizeColorToHex(value || '', '').toLowerCase();
+      container.querySelectorAll('.template-color-swatch').forEach(swatch => {
+        const swatchValue = normalizeColorToHex(swatch.dataset.value || '', '').toLowerCase();
+        swatch.classList.toggle('active', normalized && swatchValue === normalized);
+      });
+    }
 
-      function updateBorderWidthDataset(block, baseWidth, accentExtra) {
-        if (!block) return;
-        if (Number.isFinite(baseWidth)) {
-          block.dataset.borderWidth = String(baseWidth);
+    function clearNotePresetClass(target) {
+      if (!target || !target.classList) return;
+      notePresetKeys?.forEach(key => {
+        const className = noteStylePresets[key]?.className;
+        if (className) {
+          target.classList.remove(className);
+        }
+      });
+    }
+
+    function setNotePreset(block, presetKey) {
+      if (!block) return;
+      if (presetKey && noteStylePresets[presetKey]) {
+        block.dataset.notePreset = presetKey;
+      } else {
+        block.dataset.notePreset = 'custom';
+      }
+      if (templateNoteStyleSelect && block === selectedTemplateBlock) {
+        const value = presetKey && noteStylePresets[presetKey] ? presetKey : 'custom';
+        templateNoteStyleSelect.value = value;
+      }
+    }
+
+    function applyNotePreset(presetKey, options = {}) {
+      const block = options.block || selectedTemplateBlock;
+      if (!block) return;
+      const target = getTemplateTarget(block);
+      if (!target || !target.classList.contains('box')) return;
+      const preset = noteStylePresets[presetKey];
+      clearNotePresetClass(target);
+      if (preset) {
+        target.classList.add(preset.className);
+        target.style.backgroundColor = preset.background;
+        target.style.borderColor = preset.borderColor;
+        target.style.borderLeftColor = preset.accentColor;
+        target.style.color = preset.textColor;
+        if (target.dataset) {
+          target.dataset.notePreset = presetKey;
+        }
+        block.dataset.bgColor = preset.background;
+        block.dataset.textColor = preset.textColor;
+        block.dataset.borderColor = preset.borderColor;
+        block.dataset.accentColor = preset.accentColor;
+        setNotePreset(block, presetKey);
+        updateTemplateToolbarState(block);
+      } else {
+        if (target.dataset) {
+          delete target.dataset.notePreset;
+        }
+        setNotePreset(block, 'custom');
+        updateTemplateToolbarState(block);
+      }
+    }
+
+    function markNoteAsCustom(block) {
+      if (!block) return;
+      const target = getTemplateTarget(block);
+      if (target?.dataset) {
+        delete target.dataset.notePreset;
+      }
+      block.dataset.notePreset = 'custom';
+      if (templateNoteStyleSelect && block === selectedTemplateBlock) {
+        templateNoteStyleSelect.value = 'custom';
+      }
+    }
+
+    function insertNoteSpacer(position) {
+      if (!selectedTemplateBlock || !isEditMode) return;
+      const reference = selectedTemplateBlock;
+      const parent = reference.parentNode;
+      if (!parent) return;
+      const spacer = document.createElement('p');
+      spacer.className = 'note-spacer';
+      spacer.innerHTML = '<br>';
+      if (position === 'before') {
+        parent.insertBefore(spacer, reference);
+      } else {
+        parent.insertBefore(spacer, reference.nextSibling);
+      }
+      const range = document.createRange();
+      range.selectNodeContents(spacer);
+      range.collapse(false);
+      const selection = window.getSelection();
+      if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+      scheduleCacheSave({ delay: 0 });
+      repositionTemplateToolbar();
+    }
+
+    function updateBorderWidthDataset(block, baseWidth, accentExtra) {
+      if (!block) return;
+      if (Number.isFinite(baseWidth)) {
+        block.dataset.borderWidth = String(baseWidth);
         }
         if (Number.isFinite(accentExtra)) {
           block.dataset.borderAccentExtra = String(accentExtra);
@@ -3194,82 +3553,134 @@
         if (!selectedTemplateBlock) return;
         const target = getTemplateTarget(selectedTemplateBlock);
         if (!target) return;
-        if (!color || color === 'transparent') {
-          target.style.backgroundColor = 'transparent';
-          delete selectedTemplateBlock.dataset.bgColor;
-          if (templateBgColorInput) {
-            templateBgColorInput.value = '#ffffff';
-          }
-          setPaletteActive(templateBgPalette, '');
-        } else {
-          target.style.backgroundColor = color;
-          selectedTemplateBlock.dataset.bgColor = color;
-          if (templateBgColorInput) {
-            templateBgColorInput.value = normalizeColorToHex(color, '#ffffff');
-          }
-          setPaletteActive(templateBgPalette, color);
+      if (!color || color === 'transparent') {
+        target.style.backgroundColor = 'transparent';
+        delete selectedTemplateBlock.dataset.bgColor;
+        if (templateBgColorInput) {
+          templateBgColorInput.value = '#ffffff';
         }
-        repositionTemplateToolbar();
+        setPaletteActive(templateBgPalette, '');
+        if (target.classList.contains('box')) {
+          clearNotePresetClass(target);
+          markNoteAsCustom(selectedTemplateBlock);
+        }
+      } else {
+        target.style.backgroundColor = color;
+        selectedTemplateBlock.dataset.bgColor = color;
+        if (templateBgColorInput) {
+          templateBgColorInput.value = normalizeColorToHex(color, '#ffffff');
+        }
+        setPaletteActive(templateBgPalette, color);
+        if (target.classList.contains('box')) {
+          clearNotePresetClass(target);
+          markNoteAsCustom(selectedTemplateBlock);
+        }
       }
+      repositionTemplateToolbar();
+      scheduleCacheSave();
+    }
 
       function applyTemplateTextColor(color) {
         if (!selectedTemplateBlock) return;
         const target = getTemplateTarget(selectedTemplateBlock);
         if (!target) return;
-        if (!color) {
-          target.style.color = '';
-          delete selectedTemplateBlock.dataset.textColor;
-          if (templateTextColorInput) {
-            templateTextColorInput.value = '#212529';
-          }
-          setPaletteActive(templateTextPalette, '');
-        } else {
-          target.style.color = color;
-          selectedTemplateBlock.dataset.textColor = color;
-          if (templateTextColorInput) {
-            templateTextColorInput.value = normalizeColorToHex(color, '#212529');
-          }
-          setPaletteActive(templateTextPalette, color);
+      if (!color) {
+        target.style.color = '';
+        delete selectedTemplateBlock.dataset.textColor;
+        if (templateTextColorInput) {
+          templateTextColorInput.value = '#212529';
         }
+        setPaletteActive(templateTextPalette, '');
+      } else {
+        target.style.color = color;
+        selectedTemplateBlock.dataset.textColor = color;
+        if (templateTextColorInput) {
+          templateTextColorInput.value = normalizeColorToHex(color, '#212529');
+        }
+        setPaletteActive(templateTextPalette, color);
       }
+      if (target.classList.contains('box')) {
+        markNoteAsCustom(selectedTemplateBlock);
+      }
+      scheduleCacheSave();
+    }
 
       function applyTemplateBorderColor(color) {
         if (!selectedTemplateBlock) return;
         const target = getTemplateTarget(selectedTemplateBlock);
         if (!target || !target.classList.contains('box')) return;
-        const normalized = color || '#ced4da';
-        target.style.borderStyle = 'solid';
-        target.style.borderColor = normalized;
-        selectedTemplateBlock.dataset.borderColor = normalized;
-        if (templateBorderColorInput) {
-          templateBorderColorInput.value = normalizeColorToHex(normalized, '#ced4da');
-        }
-        setPaletteActive(templateBorderPalette, normalized);
-        if (selectedTemplateBlock.dataset.accentColor) {
-          target.style.borderLeftColor = selectedTemplateBlock.dataset.accentColor;
-        }
-        updateTemplateToolbarState(selectedTemplateBlock);
+      const normalized = color || '#ced4da';
+      target.style.borderStyle = 'solid';
+      target.style.borderColor = normalized;
+      selectedTemplateBlock.dataset.borderColor = normalized;
+      if (templateBorderColorInput) {
+        templateBorderColorInput.value = normalizeColorToHex(normalized, '#ced4da');
       }
+      setPaletteActive(templateBorderPalette, normalized);
+      if (selectedTemplateBlock.dataset.accentColor) {
+        target.style.borderLeftColor = selectedTemplateBlock.dataset.accentColor;
+      }
+      updateTemplateToolbarState(selectedTemplateBlock);
+      if (target.classList.contains('box')) {
+        markNoteAsCustom(selectedTemplateBlock);
+      }
+      scheduleCacheSave();
+    }
 
-      function applyTemplateAccentColor(color) {
-        if (!selectedTemplateBlock) return;
-        const target = getTemplateTarget(selectedTemplateBlock);
+    function applyTemplateAccentColor(color) {
+      if (!selectedTemplateBlock) return;
+      const target = getTemplateTarget(selectedTemplateBlock);
         if (!target || !target.classList.contains('box')) return;
-        const normalized = color || selectedTemplateBlock.dataset.borderColor || '#0d6efd';
-        target.style.borderLeftColor = normalized;
-        selectedTemplateBlock.dataset.accentColor = normalized;
-        if (templateAccentColorInput) {
-          templateAccentColorInput.value = normalizeColorToHex(normalized, '#0d6efd');
-        }
-        setPaletteActive(templateAccentPalette, normalized);
-        updateTemplateToolbarState(selectedTemplateBlock);
+      const normalized = color || selectedTemplateBlock.dataset.borderColor || '#0d6efd';
+      target.style.borderLeftColor = normalized;
+      selectedTemplateBlock.dataset.accentColor = normalized;
+      if (templateAccentColorInput) {
+        templateAccentColorInput.value = normalizeColorToHex(normalized, '#0d6efd');
       }
+      setPaletteActive(templateAccentPalette, normalized);
+      updateTemplateToolbarState(selectedTemplateBlock);
+      if (target.classList.contains('box')) {
+        markNoteAsCustom(selectedTemplateBlock);
+      }
+      scheduleCacheSave();
+    }
 
       function updateTemplateToolbarState(block) {
         if (!block || !templateToolbar) return;
         const target = getTemplateTarget(block);
         const computed = window.getComputedStyle(target || block);
         const isNote = target && target.classList && target.classList.contains('box');
+
+        if (isNote && notePresetKeys && noteStylePresets) {
+          let presetCandidate = block.dataset.notePreset;
+          const targetPreset = target?.dataset?.notePreset;
+          if (targetPreset && noteStylePresets[targetPreset]) {
+            presetCandidate = targetPreset;
+          }
+          if (!presetCandidate || (presetCandidate !== 'custom' && !noteStylePresets[presetCandidate])) {
+            const detectedPreset = notePresetKeys.find(key => target.classList.contains(noteStylePresets[key].className));
+            if (detectedPreset) {
+              presetCandidate = detectedPreset;
+            }
+          }
+          block.dataset.notePreset = presetCandidate || 'custom';
+        }
+
+        if (templateNoteStyleRow) {
+          templateNoteStyleRow.style.display = isNote ? 'flex' : 'none';
+        }
+
+        if (templateSpacerRow) {
+          templateSpacerRow.style.display = isNote ? 'flex' : 'none';
+        }
+
+        if (templateNoteStyleSelect) {
+          templateNoteStyleSelect.disabled = !isNote;
+          const presetValue = block.dataset.notePreset && (block.dataset.notePreset === 'custom' || noteStylePresets[block.dataset.notePreset])
+            ? block.dataset.notePreset
+            : (isNote ? 'custom' : 'custom');
+          templateNoteStyleSelect.value = presetValue;
+        }
 
         if (templateBgColorInput) {
           const bgValue = block.dataset.bgColor || target?.style.backgroundColor || computed.backgroundColor;
@@ -3315,8 +3726,15 @@
           if (!isNote) {
             templateBorderWidthSlider.disabled = true;
             templateBorderWidthDisplay.textContent = '—';
+            if (templateBorderWidthNumber) {
+              templateBorderWidthNumber.disabled = true;
+              templateBorderWidthNumber.value = '';
+            }
           } else {
             templateBorderWidthSlider.disabled = false;
+            if (templateBorderWidthNumber) {
+              templateBorderWidthNumber.disabled = false;
+            }
             const sliderMax = parseInt(templateBorderWidthSlider.max || '12', 10);
             const sliderMin = parseInt(templateBorderWidthSlider.min || '0', 10);
             const storedWidth = block.dataset.borderWidth !== undefined ? parseInt(block.dataset.borderWidth, 10) : null;
@@ -3331,6 +3749,9 @@
             const clampedWidth = Math.max(sliderMin, Math.min(sliderMax, baseWidth));
             templateBorderWidthSlider.value = clampedWidth;
             templateBorderWidthDisplay.textContent = baseWidth + 'px';
+            if (templateBorderWidthNumber) {
+              templateBorderWidthNumber.value = clampedWidth;
+            }
             updateBorderWidthDataset(block, baseWidth, accentExtra);
           }
         }
@@ -5184,7 +5605,26 @@
         if (templateBorderWidthDisplay) {
           templateBorderWidthDisplay.textContent = width + 'px';
         }
+        if (templateBorderWidthNumber) {
+          templateBorderWidthNumber.value = width;
+        }
+        markNoteAsCustom(selectedTemplateBlock);
         updateBorderWidthDataset(selectedTemplateBlock, width, Math.max(0, accentExtra));
+        scheduleCacheSave();
+      });
+
+      templateBorderWidthNumber?.addEventListener('input', (e) => {
+        if (!selectedTemplateBlock || !templateBorderWidthSlider) return;
+        const min = parseInt(templateBorderWidthSlider.min || '0', 10);
+        const max = parseInt(templateBorderWidthSlider.max || '12', 10);
+        let value = parseInt(e.target.value, 10);
+        if (!Number.isFinite(value)) {
+          value = min;
+        }
+        value = Math.max(min, Math.min(max, value));
+        templateBorderWidthSlider.value = value;
+        const inputEvent = new Event('input', { bubbles: true });
+        templateBorderWidthSlider.dispatchEvent(inputEvent);
       });
 
       templateFontSizeSlider?.addEventListener('input', (e) => {
@@ -5196,6 +5636,35 @@
           templateFontSizeDisplay.textContent = size + '%';
         }
         repositionTemplateToolbar();
+      });
+
+      templateNoteStyleSelect?.addEventListener('change', (e) => {
+        if (!selectedTemplateBlock) return;
+        const target = getTemplateTarget(selectedTemplateBlock);
+        if (!target || !target.classList.contains('box')) {
+          return;
+        }
+        const value = e.target.value;
+        if (value === 'custom') {
+          markNoteAsCustom(selectedTemplateBlock);
+          updateTemplateToolbarState(selectedTemplateBlock);
+          scheduleCacheSave();
+          return;
+        }
+        if (noteStylePresets[value]) {
+          applyNotePreset(value);
+          scheduleCacheSave();
+        }
+      });
+
+      templateAddSpaceAboveBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        insertNoteSpacer('before');
+      });
+
+      templateAddSpaceBelowBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        insertNoteSpacer('after');
       });
 
       templateMarginTopSlider?.addEventListener('input', (e) => {
@@ -5590,15 +6059,15 @@
         const templates = [
           {
             name: 'Nota Importante',
-            html: '<div class="box" style="border-left-color: #dc3545;"><strong>Nota importante:</strong> Escribe tu contenido aquí.</div>'
+            html: '<div class="box note-style-rose" data-note-preset="rose"><strong>Nota importante:</strong> Escribe tu contenido aquí.</div>'
           },
           {
             name: 'Perla Clínica',
-            html: '<div class="box pearl">Escribe tu perla clínica aquí.</div>'
+            html: '<div class="box pearl note-style-sunset" data-note-preset="sunset">Escribe tu perla clínica aquí.</div>'
           },
           {
             name: 'Cuadro Informativo',
-            html: '<div class="box"><strong>Título:</strong><p>Contenido del cuadro informativo.</p></div>'
+            html: '<div class="box note-style-base" data-note-preset="base"><strong>Título:</strong><p>Contenido del cuadro informativo.</p></div>'
           },
           {
             name: 'Separador Simple',
@@ -5614,11 +6083,11 @@
           },
           {
             name: 'Nota de Advertencia',
-            html: '<div class="box" style="background: #fff3cd; border-left-color: #ffc107;"><strong>⚠️ Advertencia:</strong> Contenido importante de advertencia.</div>'
+            html: '<div class="box note-style-sunset" data-note-preset="sunset"><strong>⚠️ Advertencia:</strong> Contenido importante de advertencia.</div>'
           },
           {
             name: 'Nota de Éxito',
-            html: '<div class="box" style="background: #d1e7dd; border-left-color: #198754;"><strong>✓ Éxito:</strong> Información positiva o exitosa.</div>'
+            html: '<div class="box note-style-emerald" data-note-preset="emerald"><strong>✓ Éxito:</strong> Información positiva o exitosa.</div>'
           },
           {
             name: 'Lista de Verificación',
@@ -5634,7 +6103,7 @@
           },
           {
             name: 'Definición',
-            html: '<div class="box" style="background: #e7f3ff;"><strong>Definición:</strong> Término a definir - explicación del término.</div>'
+            html: '<div class="box note-style-sky" data-note-preset="sky"><strong>Definición:</strong> Término a definir - explicación del término.</div>'
           }
         ];
 
